@@ -73,11 +73,14 @@
             <div class="card-body">
                 <form action="">
                     <div class="form-group">
-                        <textarea name="fs_objective" id="fs_objective" rows="5" class="form-control" placeholder="Ketik disini ....">
-TB : 
-BB : 
-ST :
-TD :
+                        <textarea name="fs_objective" id="fs_objective" rows="7" class="form-control" placeholder="Ketik disini ....">
+Tekanan darah : mm/Hg
+Nadi : x/mnt 
+Respirasi : x/mnt
+Suhu : *C
+Tinggi badan : cm
+Berat badan : kg
+Isian :
                         </textarea>
                     </div>
                 </form>
