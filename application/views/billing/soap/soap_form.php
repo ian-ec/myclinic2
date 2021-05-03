@@ -45,7 +45,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <div class="card" style="margin-bottom: 5px;">
             <div class="bg-soft-primary">
                 <div class="row">
@@ -120,7 +120,7 @@ Isian :
         </div>
         <span id="tombol"></span>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-7">
         <div class="card">
             <div class="card-body">
                 <span id="soap"></span>
