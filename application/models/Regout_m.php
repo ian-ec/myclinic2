@@ -164,4 +164,14 @@ class Regout_m extends CI_Model
         $query = $this->db->get();
         return $query;
     }
+
+    public function penerimaan_kas()
+    {
+        $date_now = date('Y-m');
+        $this->db->select('SUM(fn_cash) as penerimaan');
+        $this->db->from('t_trs_regout2');
+        $this->db->like('fd_tgl_bayar', $date_now);
+        $query = $this->db->get();
+        return $query;
+    }
 }

@@ -112,14 +112,14 @@
         <div class="col-xl-5">
           <div class="text-center p-4 bg-success">
             <span style="font-size: 50px; color: black;">
-              <i class="fas fa-address-book"></i>
+              <i class="fas fa-dollar-signfas fa-dollar-sign"></i>
             </span>
           </div>
         </div>
         <div class="col-xl-7">
           <div class="p-4 text-center text-xl-left">
             <div class="row">
-              <h1>100.000.000</h1>
+              <h1><?= indo_currency2($penerimaan_kas->penerimaan) ?></h1>
             </div>
             <div class="row">
               <h5>PENERIMAAN KAS</h5>

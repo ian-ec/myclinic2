@@ -262,6 +262,15 @@ TD :
                     '<table style="width: 100%;" class="table table-bordered">' +
                     '<tbody>' +
                     '<tr><td>' +
+                    '<a class="btn btn-sm btn-warning" id="copy_soap"' +
+                    'data-fs_id_soap="' + val.fs_id_soap + '"' +
+                    'data-fs_subjective="' + val.fs_subjective + '"' +
+                    'data-fs_objective="' + val.fs_objective + '"' +
+                    'data-fs_assesment="' + val.fs_assesment + '"' +
+                    'data-fs_planing="' + val.fs_planing + '"' +
+                    '><i class="fas fa-copy"></i></a>' +
+                    '</td></tr>' +
+                    '<tr><td>' +
                     '<a class="btn btn-sm btn-success" id="edit_soap"' +
                     'data-fs_id_soap="' + val.fs_id_soap + '"' +
                     'data-fs_subjective="' + val.fs_subjective + '"' +
@@ -269,14 +278,16 @@ TD :
                     'data-fs_assesment="' + val.fs_assesment + '"' +
                     'data-fs_planing="' + val.fs_planing + '"' +
                     '><i class="fas fa-pen"></i></a>' +
+                    '</td></tr>' +
                     '<tr><td>' +
                     '<a href="<?= site_url('soap/cetak_pdf/') ?>' + val.fs_id_soap + '"  target="_blank" class="btn btn-sm btn-primary"><i class="fas fa-print"></i></a>' +
-                    '<tr><td>' +
+                    '</td></tr>' +
                     '<?php if ($this->fungsi->user_login()->level == 1) { ?>' +
+                    '<tr><td>' +
                     '<a href="<?= site_url('soap/del/') ?>' + val.fs_id_soap + '" id="btn-hapus" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">' +
                     '<i class="fa fa-trash"></i></a>' +
-                    '<?php } ?>' +
                     '</td></tr>' +
+                    '<?php } ?>' +
                     '</tbody>' +
                     '</table>' +
                     '</td>' +
@@ -381,6 +392,21 @@ TD :
         var tombol = '<div class="card">' +
             '<div class="card-body text-right" style="padding: 10px;">' +
             '<button class="btn btn-md btn-info" id="edit">Simpan Edit</button>' +
+            '</div>' +
+            '</div>'
+        $('#tombol').html(tombol)
+    })
+
+    $(document).on('click', '#copy_soap', function() {
+        $('#fs_id_soap').val($(this).data('fs_id_soap'))
+        $('#fs_subjective').val($(this).data('fs_subjective'))
+        $('#fs_objective').val($(this).data('fs_objective'))
+        $('#fs_assesment').val($(this).data('fs_assesment'))
+        $('#fs_planing').val($(this).data('fs_planing'))
+
+        var tombol = '<div class="card">' +
+            '<div class="card-body text-right" style="padding: 10px;">' +
+            '<button class="btn btn-md btn-success" id="add">Simpan</button>' +
             '</div>' +
             '</div>'
         $('#tombol').html(tombol)
