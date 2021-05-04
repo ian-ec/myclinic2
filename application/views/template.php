@@ -158,21 +158,33 @@
               <ul class="sub-menu" aria-expanded="false">
                 <li><a href="<?= site_url('pembelian') ?>" key="t-default" <?= $this->uri->segment(1) == 'pembelian' ? 'class="mm-active"' : '' ?>>Pembelian</a></li>
                 <li><a href="<?= site_url('penjualan') ?>" key="t-default" <?= $this->uri->segment(1) == 'penjualan' ? 'class="mm-active"' : '' ?>>Penjualan</a></li>
-                <li><a href="<?= site_url('retur') ?>" key="t-default" <?= $this->uri->segment(1) == 'retur' ? 'class="mm-active"' : '' ?>>Retur</a></li>
+                <li><a href="<?= site_url('retur') ?>" key="t-default" <?= $this->uri->segment(1) == 'retur' ? 'class="mm-active"' : '' ?>>Retur Pembelian</a></li>
                 <li><a href="<?= site_url('adjustment') ?>" key="t-default" <?= $this->uri->segment(1) == 'adjustment' ? 'class="mm-active"' : '' ?>>Adjustment</a></li>
               </ul>
             </li>
-            <li class="<?= $this->uri->segment(1) == 'deposit' ||
-                          $this->uri->segment(1) == 'kasir'
+            <li class="<?= $this->uri->segment(1) == 'kasir'
                           ? ' mm-active' : '' ?>">
-              <a href="javascript: void(0);" class="waves-effect has-arrow <?= $this->uri->segment(1) == 'deposit' ||
-                                                                              $this->uri->segment(1) == 'kasir'
+              <a href="javascript: void(0);" class="waves-effect has-arrow <?= $this->uri->segment(1) == 'kasir'
                                                                               ? ' mm-active' : '' ?>">
                 <i class="far fa-money-bill-alt"></i>
                 <span key="t-dashboards">Pembayaran</span>
               </a>
               <ul class="sub-menu" aria-expanded="false">
                 <li><a href="<?= site_url('kasir') ?>" key="t-default" <?= $this->uri->segment(1) == 'kasir' ? 'class="mm-active"' : '' ?>>Registrasi Keluar</a></li>
+              </ul>
+            </li>
+            <li class="<?= $this->uri->segment(1) == 'order_piutang' ||
+                          $this->uri->segment(1) == 'pelunasan_piutang'
+                          ? ' mm-active' : '' ?>">
+              <a href="javascript: void(0);" class="waves-effect has-arrow <?= $this->uri->segment(1) == 'order_piutang' ||
+                                                                              $this->uri->segment(1) == 'pelunasan_piutang'
+                                                                              ? ' mm-active' : '' ?>">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span key="t-dashboards">Akunting</span>
+              </a>
+              <ul class="sub-menu" aria-expanded="false">
+                <li><a href="<?= site_url('order_piutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'order_piutang' ? 'class="mm-active"' : '' ?>>Order Pelunasan Piutang</a></li>
+                <li><a href="<?= site_url('pelunasan_piutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'pelunasan_piutang' ? 'class="mm-active"' : '' ?>>Pelunasan Piutang</a></li>
               </ul>
             </li>
             <li class="menu-title" key="t-menu">LAPORAN INFORMASI</li>

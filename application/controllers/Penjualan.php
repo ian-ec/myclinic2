@@ -23,13 +23,10 @@ class penjualan extends CI_Controller
 
     public function index()
     {
-
-        $barang = $this->barang_m->get_penjualan()->result();
-        $cart = $this->penjualan_m->get_cart_penjualan();
         $data = array(
             'registrasi' => $this->registrasi_m->get()->result(),
-            'barang' => $barang,
-            'cart' => $cart,
+            'barang' => $this->barang_m->get_penjualan()->result(),
+            'cart' => $this->penjualan_m->get_cart_penjualan(),
             'no_penjualan' => $this->penjualan_m->no_penjualan(),
             'debit' => $this->bank_m->get_debit()->result(),
             'credit' => $this->bank_m->get_credit()->result(),
