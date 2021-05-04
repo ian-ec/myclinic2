@@ -101,24 +101,24 @@
             <table class="transaction-table" cellspacing="10" cellpadding="0">
                 <tbody>
                     <tr>
-                        <td style="width: 20%;"><b>Subjective</b></td>
-                        <td style="width: 5%;">:</td>
-                        <td><?= $soap->fs_subjective ?></td>
+                        <td style="width: 20%; vertical-align: top;"><b>Subjective</b></td>
+                        <td style="width: 5%; vertical-align: top;">:</td>
+                        <td><?= nl2br($soap->fs_subjective) ?></td>
                     </tr>
                     <tr>
-                        <td style="width: 20%;"><b>Objective</b></td>
-                        <td style="width: 5%;">:</td>
-                        <td><?= $soap->fs_objective ?></td>
+                        <td style="width: 20%; vertical-align: top;"><b>Objective</b></td>
+                        <td style="width: 5%; vertical-align: top;">:</td>
+                        <td><?= nl2br($soap->fs_objective) ?></td>
                     </tr>
                     <tr>
-                        <td style="width: 20%;"><b>Assesment</b></td>
-                        <td style="width: 5%;">:</td>
-                        <td><?= $soap->fs_assesment ?></td>
+                        <td style="width: 20%; vertical-align: top;"><b>Assesment</b></td>
+                        <td style="width: 5%; vertical-align: top;">:</td>
+                        <td><?= nl2br($soap->fs_assesment) ?></td>
                     </tr>
                     <tr>
-                        <td style="width: 20%;"><b>Planing</b></td>
-                        <td style="width: 5%;">:</td>
-                        <td><?= $soap->fs_planing ?></td>
+                        <td style="width: 20%; vertical-align: top;"><b>Planing</b></td>
+                        <td style="width: 5%; vertical-align: top;">:</td>
+                        <td><?= nl2br($soap->fs_planing) ?></td>
                     </tr>
                 </tbody>
             </table>

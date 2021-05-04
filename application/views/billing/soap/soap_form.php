@@ -73,14 +73,15 @@
             <div class="card-body">
                 <form action="">
                     <div class="form-group">
-                        <textarea name="fs_objective" id="fs_objective" rows="7" class="form-control" placeholder="Ketik disini ....">
-Tekanan darah : mm/Hg
-Nadi : x/mnt 
-Respirasi : x/mnt
-Suhu : *C
-Tinggi badan : cm
-Berat badan : kg
-Isian :
+                        <textarea name="fs_objective" id="fs_objective" rows="9" class="form-control" placeholder="Ketik disini ....">
+Tekanan darah:  mm/Hg
+Nadi:  x/mnt 
+Respirasi:  x/mnt
+Suhu:  *C
+Tinggi badan: cm
+Berat badan:  kg
+
+Isian:
                         </textarea>
                     </div>
                 </form>
@@ -316,7 +317,8 @@ Isian :
 
         var tombol = '<div class="card">' +
             '<div class="card-body text-right" style="padding: 10px;">' +
-            '<button class="btn btn-md btn-success" id="add">Simpan</button>' +
+            '<button class="btn btn-md btn-success" id="add">Simpan</button>  ' +
+            '<a href="<?= site_url('soap') ?>" class="btn btn-md btn-warning" id="refresh">Refresh</a>' +
             '</div>' +
             '</div>'
         $('#tombol').html(tombol)
@@ -394,7 +396,8 @@ Isian :
 
         var tombol = '<div class="card">' +
             '<div class="card-body text-right" style="padding: 10px;">' +
-            '<button class="btn btn-md btn-info" id="edit">Simpan Edit</button>' +
+            '<button class="btn btn-md btn-info" id="edit">Simpan Edit</button>  ' +
+            '<a href="<?= site_url('soap') ?>" class="btn btn-md btn-warning" id="refresh">Refresh</a>' +
             '</div>' +
             '</div>'
         $('#tombol').html(tombol)
@@ -409,7 +412,8 @@ Isian :
 
         var tombol = '<div class="card">' +
             '<div class="card-body text-right" style="padding: 10px;">' +
-            '<button class="btn btn-md btn-success" id="add">Simpan</button>' +
+            '<button class="btn btn-md btn-success" id="add">Simpan</button>  ' +
+            '<a href="<?= site_url('soap') ?>" class="btn btn-md btn-warning" id="refresh">Refresh</a>' +
             '</div>' +
             '</div>'
         $('#tombol').html(tombol)
