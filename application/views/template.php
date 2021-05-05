@@ -183,7 +183,7 @@
                 <span key="t-dashboards">Akunting</span>
               </a>
               <ul class="sub-menu" aria-expanded="false">
-                <li><a href="<?= site_url('order_piutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'order_piutang' ? 'class="mm-active"' : '' ?>>Order Pelunasan Piutang</a></li>
+                <li><a href="<?= site_url('order_piutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'order_piutang' ? 'class="mm-active"' : '' ?>>Order Piutang</a></li>
                 <li><a href="<?= site_url('pelunasan_piutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'pelunasan_piutang' ? 'class="mm-active"' : '' ?>>Pelunasan Piutang</a></li>
               </ul>
             </li>
