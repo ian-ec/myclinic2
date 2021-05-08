@@ -4,7 +4,7 @@
         padding: 5px;
         /* margin-top: 5px; */
         width: 100%;
-        height: 510px;
+        height: 423px;
         overflow: auto;
     }
 </style>
@@ -31,13 +31,13 @@
                 <div class="form-group row mb-2">
                     <label class="col-sm-3 col-form-label text-right">Tanggal</label>
                     <div class="col-sm-9">
-                        <input type="date" id="fd_tgl_registrasi" value="<?= date('Y-m-d') ?>" class="form-control">
+                        <input type="date" id="fd_tgl_order" value="<?= date('Y-m-d') ?>" class="form-control">
                     </div>
                 </div>
                 <div class="form-group row mb-2">
                     <label class="col-sm-3 col-form-label text-right">Kode Order</label>
                     <div class="col-sm-9">
-                        <input type="text" id="fs_kd_order_piutang" value="OP0000001" class="form-control" style="background-color: lavender;" readonly>
+                        <input type="text" id="fs_kd_order_piutang" value="<?= $no_order_piutang ?>" class="form-control" style="background-color: lavender;" readonly>
                     </div>
                 </div>
                 <div class="form-group row mb-2">
@@ -59,8 +59,8 @@
                     <div class="col-sm-9">
                         <div class="input-group">
                             <div class="form-inline">
-                                <input type="date" class="form-control mb-2 mr-2" value="<?= date('Y-m-01') ?>" style="width: 45%;"><span> - </span>
-                                <input type="date" class="form-control mb-2 ml-2" value="<?= date('Y-m-d') ?>" style="width: 45%;">
+                                <input type="date" id="awal" class="form-control mb-2 mr-2" value="<?= date('Y-m-01') ?>" style="width: 45%;"><span> - </span>
+                                <input type="date" id="akhir" class="form-control mb-2 ml-2" value="<?= date('Y-m-d') ?>" style="width: 45%;">
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                 <div class="form-group row mb-2">
                     <label class="col-sm-3 col-form-label text-right"></label>
                     <div class="col-sm-9 text-right">
-                        <button class="btn btn-info">Proses Data</button>
+                        <button id="proses" class="btn btn-info">Proses Data</button>
                     </div>
                 </div>
             </div>
@@ -76,21 +76,9 @@
         <div class="card">
             <div class="card-body">
                 <div class="form-group row mb-2">
-                    <label class="col-sm-3 col-form-label text-right">Subtotal</label>
-                    <div class="col-sm-9">
-                        <input type="text" id="" value="1.000.000" class="form-control" style="background-color: lavender;" readonly>
-                    </div>
-                </div>
-                <div class="form-group row mb-2">
-                    <label class="col-sm-3 col-form-label text-right">Diskon</label>
-                    <div class="col-sm-9">
-                        <input type="text" id="" value="0" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group row mb-2">
                     <label class="col-sm-3 col-form-label text-right">Grandtotal</label>
                     <div class="col-sm-9">
-                        <input type="text" id="" value="1.000.000" class="form-control" style="background-color: lavender;" readonly>
+                        <input type="number" id="fn_grandtotal" value="0" class="form-control" style="background-color: lavender;" readonly>
                     </div>
                 </div>
                 <div class="form-group row mb-2">
@@ -111,45 +99,16 @@
                             <th style="width: 5%;">No</th>
                             <th>Kode Reg</th>
                             <th>Nama</th>
-                            <th>Klaim</th>
-                            <th style="width: 5%;"><i class="fas fa-cog"></th>
+                            <th>Tgl Piutang</th>
+                            <th style="text-align: right;">Klaim</th>
+                            <th style="width: 5%; text-align: center;"><i class="fas fa-cog"></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1.</td>
-                            <td>RG0000001</td>
-                            <td>Ian Ec</td>
-                            <td>500.000</td>
-                            <td>
-                                <input type="checkbox">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2.</td>
-                            <td>RG0000001</td>
-                            <td>Ian Ec</td>
-                            <td>500.000</td>
-                            <td>
-                                <input type="checkbox">
-                            </td>
-                        </tr>
+                    <tbody id="data_piutang">
                     </tbody>
                 </table>
             </div>
         </div>
-
-        <div class="card">
-            <div class="card-body">
-                <label><input type="checkbox" value="2000" /> Nasi 2000</label><br>
-                <label><input type="checkbox" value="2200" /> Nasi 2200</label><br>
-                <label><input type="checkbox" value="2400" /> Nasi 2400</label><br>
-                <label><input type="checkbox" value="2500" /> Nasi 2500</label><br>
-                <br>
-                <input name="total" />
-            </div>
-        </div>
-
     </div>
 </div>
 
@@ -219,13 +178,62 @@
         $('#modal-jaminan').modal('hide')
     })
 
+    $(document).on('click', '#proses', function() {
+        var fs_id_jaminan = $('#fs_id_jaminan').val()
+        var awal = $('#awal').val()
+        var akhir = $('#akhir').val()
 
+        if (fs_id_jaminan == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Jaminan belum di pilih!',
+                text: 'Silahkan pilih jaminan terlebih dahulu!',
+            })
+            $('#fs_nm_jaminan').focus()
+        } else {
+
+            show_loading()
+            var i = 0;
+            var data_piutang = null
+            $.getJSON('<?= site_url('order_piutang/data_piutang/') ?>' + fs_id_jaminan + '/' + awal + '/' + akhir, function(data) {
+                $.each(data, function(key, val) {
+                    i += 1
+                    data_piutang += '<tr>' +
+                        '<td>' + i + '</td>' +
+                        '<td>' + val.fs_kd_registrasi + '</td>' +
+                        '<td>' + val.fs_nm_pasien + '</td>' +
+                        '<td>' + dateFormat(val.fd_tgl_bayar) + '</td>' +
+                        '<td style="text-align: right;">' + currencyFormat(val.fn_klaim) + '</td>' +
+                        '<td style="text-align: center;"><input type="checkbox" value="' + val.fn_klaim + '" ' +
+                        'data-fs_id_registrasi="' + val.id_registrasi + '"' +
+                        'data-fn_klaim="' + val.fn_klaim + '"/></td></tr>'
+                })
+                $('#data_piutang').html(data_piutang)
+            })
+            $('#fn_grandtotal').val(0)
+            hide_loading()
+        }
+    })
 
     $(document).on("click", "input[type='checkbox']", function() {
-        total = 0;
-        $("input[type='checkbox']:checked").each(function() {
-            total += parseInt($(this).val())
-        })
-        $("input[name='total']").val(total)
+        var fs_id_registrasi = $(this).data('fs_id_registrasi')
+        var fn_klaim = $(this).data('fn_klaim')
+
+        $.ajax({
+            type: 'POST',
+            url: "<?= base_url('order_piutang/add_cart_order'); ?>",
+            data: {
+                'fs_id_registrasi': fs_id_registrasi,
+                'fn_klaim': fn_klaim
+            },
+            dataType: 'json',
+            success: function(result) {
+                total = 0;
+                $("input[type='checkbox']:checked").each(function() {
+                    total += parseInt($(this).val())
+                })
+                $("#fn_grandtotal").val(total)
+            }
+        });
     })
 </script>
