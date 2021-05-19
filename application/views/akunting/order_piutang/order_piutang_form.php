@@ -31,7 +31,7 @@
                 <div class="form-group row mb-2">
                     <label class="col-sm-3 col-form-label text-right">Tanggal</label>
                     <div class="col-sm-9">
-                        <input type="date" id="fd_tgl_order" value="<?= date('Y-m-d') ?>" class="form-control">
+                        <input type="date" id="fd_tgl_order_piutang" value="<?= date('Y-m-d') ?>" class="form-control">
                     </div>
                 </div>
                 <div class="form-group row mb-2">
@@ -84,7 +84,7 @@
                 <div class="form-group row mb-2">
                     <label class="col-sm-3 col-form-label text-right"></label>
                     <div class="col-sm-9 text-right">
-                        <button class="btn btn-success">Simpan</button>
+                        <button class="btn btn-success" id="simpan">Simpan</button>
                     </div>
                 </div>
             </div>
@@ -235,5 +235,76 @@
                 $("#fn_grandtotal").val(total)
             }
         });
+    })
+
+    $(document).on('click', '#simpan', function() {
+        var fs_id_jaminan = $('#fs_id_jaminan').val()
+        var fn_nilai_order = $('#fn_grandtotal').val()
+        var fd_tgl_order_piutang = $('#fd_tgl_order_piutang').val()
+
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Data akan disimpan!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#00a65a',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, simpan!',
+            cancelButtonText: 'Batal',
+            showClass: {
+                popup: 'animate__animated animate__bounceIn'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__backOutDown'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: '<?= site_url('order_piutang/process') ?>',
+                    data: {
+                        'simpan': true,
+                        'fs_id_jaminan': fs_id_jaminan,
+                        'fn_nilai_order': fn_nilai_order,
+                        'fd_tgl_order_piutang': fd_tgl_order_piutang
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                        if (result.success) {
+                            kode = result.fs_id_order_piutang,
+                                Swal.fire({
+                                    title: 'Cetak transaksi ini?',
+                                    icon: 'info',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#00a65a',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Ya, Cetak!',
+                                    cancelButtonText: 'Batal',
+                                    showClass: {
+                                        popup: 'animate__animated animate__bounceIn'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__backOutDown'
+                                    }
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.href = '<?= site_url('order_piutang') ?>'
+                                        window.open('<?= site_url('order_piutang/cetak_pdf/') ?>' + kode, '_blank')
+                                    } else {
+                                        location.href = '<?= site_url('order_piutang') ?>'
+                                    }
+                                })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal!',
+                                text: 'Transaksi gagal tersimpan!',
+                            })
+                        }
+                    }
+                })
+            }
+        })
+
     })
 </script>

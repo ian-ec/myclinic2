@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Bulan Mei 2021 pada 06.36
+-- Waktu pembuatan: 18 Bulan Mei 2021 pada 04.39
 -- Versi server: 10.1.35-MariaDB
 -- Versi PHP: 7.2.9
 
@@ -103,13 +103,13 @@ CREATE TABLE `tb_barang` (
 --
 
 INSERT INTO `tb_barang` (`fs_id_barang`, `fs_kd_barang`, `fs_kd_barcode`, `fs_nm_barang`, `fs_id_golongan`, `fs_id_group`, `fs_id_satuan`, `fs_id_rekapcetak`, `fs_id_etiket`, `fn_harga_beli`, `fn_hna`, `fn_profit`, `fn_harga_jual`, `fn_stok`, `fn_stok_min`, `fn_stok_max`, `fb_aktif`) VALUES
-(1, 'BR0001', '111111', 'Amoxilin', 1, 1, 11, 2, 3, 1000, 1100, 0, 2000, 49, 10, 100, 1),
-(2, 'BR0002', '222222', 'Asam Mefenamat', 1, 1, 11, 2, 3, 2000, 2200, 0, 3000, 49, 10, 100, 1),
-(3, 'BR000003', '333333', 'Bodrex', 1, 1, 11, 2, 3, 1000, 1100, 10, 0, 4, 10, 100, 1),
-(4, 'BR000004', '444444', 'Paracetamol', 4, 1, 11, 2, 3, 6000, 6600, 20, 0, 14, 10, 100, 1),
-(5, 'BR000005', '555555', 'Sanmol Drop', 1, 1, 10, 2, 3, 5000, 5000, 20, 0, 4, 10, 100, 1),
-(6, 'BR000006', '666666', 'Panadol', 1, 1, 13, 2, 5, 5000, 5500, 25, 0, 4, 10, 100, 1),
-(7, 'BR000007', 'BR000007', 'Konidin', 2, 1, 12, 2, 0, 1000, 1000, 20, 0, 79, 10, 100, 1),
+(1, 'BR0001', '111111', 'Amoxilin', 1, 1, 11, 2, 3, 1000, 1100, 0, 2000, 30, 10, 100, 1),
+(2, 'BR0002', '222222', 'Asam Mefenamat', 1, 1, 11, 2, 3, 2000, 2200, 0, 3000, 30, 10, 100, 1),
+(3, 'BR000003', '333333', 'Bodrex', 1, 1, 11, 2, 3, 1000, 1100, 10, 0, 2, 10, 100, 1),
+(4, 'BR000004', '444444', 'Paracetamol', 4, 1, 11, 2, 3, 6000, 6600, 20, 0, 8, 10, 100, 1),
+(5, 'BR000005', '555555', 'Sanmol Drop', 1, 1, 10, 2, 3, 5000, 5000, 20, 0, 2, 10, 100, 1),
+(6, 'BR000006', '666666', 'Panadol', 1, 1, 13, 2, 5, 5000, 5500, 25, 0, 2, 10, 100, 1),
+(7, 'BR000007', 'BR000007', 'Konidin', 2, 1, 12, 2, 0, 1000, 1000, 20, 0, 60, 10, 100, 1),
 (8, 'BR000008', '888888', 'Kursi Roda', 4, 3, 7, 2, 4, 9000000, 9000000, 0, 15000000, 1, 1, 10, 1),
 (9, 'BR000009', 'BR000009', 'Konidin Box', 1, 1, 8, 2, 3, 10000, 10000, 20, 0, 4, 10, 100, 1);
 
@@ -439,7 +439,7 @@ CREATE TABLE `tb_trs_pembelian` (
 
 INSERT INTO `tb_trs_pembelian` (`fs_id_pembelian`, `fs_kd_pembelian`, `fs_id_distributor`, `fn_nilai_beli`, `fn_diskon`, `fn_total_nilai_beli`, `fn_jenis_bayar`, `fs_keterangan`, `fd_tgl_bayar`, `fd_tgl_pembelian`, `fd_tgl_void`, `fs_id_user`) VALUES
 (1, 'PB00000007', 3, 115500, 0, 115500, 1, '', '2021-03-24', '2021-03-24', '0000-00-00', 1),
-(2, 'PB00000008', 1, 217800, 0, 217800, 2, 'Akan di bayarkan bulan depan', '2021-04-24', '2021-03-24', '0000-00-00', 1),
+(2, 'PB00000008', 1, 217800, 0, 217800, 1, 'Akan di bayarkan bulan depan', '2021-04-24', '2021-03-24', '0000-00-00', 1),
 (3, 'PB00000009', 3, 9000000, 0, 9000000, 1, 'lunas', '2021-04-01', '2021-04-01', '0000-00-00', 1),
 (4, 'PB00000010', 3, 77000, 0, 77000, 1, 'Pembayaran bulan depan', '2021-05-01', '2021-04-01', '0000-00-00', 1),
 (5, 'PB00000011', 3, 100000, 0, 100000, 1, '', '2021-04-10', '2021-04-10', '0000-00-00', 1);
@@ -532,7 +532,12 @@ INSERT INTO `tb_trs_penjualan` (`fs_id_penjualan`, `fs_kd_penjualan`, `fs_id_reg
 (79, 'PJ00000079', 56, 100000, 129275, 0, 129275, '2021-04-08', '0000-00-00', 1),
 (80, 'PJ00000080', 57, 65000, 85250, 0, 85250, '2021-04-09', '0000-00-00', 1),
 (81, 'PJ00000081', 62, 90000, 126375, 0, 126375, '2021-04-17', '0000-00-00', 1),
-(82, 'PJ00000082', 63, 31000, 40205, 0, 40205, '2021-04-17', '0000-00-00', 1);
+(82, 'PJ00000082', 63, 31000, 40205, 0, 40205, '2021-04-17', '0000-00-00', 1),
+(83, 'PJ00000083', 68, 60000, 87480, 0, 87480, '2021-05-04', '0000-00-00', 1),
+(84, 'PJ00000084', 67, 22000, 28880, 0, 28880, '2021-05-06', '0000-00-00', 1),
+(85, 'PJ00000085', 69, 12000, 15130, 0, 15130, '2021-05-06', '0000-00-00', 1),
+(86, 'PJ00000086', 70, 20000, 32000, 0, 32000, '2021-05-06', '0000-00-00', 1),
+(87, 'PJ00000087', 71, 20000, 30000, 0, 30000, '2021-05-06', '0000-00-00', 1);
 
 -- --------------------------------------------------------
 
@@ -633,7 +638,21 @@ INSERT INTO `tb_trs_penjualan_detail` (`fs_id_penjualan_detail`, `fs_id_penjuala
 (217, 82, 55, 5, 0, 5000, 6000, 1, 0, 6000),
 (218, 82, 56, 2, 0, 2000, 3000, 1, 0, 3000),
 (219, 82, 56, 1, 0, 1000, 2000, 1, 0, 2000),
-(220, 82, 56, 9, 0, 10000, 12000, 1, 0, 12000);
+(220, 82, 56, 9, 0, 10000, 12000, 1, 0, 12000),
+(221, 83, 0, 2, 3, 2000, 3000, 9, 0, 27000),
+(222, 83, 0, 4, 3, 6000, 7920, 4, 0, 31680),
+(223, 83, 58, 1, 0, 1000, 2000, 9, 0, 18000),
+(224, 83, 58, 7, 0, 1000, 1200, 9, 0, 10800),
+(225, 84, 0, 6, 5, 5000, 6875, 2, 0, 13750),
+(226, 84, 0, 5, 3, 5000, 6000, 1, 0, 6000),
+(227, 84, 0, 4, 3, 6000, 7920, 1, 0, 7920),
+(228, 84, 0, 3, 3, 1000, 1210, 1, 0, 1210),
+(229, 85, 0, 5, 3, 5000, 6000, 1, 0, 6000),
+(230, 85, 0, 4, 3, 6000, 7920, 1, 0, 7920),
+(231, 85, 0, 3, 3, 1000, 1210, 1, 0, 1210),
+(232, 86, 0, 1, 3, 1000, 2000, 10, 0, 20000),
+(233, 86, 0, 7, 0, 1000, 1200, 10, 0, 12000),
+(234, 87, 0, 2, 3, 2000, 3000, 10, 0, 30000);
 
 --
 -- Trigger `tb_trs_penjualan_detail`
@@ -687,7 +706,8 @@ INSERT INTO `tb_trs_racik` (`fs_id_racik`, `fs_id_penjualan`, `fs_kd_racik`, `fs
 (53, 79, 'RCK0000053', 'Racik Panas', 12, 10, 3, 60000, 77575, '2021-04-08', '0000-00-00', 1),
 (54, 81, 'RCK0000055', 'Racik Nyeri', 12, 20, 3, 60000, 76375, '2021-04-17', '0000-00-00', 1),
 (55, 82, 'RCK0000056', 'Racik Panas', 12, 10, 3, 11000, 14075, '2021-04-17', '0000-00-00', 1),
-(56, 82, 'RCK0000057', 'Racik Nyeri', 12, 10, 3, 13000, 17000, '2021-04-17', '0000-00-00', 1);
+(56, 82, 'RCK0000057', 'Racik Nyeri', 12, 10, 3, 13000, 17000, '2021-04-17', '0000-00-00', 1),
+(58, 83, 'RCK0000059', 'Racik Panas', 12, 5, 3, 18000, 28800, '2021-05-04', '0000-00-00', 1);
 
 -- --------------------------------------------------------
 
@@ -753,7 +773,9 @@ INSERT INTO `tb_trs_racik_detail` (`fs_id_racik_detail`, `fs_id_racik`, `fs_id_p
 (119, 55, 82, 5, 0, 5000, 6000, 1, 0, 6000, 1),
 (120, 56, 82, 2, 0, 2000, 3000, 1, 0, 3000, 1),
 (121, 56, 82, 1, 0, 1000, 2000, 1, 0, 2000, 1),
-(122, 56, 82, 9, 0, 10000, 12000, 1, 0, 12000, 1);
+(122, 56, 82, 9, 0, 10000, 12000, 1, 0, 12000, 1),
+(125, 58, 83, 1, 0, 1000, 2000, 9, 0, 18000, 1),
+(126, 58, 83, 7, 0, 1000, 1200, 9, 0, 10800, 1);
 
 -- --------------------------------------------------------
 
@@ -978,9 +1000,9 @@ INSERT INTO `t_no` (`fs_trs`, `fs_nm_trs`, `fn_no`) VALUES
 ('AJ', 'ADJUSTMENT', 7),
 ('BN', 'BANK', 3),
 ('BR', 'BARANG', 10),
-('CT', 'CATATAN TERINTEGRASI (SOAP)', 29),
+('CT', 'CATATAN TERINTEGRASI (SOAP)', 30),
 ('DS', 'DISTRIBUTOR', 4),
-('DX', 'PEMBAYARAN TRANSAKSI', 49),
+('DX', 'PEMBAYARAN TRANSAKSI', 56),
 ('ET', 'ETIKET', 6),
 ('GL', 'GOLONGAN', 5),
 ('GR', 'GROUP', 5),
@@ -988,19 +1010,20 @@ INSERT INTO `t_no` (`fs_trs`, `fs_nm_trs`, `fn_no`) VALUES
 ('KC', 'KARCIS', 7),
 ('KP', 'KOMPONEN TARIF', 7),
 ('LY', 'LAYANAN', 8),
+('OP', 'ORDER PIUTANG', 1),
 ('PB', 'PEMBELIAN BARANG', 12),
 ('PG', 'PEGAWAI', 4),
-('PJ', 'PENJUALAN BARANG', 83),
+('PJ', 'PENJUALAN BARANG', 88),
 ('RC', 'REKAP CETAK', 7),
-('RCK', 'RACIK', 58),
-('RG', 'REGISTER', 63),
+('RCK', 'RACIK', 60),
+('RG', 'REGISTER', 66),
 ('RM', 'REKAM MEDIS', 10),
 ('RP', 'REPACK BARANG', 3),
 ('RU', 'RETUR', 8),
 ('SM', 'SATUAN MEDIS', 6),
 ('ST', 'SATUAN BARANG', 14),
 ('TM', 'TINDAKAN MEDIS', 17),
-('TU', 'TINDAKAN UMUM', 80);
+('TU', 'TINDAKAN UMUM', 85);
 
 -- --------------------------------------------------------
 
@@ -1083,9 +1106,9 @@ CREATE TABLE `t_rm` (
 --
 
 INSERT INTO `t_rm` (`fs_id_rm`, `fs_kd_rm`, `fs_nm_pasien`, `fs_kd_kelamin`, `fs_tmpt_lahir`, `fd_tgl_lahir`, `fs_alamat`, `fs_telp`, `fs_identitas`, `fs_kd_agama`, `fd_tgl_rm`, `fd_tgl_update`, `fs_kd_user`, `fb_aktif_reg`, `fb_aktif`) VALUES
-(10, 'RM0000001', 'Teguh Syahrian', 1, 'Negara', '1990-10-09', 'Jembrana ', '081999123660', '123123', 1, '2020-10-16', '2020-11-23', 1, 1, 1),
+(10, 'RM0000001', 'Teguh Syahrian', 1, 'Negara', '1990-10-09', 'Jembrana ', '081999123660', '123123', 1, '2020-10-16', '2020-11-23', 1, 0, 1),
 (11, 'RM0000002', 'Budi Gunawan Candra', 1, 'Karangasem', '1988-01-01', 'Karangasem', '08177887766', '112233', 2, '2020-10-16', '0000-00-00', 1, 0, 1),
-(12, 'RM0000003', 'Nia Ramadhan', 2, 'Jakarta', '2000-02-14', 'Jln Jakarta', '(0361) 112233', '112233', 3, '2020-10-16', '0000-00-00', 1, 1, 1),
+(12, 'RM0000003', 'Nia Ramadhan', 2, 'Jakarta', '2000-02-14', 'Jln Jakarta', '(0361) 112233', '112233', 3, '2020-10-16', '0000-00-00', 1, 0, 1),
 (13, 'RM0000004', 'Rahmat Andara', 1, 'Negara', '1990-07-01', 'Gianyar', '0819995566', '445566', 1, '2020-10-20', '0000-00-00', 1, 0, 1),
 (14, 'RM0000005', 'Hendra Rama', 1, 'Negara', '2020-11-23', 'Tabanan', '08199912366', '123123', 2, '2020-11-23', '2020-11-23', 1, 0, 1),
 (15, 'RM0000006', 'Hasan Ansori', 1, 'Negara', '2020-11-09', 'Denpasar', '081999123660', '123123', 2, '2020-11-23', '2020-11-23', 1, 0, 1),
@@ -1154,7 +1177,8 @@ INSERT INTO `t_soap` (`fs_id_soap`, `fs_kd_soap`, `fs_id_rm`, `fs_id_registrasi`
 (16, 'CT00000025', 16, 62, 'Sakit pada bagian perut kiri', 'TD = 110/90\nTB = 160 cm\nBB = 50 kg\nSB = 36.7 C', 'Appendix', 'Rujuk ke RS untuk cek lab dan radiologi', 1, '2021-04-17', '0000-00-00', 1, 1),
 (17, 'CT00000026', 10, 64, '', 'kahksjdh\nkashdkj\najhsdkja\nkajhds\n', '', '', 1, '2021-04-19', '2021-04-19', 1, 0),
 (18, 'CT00000027', 12, 56, 'Pusing', 'TB :  150 cm\nBB :  55 kg\nST :  36,7 *C\nTD : 110/90\n                        ', 'Gejala migrain', 'di berikan obat bodrex', 1, '2021-04-29', '2021-04-29', 1, 1),
-(19, 'CT00000028', 12, 67, 'kontrol luka kena air panas pada tangan  scala nyeri 4[0-10]\n', 'Tekanan darah : mm/Hg\nNadi : 90 x/mnt\nRespirasi : 24 x/mnt\nSuhu : 36.5 ?C\nTinggi badan : cm\nBerat badan : kg\nLingkar Kepala : cm\nIsian : luka masih basah dirawat dg sufratule dan ditutup . resiko jatuh sedang .', 'gg integritas jaringan .\n', 'setelah diberikan askep selama 1x15 mnt klg pasien paham .\n', 1, '2021-05-03', '0000-00-00', 1, 1);
+(19, 'CT00000028', 12, 67, 'kontrol luka kena air panas pada tangan  scala nyeri 4[0-10]\n', 'Tekanan darah : mm/Hg\nNadi : 90 x/mnt\nRespirasi : 24 x/mnt\nSuhu : 36.5 ?C\nTinggi badan : cm\nBerat badan : kg\nLingkar Kepala : cm\nIsian : luka masih basah dirawat dg sufratule dan ditutup . resiko jatuh sedang .', 'gg integritas jaringan .\n', 'setelah diberikan askep selama 1x15 mnt klg pasien paham .\n', 1, '2021-05-03', '0000-00-00', 1, 1),
+(20, 'CT00000029', 10, 68, 'kontrol luka kena air panas pada tangan scala nyeri 4[0-10]', 'Tekanan darah   :  110/90  mm/Hg\nNadi                       :  90  x/mnt \nRespirasi               :  60  x/mnt\nSuhu                      :   37.5 *C\nTinggi badan       :   165 cm\nBerat badan        :   70 kg\nIsian                       :\n                        ', 'gg integritas jaringan .\n', 'setelah diberikan askep selama 1x15 mnt klg pasien paham .\n', 1, '2021-05-04', '0000-00-00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1374,7 +1398,69 @@ INSERT INTO `t_trs_billing` (`fs_id_trs_billing`, `fs_id_registrasi`, `fs_kd_trs
 (174, 66, 'RG00000060', 50000, 0, 50000, '2021-04-20'),
 (183, 66, 'TU00000078', 400000, 0, 400000, '2021-04-20'),
 (184, 67, 'RG00000061', 10000, 0, 10000, '2021-05-03'),
-(185, 68, 'RG00000062', 5000, 0, 5000, '2021-05-03');
+(185, 68, 'RG00000062', 5000, 0, 5000, '2021-05-03'),
+(186, 68, 'TU00000080', 321000, 0, 321000, '2021-05-04'),
+(187, 68, 'PJ00000083', 87480, 0, 87480, '2021-05-04'),
+(188, 67, 'TU00000081', 471000, 0, 471000, '2021-05-06'),
+(189, 67, 'PJ00000084', 28880, 0, 28880, '2021-05-06'),
+(190, 69, 'RG00000063', 100000, 0, 100000, '2021-05-06'),
+(191, 70, 'RG00000064', 100000, 0, 100000, '2021-05-06'),
+(192, 71, 'RG00000065', 100000, 0, 100000, '2021-05-06'),
+(193, 69, 'TU00000082', 480000, 0, 480000, '2021-05-06'),
+(194, 70, 'TU00000083', 250000, 0, 250000, '2021-05-06'),
+(195, 71, 'TU00000084', 260000, 0, 260000, '2021-05-06'),
+(196, 69, 'PJ00000085', 15130, 0, 15130, '2021-05-06'),
+(197, 70, 'PJ00000086', 32000, 0, 32000, '2021-05-06'),
+(198, 71, 'PJ00000087', 30000, 0, 30000, '2021-05-06');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `t_trs_order_piutang`
+--
+
+CREATE TABLE `t_trs_order_piutang` (
+  `fs_id_order_piutang` int(11) NOT NULL,
+  `fs_kd_order_piutang` varchar(10) NOT NULL,
+  `fs_id_jaminan` int(11) NOT NULL,
+  `fn_nilai_order` int(11) NOT NULL,
+  `fd_tgl_order_piutang` date NOT NULL,
+  `fs_id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `t_trs_order_piutang_cart`
+--
+
+CREATE TABLE `t_trs_order_piutang_cart` (
+  `fs_id_cart_order_piutang` int(11) NOT NULL,
+  `fs_id_registrasi` int(11) NOT NULL,
+  `fn_nilai_piutang` int(11) NOT NULL,
+  `fs_id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `t_trs_order_piutang_cart`
+--
+
+INSERT INTO `t_trs_order_piutang_cart` (`fs_id_cart_order_piutang`, `fs_id_registrasi`, `fn_nilai_piutang`, `fs_id_user`) VALUES
+(1, 69, 595130, 1),
+(2, 67, 509880, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `t_trs_order_piutang_detail`
+--
+
+CREATE TABLE `t_trs_order_piutang_detail` (
+  `fs_id_porder_piutang_detail` int(11) NOT NULL,
+  `fs_id_order_piutang` int(11) NOT NULL,
+  `fs_id_registrasi` int(11) NOT NULL,
+  `fn_nilai_piutang` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1430,8 +1516,11 @@ INSERT INTO `t_trs_registrasi` (`fs_id_registrasi`, `fs_kd_registrasi`, `fs_id_r
 (64, 'RG00000058', 10, 8, 1, 3, '', 6, 100000, 2, '2021-04-19', '2021-05-03', '3000-01-01', 1, 1),
 (65, 'RG00000059', 13, 8, 1, 4, '', 1, 5000, 2, '2021-04-20', '2021-04-30', '3000-01-01', 1, 1),
 (66, 'RG00000060', 17, 7, 2, 2, '', 5, 50000, 2, '2021-04-20', '2021-04-30', '3000-01-01', 1, 1),
-(67, 'RG00000061', 12, 3, 1, 4, '', 2, 10000, 1, '2021-05-03', '3000-01-01', '3000-01-01', 1, 1),
-(68, 'RG00000062', 10, 8, 1, 3, '', 1, 5000, 1, '2021-05-03', '3000-01-01', '3000-01-01', 1, 1);
+(67, 'RG00000061', 12, 3, 1, 4, '', 2, 10000, 3, '2021-05-03', '2021-05-06', '3000-01-01', 1, 1),
+(68, 'RG00000062', 10, 8, 1, 3, '', 1, 5000, 3, '2021-05-03', '2021-05-04', '3000-01-01', 1, 1),
+(69, 'RG00000063', 13, 5, 2, 4, '556677', 6, 100000, 3, '2021-05-06', '2021-05-06', '3000-01-01', 1, 1),
+(70, 'RG00000064', 18, 2, 2, 4, '123123123', 6, 100000, 3, '2021-05-06', '2021-05-06', '3000-01-01', 1, 1),
+(71, 'RG00000065', 11, 7, 1, 4, '898989', 6, 100000, 3, '2021-05-06', '2021-05-06', '3000-01-01', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1472,8 +1561,13 @@ INSERT INTO `t_trs_regout` (`fs_id_regout`, `fs_id_registrasi`, `fn_grandtotal`,
 (42, 63, 611205, 0, '2021-04-17', 1),
 (43, 56, 540275, 0, '2021-04-29', 1),
 (44, 65, 5000, 0, '2021-04-30', 1),
-(45, 66, 450000, 324500, '2021-04-30', 1),
-(46, 64, 500000, 0, '2021-05-03', 1);
+(45, 66, 450000, 0, '2021-04-30', 1),
+(46, 64, 500000, 0, '2021-05-03', 1),
+(47, 68, 413480, 0, '2021-05-04', 1),
+(48, 67, 509880, 0, '2021-05-06', 1),
+(49, 69, 595130, 0, '2021-05-06', 1),
+(50, 70, 382000, 0, '2021-05-06', 1),
+(51, 71, 390000, 0, '2021-05-06', 1);
 
 -- --------------------------------------------------------
 
@@ -1536,7 +1630,14 @@ INSERT INTO `t_trs_regout2` (`fs_id_regout2`, `fs_kd_regout2`, `fs_id_regout`, `
 (49, 'DX00000045', 44, 65, 5000, 0, 0, 0, 0, 0, 0, 4, 0, 0, '2021-04-30'),
 (50, 'DX00000046', 45, 66, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, '2021-04-30'),
 (51, 'DX00000047', 45, 66, 125500, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2021-04-30'),
-(52, 'DX00000048', 46, 64, 500000, 0, 0, 0, 0, 0, 0, 3, 0, 0, '2021-05-03');
+(52, 'DX00000048', 46, 64, 500000, 0, 0, 0, 0, 0, 0, 3, 0, 0, '2021-05-03'),
+(53, 'DX00000049', 45, 66, 324500, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2021-05-04'),
+(54, 'DX00000050', 47, 68, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, '2021-05-04'),
+(55, 'DX00000051', 48, 67, 0, 0, 0, 0, 0, 0, 0, 4, 509880, 0, '2021-05-06'),
+(56, 'DX00000052', 49, 69, 0, 0, 0, 0, 0, 0, 0, 4, 595130, 0, '2021-05-06'),
+(57, 'DX00000053', 50, 70, 0, 0, 0, 0, 0, 0, 0, 1, 382000, 0, '2021-05-06'),
+(58, 'DX00000054', 51, 71, 0, 0, 0, 0, 0, 0, 0, 1, 390000, 0, '2021-05-06'),
+(59, 'DX00000055', 47, 68, 413480, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2021-05-08');
 
 -- --------------------------------------------------------
 
@@ -1587,7 +1688,12 @@ INSERT INTO `t_trs_tindakan` (`fs_id_trs_tindakan`, `fs_kd_trs_tindakan`, `fs_id
 (63, 'TU00000076', 64, 8, 250000, 250000, 0, '2021-04-20', '0000-00-00', 1),
 (64, 'TU00000077', 64, 8, 150000, 150000, 0, '2021-04-20', '0000-00-00', 1),
 (66, 'TU00000079', 65, 8, 321000, 321000, 0, '2021-04-23', '2021-04-28', 1),
-(73, 'TU00000078', 66, 8, 400000, 400000, 0, '2021-04-20', '0000-00-00', 1);
+(73, 'TU00000078', 66, 8, 400000, 400000, 0, '2021-04-20', '0000-00-00', 1),
+(74, 'TU00000080', 68, 8, 321000, 321000, 0, '2021-05-04', '0000-00-00', 1),
+(75, 'TU00000081', 67, 8, 471000, 471000, 0, '2021-05-06', '0000-00-00', 1),
+(76, 'TU00000082', 69, 5, 480000, 480000, 0, '2021-05-06', '0000-00-00', 1),
+(77, 'TU00000083', 70, 2, 250000, 250000, 0, '2021-05-06', '0000-00-00', 1),
+(78, 'TU00000084', 71, 7, 260000, 260000, 0, '2021-05-06', '0000-00-00', 1);
 
 -- --------------------------------------------------------
 
@@ -1670,7 +1776,24 @@ INSERT INTO `t_trs_tindakan2` (`fs_id_tindakan2`, `fs_id_tindakan`, `fs_id_tarif
 (134, 66, 33, 1, 0, 150000, 150000),
 (154, 73, 45, 1, 0, 150000, 150000),
 (155, 73, 40, 1, 0, 100000, 100000),
-(156, 73, 33, 1, 0, 150000, 150000);
+(156, 73, 33, 1, 0, 150000, 150000),
+(157, 74, 43, 1, 0, 71000, 71000),
+(158, 74, 40, 1, 0, 100000, 100000),
+(159, 74, 33, 1, 0, 150000, 150000),
+(160, 75, 45, 1, 0, 150000, 150000),
+(161, 75, 43, 1, 0, 71000, 71000),
+(162, 75, 40, 1, 0, 100000, 100000),
+(163, 75, 33, 1, 0, 150000, 150000),
+(164, 76, 45, 1, 0, 150000, 150000),
+(165, 76, 37, 1, 0, 80000, 80000),
+(166, 76, 34, 1, 0, 100000, 100000),
+(167, 76, 33, 1, 0, 150000, 150000),
+(168, 77, 34, 1, 0, 100000, 100000),
+(169, 77, 33, 1, 0, 150000, 150000),
+(170, 78, 42, 1, 0, 50000, 50000),
+(171, 78, 41, 1, 0, 70000, 70000),
+(172, 78, 38, 1, 0, 70000, 70000),
+(173, 78, 36, 1, 0, 70000, 70000);
 
 -- --------------------------------------------------------
 
@@ -1986,6 +2109,24 @@ ALTER TABLE `t_trs_billing`
   ADD PRIMARY KEY (`fs_id_trs_billing`);
 
 --
+-- Indeks untuk tabel `t_trs_order_piutang`
+--
+ALTER TABLE `t_trs_order_piutang`
+  ADD PRIMARY KEY (`fs_id_order_piutang`);
+
+--
+-- Indeks untuk tabel `t_trs_order_piutang_cart`
+--
+ALTER TABLE `t_trs_order_piutang_cart`
+  ADD PRIMARY KEY (`fs_id_cart_order_piutang`);
+
+--
+-- Indeks untuk tabel `t_trs_order_piutang_detail`
+--
+ALTER TABLE `t_trs_order_piutang_detail`
+  ADD PRIMARY KEY (`fs_id_porder_piutang_detail`);
+
+--
 -- Indeks untuk tabel `t_trs_registrasi`
 --
 ALTER TABLE `t_trs_registrasi`
@@ -2115,25 +2256,25 @@ ALTER TABLE `tb_trs_pembelian_detail`
 -- AUTO_INCREMENT untuk tabel `tb_trs_penjualan`
 --
 ALTER TABLE `tb_trs_penjualan`
-  MODIFY `fs_id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `fs_id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_trs_penjualan_detail`
 --
 ALTER TABLE `tb_trs_penjualan_detail`
-  MODIFY `fs_id_penjualan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
+  MODIFY `fs_id_penjualan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=235;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_trs_racik`
 --
 ALTER TABLE `tb_trs_racik`
-  MODIFY `fs_id_racik` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `fs_id_racik` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_trs_racik_detail`
 --
 ALTER TABLE `tb_trs_racik_detail`
-  MODIFY `fs_id_racik_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+  MODIFY `fs_id_racik_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_trs_retur`
@@ -2199,7 +2340,7 @@ ALTER TABLE `t_satgas`
 -- AUTO_INCREMENT untuk tabel `t_soap`
 --
 ALTER TABLE `t_soap`
-  MODIFY `fs_id_soap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `fs_id_soap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_tarif`
@@ -2223,37 +2364,49 @@ ALTER TABLE `t_tarif_nilai_dtl`
 -- AUTO_INCREMENT untuk tabel `t_trs_billing`
 --
 ALTER TABLE `t_trs_billing`
-  MODIFY `fs_id_trs_billing` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
+  MODIFY `fs_id_trs_billing` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=199;
+
+--
+-- AUTO_INCREMENT untuk tabel `t_trs_order_piutang`
+--
+ALTER TABLE `t_trs_order_piutang`
+  MODIFY `fs_id_order_piutang` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `t_trs_order_piutang_detail`
+--
+ALTER TABLE `t_trs_order_piutang_detail`
+  MODIFY `fs_id_porder_piutang_detail` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_trs_registrasi`
 --
 ALTER TABLE `t_trs_registrasi`
-  MODIFY `fs_id_registrasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `fs_id_registrasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_trs_regout`
 --
 ALTER TABLE `t_trs_regout`
-  MODIFY `fs_id_regout` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `fs_id_regout` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_trs_regout2`
 --
 ALTER TABLE `t_trs_regout2`
-  MODIFY `fs_id_regout2` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `fs_id_regout2` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_trs_tindakan`
 --
 ALTER TABLE `t_trs_tindakan`
-  MODIFY `fs_id_trs_tindakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `fs_id_trs_tindakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_trs_tindakan2`
 --
 ALTER TABLE `t_trs_tindakan2`
-  MODIFY `fs_id_tindakan2` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
+  MODIFY `fs_id_tindakan2` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_trs_tindakan_cart2`

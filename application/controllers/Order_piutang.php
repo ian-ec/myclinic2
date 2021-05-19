@@ -56,4 +56,44 @@ class Order_piutang extends CI_Controller
         $data_piutang = $this->order_piutang_m->get($id, $awal, $akhir)->result();
         echo json_encode($data_piutang);
     }
+
+    public function process()
+    {
+        $data = $this->input->post(null, TRUE);
+
+        if (isset($_POST['simpan'])) {
+            $order_piutang_id = $this->order_piutang_m->simpan($data);
+            $cart = $this->order_piutang_m->get_cart()->result();
+            $row = [];
+            foreach ($cart as $c => $value) {
+                array_push($row, array(
+                    'fs_id_order_piutang' => $order_piutang_id,
+                    'fs_id_registrasi' => $value->fs_id_registrasi,
+                    'fn_nilai_piutang' => $value->fn_nilai_piutang,
+                ));
+            }
+            $this->order_piutang_m->add_order_piutang_detail($row);
+            $this->order_piutang_m->update_no();
+            $this->order_piutang_m->update_data_regout2($order_piutang_id);
+            $this->order_piutang_m->del_cart();
+
+            if ($this->db->affected_rows() > 0) {
+                $params = array("success" => true, "fs_id_order_piutang" => $order_piutang_id);
+            } else {
+                $params = array("success" => false);
+            }
+            echo json_encode($params);
+        }
+    }
+
+    public function cetak_pdf($id)
+    {
+        $data = array(
+            'order_piutang' => $this->order_piutang_m->get_order_piutang($id)->row(),
+            'order_piutang_detail' => $this->order_piutang_m->get_order_piutang_detail($id),
+            'parameter' => $this->parameter_m->get()->row()
+        );
+        $html = $this->load->view('akunting/order_piutang/order_piutang_cetak_pdf', $data, true);
+        $this->fungsi->PdfGenerator($html, 'PRINT', 'A4', 'potrait');
+    }
 }
