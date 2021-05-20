@@ -34,22 +34,6 @@ class Tindakan extends CI_Controller
 		$this->template->load('template', 'billing/tindakan_umum/tindakan_form', $data);
 	}
 
-	// public function add()
-	// {
-	// 	$data = array(
-	// 		'page' => 'add',
-	// 		'registrasi' => $this->registrasi_m->get()->result(),
-	// 		'tarif' => $this->tarif_m->get()->result(),
-	// 		'no_tindakan' => $this->tindakan_m->no_tindakan(),
-	// 		'cart' => $this->tindakan_m->get_cart(),
-	// 		'nilai' => $this->tindakan_m->sum_cart()->row(),
-	// 		'pegawai' => $this->pegawai_m->get()->result(),
-	// 		'layanan' => $this->layanan_m->get()->result(),
-	// 		'parameter' => $this->parameter_m->get()->row()
-	// 	);
-	// 	$this->template->load('template', 'billing/tindakan_umum/tindakan_form', $data);
-	// }
-
 	public function edit($id)
 	{
 		$query = $this->db->query("SELECT * FROM t_trs_tindakan_cart WHERE fs_id_tindakan ='$id'");
@@ -260,7 +244,6 @@ class Tindakan extends CI_Controller
 		echo json_encode($komponen_tarif);
 	}
 
-
 	public function del($id)
 	{
 		$this->tindakan_m->del($id);
@@ -291,12 +274,6 @@ class Tindakan extends CI_Controller
 		$html = $this->load->view('billing/tindakan_umum/tindakan_cetak_pdf', $data, true);
 		$this->fungsi->PdfGenerator($html, 'CET', 'A4', 'potrait');
 	}
-
-	// function aaa($id)
-	// {
-	// 	$bbb =  $this->tindakan_m->get($id)->row();
-	// 	echo json_encode($bbb);
-	// }
 
 	function data_tarif($id)
 	{

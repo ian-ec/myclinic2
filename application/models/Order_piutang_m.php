@@ -21,11 +21,16 @@ class Order_piutang_m extends CI_Model
         return $query;
     }
 
-    public function get_cart()
+    public function get_cart($id = null)
     {
         $this->db->select('*');
         $this->db->from('t_trs_order_piutang_cart');
-        $this->db->where('fs_id_user', $this->session->userdata('userid'));
+        $this->db->join('t_trs_registrasi', 't_trs_registrasi.fs_id_registrasi=t_trs_order_piutang_cart.fs_id_registrasi');
+        $this->db->join('t_rm', 't_rm.fs_id_rm=t_trs_registrasi.fs_id_rm');
+        if ($id != null) {
+            $this->db->where('t_trs_order_piutang_cart.fs_id_order_piutang', $id);
+        }
+        $this->db->where('t_trs_order_piutang_cart.fs_id_user', $this->session->userdata('userid'));
         $query = $this->db->get();
         return $query;
     }
@@ -71,6 +76,18 @@ class Order_piutang_m extends CI_Model
         $this->db->set('fn_no', 'fn_no+1', FALSE);
         $this->db->where('fs_trs', 'OP');
         $this->db->update('t_no');
+    }
+
+    public function no_cart()
+    {
+        $query = $this->db->query("SELECT MAX(fs_id_cart_order_piutang) AS cart_no FROM t_trs_order_piutang_cart");
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            $car_no = ((int)$row->cart_no) + 1;
+        } else {
+            $car_no = "1";
+        }
+        return $car_no;
     }
 
     public function cek_chart($id)
@@ -140,6 +157,18 @@ class Order_piutang_m extends CI_Model
         ";
 
         $query = $this->db->query($data);
+        return $query;
+    }
+
+    public function filter2($awal, $akhir)
+    {
+        $this->db->select('*');
+        $this->db->from('t_trs_order_piutang');
+        $this->db->join('t_jaminan', 't_jaminan.fs_id_jaminan=t_trs_order_piutang.fs_id_jaminan');
+        $this->db->join('user', 'user.user_id=t_trs_order_piutang.fs_id_user');
+        $this->db->where('fd_tgl_order_piutang >=', $awal);
+        $this->db->where('fd_tgl_order_piutang <=', $akhir);
+        $query = $this->db->get();
         return $query;
     }
 }
