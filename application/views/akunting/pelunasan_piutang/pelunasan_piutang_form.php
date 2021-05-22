@@ -68,6 +68,26 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group row mb-2">
+                    <label class="col-sm-4 col-form-label text-right">Rek Pelunasan</label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input type="hidden" id="fs_id_bank_group" value="">
+                            <input type="text" style="background-color: lavender;" class="form-control" id="fs_nm_bank_group" value="" readonly>
+                            <span class="input-group-btn">
+                                <button type="button" id="bank_group" class="btn btn-info btn-flat" data-toggle="modal" data-target="#modal-bank_group">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <label class="col-sm-4 col-form-label text-right">No Rekening</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="fn_no_rekening" value="" class="form-control" style="background-color: lavender;" readonly>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="card">
@@ -183,6 +203,51 @@
     </div>
 </div>
 
+<!-- Modal Bank Group -->
+<div class="modal fade" id="modal-bank_group">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-soft-info">
+                <h4 class="modal-title">Pilih Bank</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body table-responsive">
+                <table class="table table-bordered table-striped table-sm" id="tabel-jaminan">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kode Bank</th>
+                            <th>Nama Bank</th>
+                            <th>No Rekening</th>
+                            <th>Pilih</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $no = 1;
+                        foreach ($bank as $bk) { ?>
+                            <tr>
+                                <td width="5%"><?= $no++ ?></td>
+                                <td width="20%"><?= $bk->fs_kd_bank_group ?></td>
+                                <td><?= $bk->fs_nm_bank_group ?></td>
+                                <td><?= $bk->fn_no_rekening ?></td>
+                                <td class="text-center" width="10%">
+                                    <button class="btn btn-sm btn-info" id="select_bank" data-fs_id_bank_group="<?= $bk->fs_id_bank_group ?>" data-fs_kd_bank_group="<?= $bk->fs_kd_bank_group ?>" data-fs_nm_bank_group="<?= $bk->fs_nm_bank_group ?>" data-fn_no_rekening="<?= $bk->fn_no_rekening ?>">
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer bg-soft-info"></div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         $('#tabel-jaminan').DataTable({
@@ -204,6 +269,14 @@
         $('#fs_kd_jaminan').val($(this).data('kode_jaminan'))
         $('#fs_nm_jaminan').val($(this).data('nama_jaminan'))
         $('#modal-jaminan').modal('hide')
+    })
+
+    $(document).on('click', '#select_bank', function() {
+        $('#fs_id_bank_group').val($(this).data('fs_id_bank_group'))
+        $('#fs_kd_bank_group').val($(this).data('fs_kd_bank_group'))
+        $('#fs_nm_bank_group').val($(this).data('fs_nm_bank_group'))
+        $('#fn_no_rekening').val($(this).data('fn_no_rekening'))
+        $('#modal-bank_group').modal('hide')
     })
 
     $(document).on('click', '#order_piutang', function() {

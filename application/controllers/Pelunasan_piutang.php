@@ -12,6 +12,7 @@ class Pelunasan_piutang extends CI_Controller
         $this->load->model('parameter_m');
         $this->load->model('order_piutang_m');
         $this->load->model('pelunasan_piutang_m');
+        $this->load->model('bank_group_m');
     }
 
     public function index()
@@ -20,6 +21,7 @@ class Pelunasan_piutang extends CI_Controller
         $data = array(
             'parameter' =>  $this->parameter_m->get()->row(),
             'jaminan' =>  $this->jaminan_m->get()->result(),
+            'bank' =>  $this->bank_group_m->get()->result(),
             'no_pelunasan_piutang' =>  $this->pelunasan_piutang_m->no_pelunasan_piutang()
         );
         $this->template->load('template', 'akunting/pelunasan_piutang/pelunasan_piutang_form', $data);
