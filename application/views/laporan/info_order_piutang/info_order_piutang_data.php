@@ -198,7 +198,7 @@
                         ' <a href="<?= site_url('order_piutang/cetak_pdf/') ?>' + val.fs_id_order_piutang + '" target="_blank" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Print">' +
                         ' <i class="fa fa-print"></i></a>' +
                         '<?php if ($this->fungsi->user_login()->level == 1) { ?>' +
-                        ' <a href="<?= site_url('info_order_piutang/delete/') ?>' + val.fs_id_order_piutang + '" id="btn-hapus" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">' +
+                        ' <a href="<?= site_url('order_piutang/del/') ?>' + val.fs_id_order_piutang + '" id="btn-hapus" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">' +
                         '<i class="fa fa-trash"></i></a>' +
                         '<?php } ?>'
                 } else {
@@ -240,18 +240,15 @@
             '<thead>' +
             '<tr>' +
             '<th>No</th>' +
-            '<th>Kode order_piutang</th>' +
-            '<th>Tgl order_piutang</th>' +
-            '<th>Kode Tarif</th>' +
-            '<th>Nama Tarif</th>' +
-            '<th>Nilai Tarif</th>' +
-            '<th>QTY</th>' +
-            '<th>Diskon Tarif</th>' +
-            '<th>Total Tarif</th>' +
-            '<th>Layanan</th>' +
-            '<th>Kode reg</th>' +
-            '<th>Nama Pasien</th>' +
+            '<th>Kode Order</th>' +
+            '<th>Tgl Order</th>' +
             '<th>Jaminan</th>' +
+            '<th>Kode Reg</th>' +
+            '<th>Nama Pasien</th>' +
+            '<th>No Polis</th>' +
+            '<th>Layanan</th>' +
+            '<th>Tgl Keluar</th>' +
+            '<th>Klaim</th>' +
             '</thead>'
         data_order_piutang += '<tbody>'
         $.getJSON('<?= site_url('info_order_piutang/data_order_piutang_detail/') ?>' + $('#awal').val() + '/' + $('#akhir').val(), function(data) {
@@ -259,18 +256,15 @@
                 i += 1
                 data_order_piutang += '<tr>' +
                     '<td>' + i + '</td>' +
-                    '<td>' + val.fs_kd_trs_order_piutang + '</td>' +
-                    '<td>' + dateFormat(val.fd_tgl_trs) + '</td>' +
-                    '<td>' + val.fs_kd_tarif + '</td>' +
-                    '<td>' + val.fs_nm_tarif + '</td>' +
-                    '<td>' + currencyFormat(val.fn_nilai_tarif) + '</td>' +
-                    '<td>' + val.fn_qty + '</td>' +
-                    '<td>' + currencyFormat(val.fn_diskon) + '</td>' +
-                    '<td>' + currencyFormat(val.fn_total) + '</td>' +
-                    '<td>' + val.fs_nm_layanan + '</td>' +
+                    '<td>' + val.fs_kd_order_piutang + '</td>' +
+                    '<td>' + dateFormat(val.fd_tgl_order_piutang) + '</td>' +
+                    '<td>' + val.fs_nm_jaminan + '</td>' +
                     '<td>' + val.fs_kd_registrasi + '</td>' +
                     '<td>' + val.fs_nm_pasien + '</td>' +
-                    '<td>' + val.fs_nm_jaminan + '</td>' +
+                    '<td>' + val.fn_no_polis + '</td>' +
+                    '<td>' + val.fs_nm_layanan + '</td>' +
+                    '<td>' + dateFormat(val.fd_tgl_keluar) + '</td>' +
+                    '<td>' + currencyFormat(val.fn_nilai_piutang) + '</td>' +
                     '</tr>'
             })
             data_order_piutang += '</tbody></table>'

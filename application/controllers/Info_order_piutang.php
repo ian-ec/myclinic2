@@ -33,4 +33,10 @@ class Info_order_piutang extends CI_Controller
         $order_piutang_detail = $this->order_piutang_m->get_order_piutang_detail($id)->result();
         echo json_encode($order_piutang_detail);
     }
+
+    function data_order_piutang_detail($awal, $akhir)
+    {
+        $data_order_piutang_detail = $this->order_piutang_m->filter($awal, $akhir)->result();
+        echo json_encode($data_order_piutang_detail);
+    }
 }

@@ -42,6 +42,15 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="">Bank Group</label>
+                        <select name="fs_id_bank_group" class="form-control select2" required>
+                            <option value="">- Pilih Bank Group -</option>
+                            <?php foreach ($bank_group->result() as $bg) { ?>
+                                <option value="<?= $bg->fs_id_bank_group ?>" <?= $row->fs_id_bank_group == $bg->fs_id_bank_group ? 'selected' : '' ?>><?= $bg->fs_nm_bank_group ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <button type="submit" name="<?= $page ?>" class="btn btn-success btn-flat">
                             <i class="fa fa-paper-plane"></i> Simpan
                         </button>

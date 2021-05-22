@@ -96,4 +96,14 @@ class Order_piutang extends CI_Controller
         $html = $this->load->view('akunting/order_piutang/order_piutang_cetak_pdf', $data, true);
         $this->fungsi->PdfGenerator($html, 'PRINT', 'A4', 'potrait');
     }
+
+    public function del($id)
+    {
+        $this->order_piutang_m->del($id);
+        $this->order_piutang_m->del_regout2($id);
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('danger', 'Data berhasil dihapus');
+        }
+        redirect('info_order_piutang');
+    }
 }

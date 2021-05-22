@@ -8,10 +8,11 @@ class Bank_m extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tb_bank');
+        $this->db->join('tb_bank_group', 'tb_bank_group.fs_id_bank_group=tb_bank.fs_id_bank_group', 'left');
         if ($id != null) {
-            $this->db->where('fs_id_bank', $id);
+            $this->db->where('tb_bank.fs_id_bank', $id);
         }
-        $this->db->where('fb_aktif', '1');
+        $this->db->where('tb_bank.fb_aktif', '1');
         $query = $this->db->get();
         return $query;
     }
@@ -20,11 +21,12 @@ class Bank_m extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tb_bank');
+        $this->db->join('tb_bank_group', 'tb_bank_group.fs_id_bank_group=tb_bank.fs_id_bank_group');
         if ($id != null) {
-            $this->db->where('fs_id_bank', $id);
+            $this->db->where('tb_bank.fs_id_bank', $id);
         }
-        $this->db->where('fs_kd_jenis_kartu', '1');
-        $this->db->where('fb_aktif', '1');
+        $this->db->where('tb_bank.fs_kd_jenis_kartu', '1');
+        $this->db->where('tb_bank.fb_aktif', '1');
         $query = $this->db->get();
         return $query;
     }
@@ -33,11 +35,12 @@ class Bank_m extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tb_bank');
+        $this->db->join('tb_bank_group', 'tb_bank_group.fs_id_bank_group=tb_bank.fs_id_bank_group');
         if ($id != null) {
-            $this->db->where('fs_id_bank', $id);
+            $this->db->where('tb_bank.fs_id_bank', $id);
         }
-        $this->db->where('fs_kd_jenis_kartu', '2');
-        $this->db->where('fb_aktif', '1');
+        $this->db->where('tb_bank.fs_kd_jenis_kartu', '2');
+        $this->db->where('tb_bank.fb_aktif', '1');
         $query = $this->db->get();
         return $query;
     }
@@ -58,6 +61,7 @@ class Bank_m extends CI_Model
             'fs_kd_bank' => $this->no_bank(),
             'fs_nm_bank' => $post['fs_nm_bank'],
             'fs_kd_jenis_kartu' => $post['fs_kd_jenis_kartu'],
+            'fs_id_bank_group' => $post['fs_id_bank_group'],
             'fb_aktif' => 1,
         ];
         $this->db->insert('tb_bank', $params);
@@ -76,6 +80,7 @@ class Bank_m extends CI_Model
             'fs_kd_bank' => $post['fs_kd_bank'],
             'fs_nm_bank' => $post['fs_nm_bank'],
             'fs_kd_jenis_kartu' => $post['fs_kd_jenis_kartu'],
+            'fs_id_bank_group' => $post['fs_id_bank_group'],
         ];
         $this->db->where('fs_id_bank', $post['id']);
         $this->db->update('tb_bank', $params);

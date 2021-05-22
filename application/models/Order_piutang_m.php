@@ -54,6 +54,7 @@ class Order_piutang_m extends CI_Model
         $this->db->from('t_trs_order_piutang_detail');
         $this->db->join('t_trs_registrasi', 't_trs_registrasi.fs_id_registrasi=t_trs_order_piutang_detail.fs_id_registrasi');
         $this->db->join('t_rm', 't_rm.fs_id_rm=t_trs_registrasi.fs_id_rm');
+        $this->db->join('t_layanan', 't_layanan.fs_id_layanan=t_trs_registrasi.fs_id_layanan');
         if ($id != null) {
             $this->db->where('t_trs_order_piutang_detail.fs_id_order_piutang', $id);
         }
@@ -168,7 +169,40 @@ class Order_piutang_m extends CI_Model
         $this->db->join('user', 'user.user_id=t_trs_order_piutang.fs_id_user');
         $this->db->where('fd_tgl_order_piutang >=', $awal);
         $this->db->where('fd_tgl_order_piutang <=', $akhir);
+        $this->db->where('fd_tgl_void =', '0000-00-00');
         $query = $this->db->get();
         return $query;
+    }
+
+    public function filter($awal, $akhir)
+    {
+        $this->db->select('*');
+        $this->db->from('t_trs_order_piutang_detail');
+        $this->db->join('t_trs_order_piutang', 't_trs_order_piutang.fs_id_order_piutang=t_trs_order_piutang_detail.fs_id_order_piutang');
+        $this->db->join('t_trs_registrasi', 't_trs_registrasi.fs_id_registrasi=t_trs_order_piutang_detail.fs_id_registrasi');
+        $this->db->join('t_rm', 't_rm.fs_id_rm=t_trs_registrasi.fs_id_rm');
+        $this->db->join('t_layanan', 't_layanan.fs_id_layanan=t_trs_registrasi.fs_id_layanan');
+        $this->db->join('t_jaminan', 't_jaminan.fs_id_jaminan=t_trs_registrasi.fs_id_jaminan');
+        $this->db->where('fd_tgl_order_piutang >=', $awal);
+        $this->db->where('fd_tgl_order_piutang <=', $akhir);
+        $this->db->where('fd_tgl_void =', '0000-00-00');
+        $query = $this->db->get();
+        return $query;
+    }
+
+    public function del($id)
+    {
+        $user_void = $this->session->userdata('userid');
+        $this->db->set('fd_tgl_void', date('Y-m-d'));
+        $this->db->set('fs_id_user', $user_void);
+        $this->db->where('fs_id_order_piutang', $id);
+        $this->db->update('t_trs_order_piutang');
+    }
+
+    public function del_regout2($id)
+    {
+        $this->db->set('fs_id_order_piutang', '0');
+        $this->db->where('fs_id_order_piutang', $id);
+        $this->db->update('t_trs_regout2');
     }
 }

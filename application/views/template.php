@@ -236,6 +236,7 @@
                             // $this->uri->segment(1) == 'komponen' ||
                             $this->uri->segment(1) == 'rekapcetak' ||
                             $this->uri->segment(1) == 'tarif' ||
+                            $this->uri->segment(1) == 'bank_group' ||
                             $this->uri->segment(1) == 'bank'
                             ? ' mm-active' : '' ?>">
                 <a href="javascript: void(0);" class="waves-effect has-arrow <?= $this->uri->segment(1) == 'rm' ||
@@ -247,6 +248,7 @@
                                                                                 // $this->uri->segment(1) == 'komponen' ||
                                                                                 $this->uri->segment(1) == 'rekapcetak' ||
                                                                                 $this->uri->segment(1) == 'tarif' ||
+                                                                                $this->uri->segment(1) == 'bank_group' ||
                                                                                 $this->uri->segment(1) == 'bank'
                                                                                 ? ' mm-active' : '' ?>">
                   <i class="fas fa-database"></i>
@@ -262,6 +264,7 @@
                   <!-- <li><a href="<?= site_url('komponen') ?>" key="t-default" <?= $this->uri->segment(1) == 'komponen' ? 'class="mm-active"' : '' ?>>Komponen Tarif</a></li> -->
                   <li><a href="<?= site_url('rekapcetak') ?>" key="t-default" <?= $this->uri->segment(1) == 'rekapcetak' ? 'class="mm-active"' : '' ?>>Rekap Cetak</a></li>
                   <li><a href="<?= site_url('tarif') ?>" key="t-default" <?= $this->uri->segment(1) == 'tarif' ? 'class="mm-active"' : '' ?>>Tarif</a></li>
+                  <li><a href="<?= site_url('bank_group') ?>" key="t-default" <?= $this->uri->segment(1) == 'bank_group' ? 'class="mm-active"' : '' ?>>Bank Group</a></li>
                   <li><a href="<?= site_url('bank') ?>" key="t-default" <?= $this->uri->segment(1) == 'bank' ? 'class="mm-active"' : '' ?>>Bank</a></li>
                 </ul>
               </li>
