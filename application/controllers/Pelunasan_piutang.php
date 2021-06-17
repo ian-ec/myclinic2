@@ -32,4 +32,34 @@ class Pelunasan_piutang extends CI_Controller
         $data_order = $this->pelunasan_piutang_m->get_order_piutang_jaminan($id)->result();
         echo json_encode($data_order);
     }
+
+    public function process()
+    {
+        $data = $this->input->post(null, TRUE);
+        if (isset($_POST['simpan'])) {
+            $pelunasan_piutang_id = $this->pelunasan_piutang_m->add_pelunasan_piutang($data);
+
+            $fs_id_piutang = $data['fs_id_piutang'];
+            $fs_id_registrasi = $data['fs_id_registrasi'];
+            $fn_nilai_pelunasan = $data['fn_nilai_pelunasan'];
+            $row = [];
+            for ($count = 0; $count < count($fs_id_piutang); $count++) {
+                array_push($row, array(
+                    'fs_id_pelunasan_piutang' => $pelunasan_piutang_id,
+                    'fs_id_piutang' => $fs_id_piutang[$count],
+                    'fs_id_registrasi' => $fs_id_registrasi[$count],
+                    'fn_nilai_pelunasan' => $fn_nilai_pelunasan[$count]
+                ));
+            }
+            $this->pelunasan_piutang_m->add_pelunasan_piutang_detail($row);
+            $this->pelunasan_piutang_m->update_no();
+
+            if ($this->db->affected_rows() > 0) {
+                $params = array("success" => true, "pelunasan_piutang_id" => $pelunasan_piutang_id);
+            } else {
+                $params = array("success" => false);
+            }
+            echo json_encode($params);
+        }
+    }
 }

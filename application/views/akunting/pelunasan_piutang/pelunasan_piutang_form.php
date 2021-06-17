@@ -346,83 +346,160 @@
                     '<td style="text-align: left;  vertical-align: middle;">' + val.fs_nm_layanan + '</td>' +
                     '<td style="text-align: left;  vertical-align: middle;">' + dateFormat(val.fd_tgl_keluar) + '</td>' +
                     '<td style="text-align: right;  vertical-align: middle;">' + currencyFormat(val.fn_nilai_piutang) + '</td>' +
-                    '<td><input type="number" class="form-control text-right"  style="width: 100%;" value="' + val.fn_nilai_piutang + '" ' +
-                    'data-fs_id_registrasi="' + val.id_registrasi + '"' +
-                    'data-fn_klaim="' + val.fn_nilai_piutang + '"/></td></tr>'
+                    '<td id="total"><input type="number" class="form-control text-right fn_nilai_pelunasan"  style="width: 100%;" value="' + val.fn_nilai_piutang + '">' +
+                    '<input type="hidden" class="fs_id_piutang" value="' + val.fs_id_regout2 + '">' +
+                    '<input type="hidden" class="fs_id_registrasi" value="' + val.fs_id_registrasi + '">' +
+                    '</td></tr>'
             })
             $('#data_piutang').html(data_piutang)
         })
         hide_loading()
     })
 
-    $(document).on('click', '#simpan', function() {
-        var fs_id_jaminan = $('#fs_id_jaminan').val()
-        var fn_nilai_order = $('#fn_grandtotal').val()
-        var fd_tgl_pelunasan_piutang = $('#fd_tgl_pelunasan_piutang').val()
-
-        Swal.fire({
-            title: 'Apakah anda yakin?',
-            text: "Data akan disimpan!",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#00a65a',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, simpan!',
-            cancelButtonText: 'Batal',
-            showClass: {
-                popup: 'animate__animated animate__bounceIn'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__backOutDown'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    type: 'POST',
-                    url: '<?= site_url('pelunasan_piutang/process') ?>',
-                    data: {
-                        'simpan': true,
-                        'fs_id_jaminan': fs_id_jaminan,
-                        'fn_nilai_order': fn_nilai_order,
-                        'fd_tgl_pelunasan_piutang': fd_tgl_pelunasan_piutang
-                    },
-                    dataType: 'json',
-                    success: function(result) {
-                        if (result.success) {
-                            kode = result.fs_id_pelunasan_piutang,
-                                Swal.fire({
-                                    title: 'Cetak transaksi ini?',
-                                    icon: 'info',
-                                    showCancelButton: true,
-                                    confirmButtonColor: '#00a65a',
-                                    cancelButtonColor: '#d33',
-                                    confirmButtonText: 'Ya, Cetak!',
-                                    cancelButtonText: 'Batal',
-                                    showClass: {
-                                        popup: 'animate__animated animate__bounceIn'
-                                    },
-                                    hideClass: {
-                                        popup: 'animate__animated animate__backOutDown'
-                                    }
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        location.href = '<?= site_url('pelunasan_piutang') ?>'
-                                        window.open('<?= site_url('pelunasan_piutang/cetak_pdf/') ?>' + kode, '_blank')
-                                    } else {
-                                        location.href = '<?= site_url('pelunasan_piutang') ?>'
-                                    }
-                                })
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Gagal!',
-                                text: 'Transaksi gagal tersimpan!',
-                            })
-                        }
-                    }
-                })
-            }
+    function calculate() {
+        var subtotal = 0;
+        $('#data_piutang tr').each(function() {
+            subtotal += parseInt($(this).find('.fn_nilai_piutang').val())
         })
+        isNaN(subtotal) ? $('#fn_subtotal').val(0) : $('#fn_subtotal').val(subtotal)
+
+        var discount = $('#fn_diskon').val()
+        var grand_total = subtotal - discount
+        if (isNaN(grand_total)) {
+            $('#fn_grandtotal').val(0)
+        } else {
+            $('#fn_grandtotal').val(grand_total)
+        }
+
+        if (discount == '') {
+            $('#fn_diskon').val(0)
+        }
+    }
+
+    $(document).on('keyup mouseup', '.fn_nilai_piutang, #fn_subtotal, #fn_diskon', function() {
+        calculate()
+    })
+
+    $(document).ready(function() {
+        calculate()
+    })
+
+
+    $(document).on('click', '#simpan', function() {
+        var fd_tgl_pelunasan_piutang = $('#fd_tgl_pelunasan_piutang').val()
+        var fs_kd_pelunasan_piutang = $('#fs_kd_pelunasan_piutang').val()
+        var fs_id_jaminan = $('#fs_id_jaminan').val()
+        var fs_id_order_piutang = $('#fs_id_order_piutang').val()
+        var fs_id_bank_group = $('#fs_id_bank_group').val()
+        var fn_subtotal = $('#fn_subtotal').val()
+        var fn_diskon = $('#fn_diskon').val()
+        var fn_grandtotal = $('#fn_grandtotal').val()
+        var fs_id_piutang = [];
+        $('.fs_id_piutang').each(function() {
+            fs_id_piutang.push($(this).val());
+        });
+        var fs_id_registrasi = [];
+        $('.fs_id_registrasi').each(function() {
+            fs_id_registrasi.push($(this).val());
+        });
+        var fn_nilai_pelunasan = [];
+        $('.fn_nilai_pelunasan').each(function() {
+            fn_nilai_pelunasan.push($(this).val());
+        });
+
+
+        if (fs_id_jaminan == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Jaminan masih kosong!',
+                text: 'Silahkan pilih jaminan terlebih dahulu!',
+            })
+        } else if (fs_id_order_piutang == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'No order piutang masih kosong!',
+                text: 'Silahkan pilih no order piutang terlebih dahulu!',
+            })
+        } else if (fs_id_bank_group == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Rekening pelunasan masih kosong!',
+                text: 'Silahkan pilih rekening pelunasan terlebih dahulu!',
+            })
+        } else {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Data akan disimpan!",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#00a65a',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, simpan!',
+                cancelButtonText: 'Batal',
+                showClass: {
+                    popup: 'animate__animated animate__bounceIn'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__backOutDown'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '<?= site_url('pelunasan_piutang/process') ?>',
+                        data: {
+                            'simpan': true,
+                            'fd_tgl_pelunasan_piutang': fd_tgl_pelunasan_piutang,
+                            'fs_kd_pelunasan_piutang': fs_kd_pelunasan_piutang,
+                            'fs_id_jaminan': fs_id_jaminan,
+                            'fs_id_order_piutang': fs_id_order_piutang,
+                            'fs_id_bank_group': fs_id_bank_group,
+                            'fn_subtotal': fn_subtotal,
+                            'fn_diskon': fn_diskon,
+                            'fn_grandtotal': fn_grandtotal,
+                            'fs_id_piutang': fs_id_piutang,
+                            'fs_id_registrasi': fs_id_registrasi,
+                            'fn_nilai_pelunasan': fn_nilai_pelunasan
+                        },
+                        dataType: 'json',
+                        success: function(result) {
+                            if (result.success) {
+                                kode = result.pelunasan_piutang_id,
+                                    Swal.fire({
+                                        title: 'Cetak transaksi ini?',
+                                        icon: 'info',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#00a65a',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Ya, Cetak!',
+                                        cancelButtonText: 'Batal',
+                                        showClass: {
+                                            popup: 'animate__animated animate__bounceIn'
+                                        },
+                                        hideClass: {
+                                            popup: 'animate__animated animate__backOutDown'
+                                        }
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            location.href = '<?= site_url('pelunasan_piutang') ?>'
+                                            window.open('<?= site_url('pelunasan_piutang/cetak_pdf/') ?>' + kode, '_blank')
+                                        } else {
+                                            location.href = '<?= site_url('pelunasan_piutang') ?>'
+                                        }
+                                    })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal!',
+                                    text: 'Transaksi gagal tersimpan!',
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+
+        }
 
     })
 </script>

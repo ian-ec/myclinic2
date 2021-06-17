@@ -113,6 +113,7 @@ class Order_piutang_m extends CI_Model
 
         $params = array(
             'fs_id_cart_order_piutang' => $car_no,
+            'fs_id_regout2' => $post['fs_id_regout2'],
             'fs_id_registrasi' => $post['fs_id_registrasi'],
             'fn_nilai_piutang' => $post['fn_klaim'],
             'fs_id_user' => $this->session->userdata('userid'),

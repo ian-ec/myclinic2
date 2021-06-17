@@ -33,4 +33,26 @@ class Pelunasan_piutang_m extends CI_Model
         $query = $this->db->get();
         return $query;
     }
+
+    public function add_pelunasan_piutang($post)
+    {
+        $params = array(
+            'fs_kd_pelunasan_piutang' => $this->no_pelunasan_piutang(),
+            'fs_id_jaminan' => $post['fs_id_jaminan'],
+            'fs_id_order_piutang' => $post['fs_id_order_piutang'],
+            'fs_id_bank_group' => $post['fs_id_bank_group'],
+            'fn_subtotal' => $post['fn_subtotal'],
+            'fn_diskon' => $post['fn_diskon'],
+            'fn_grandtotal' => $post['fn_grandtotal'],
+            'fd_tgl_pelunasan_piutang' => $post['fd_tgl_pelunasan_piutang'],
+            'fs_id_user' => $this->session->userdata('userid')
+        );
+        $this->db->insert('t_trs_pelunasan_piutang', $params);
+        return $this->db->insert_id();
+    }
+
+    function add_pelunasan_piutang_detail($params)
+    {
+        $this->db->insert_batch('t_trs_pelunasan_piutang_detail', $params);
+    }
 }

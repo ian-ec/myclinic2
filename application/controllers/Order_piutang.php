@@ -68,6 +68,7 @@ class Order_piutang extends CI_Controller
             foreach ($cart as $c => $value) {
                 array_push($row, array(
                     'fs_id_order_piutang' => $order_piutang_id,
+                    'fs_id_regout2' => $value->fs_id_regout2,
                     'fs_id_registrasi' => $value->fs_id_registrasi,
                     'fn_nilai_piutang' => $value->fn_nilai_piutang,
                 ));

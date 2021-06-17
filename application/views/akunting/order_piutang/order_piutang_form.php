@@ -97,6 +97,7 @@
                     <thead>
                         <tr>
                             <th style="width: 5%;">No</th>
+                            <th>Kode Piutang</th>
                             <th>Kode Reg</th>
                             <th>Nama</th>
                             <th>Tgl Piutang</th>
@@ -200,11 +201,13 @@
                     i += 1
                     data_piutang += '<tr>' +
                         '<td>' + i + '</td>' +
+                        '<td>' + val.fs_kd_regout2 + '</td>' +
                         '<td>' + val.fs_kd_registrasi + '</td>' +
                         '<td>' + val.fs_nm_pasien + '</td>' +
                         '<td>' + dateFormat(val.fd_tgl_bayar) + '</td>' +
                         '<td style="text-align: right;">' + currencyFormat(val.fn_klaim) + '</td>' +
                         '<td style="text-align: center;"><input type="checkbox" value="' + val.fn_klaim + '" ' +
+                        'data-fs_id_regout2="' + val.fs_id_regout2 + '"' +
                         'data-fs_id_registrasi="' + val.id_registrasi + '"' +
                         'data-fn_klaim="' + val.fn_klaim + '"/></td></tr>'
                 })
@@ -216,6 +219,7 @@
     })
 
     $(document).on("click", "input[type='checkbox']", function() {
+        var fs_id_regout2 = $(this).data('fs_id_regout2')
         var fs_id_registrasi = $(this).data('fs_id_registrasi')
         var fn_klaim = $(this).data('fn_klaim')
 
@@ -223,6 +227,7 @@
             type: 'POST',
             url: "<?= base_url('order_piutang/add_cart_order'); ?>",
             data: {
+                'fs_id_regout2': fs_id_regout2,
                 'fs_id_registrasi': fs_id_registrasi,
                 'fn_klaim': fn_klaim
             },
