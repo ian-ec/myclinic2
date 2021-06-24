@@ -36,19 +36,24 @@ class Info_registrasi_keluar extends CI_Controller
 
     public function batal($id, $rm)
     {
-        $this->regout_m->aktif_reg($rm);
+        $this->regout_m->cek_order_piutang($id);
         if ($this->db->affected_rows() > 0) {
-            $this->regout_m->del_regout($id);
-            $this->regout_m->del_regout2($id);
-            $this->regout_m->udpate_tgl_batal($id);
-            $this->regout_m->update_status($id);
-
-            if ($this->db->affected_rows() > 0) {
-                $this->session->set_flashdata('info', 'Data berhasil batalkan');
-            }
-            redirect('kasir');
+            $this->session->set_flashdata('warning', 'Pasien sudah di buatkan order pelunasan piutang');
         } else {
-            $this->session->set_flashdata('warning', 'Pasien Aktif dengan register lain');
+            $this->regout_m->aktif_reg($rm);
+            if ($this->db->affected_rows() > 0) {
+                $this->regout_m->del_regout($id);
+                $this->regout_m->del_regout2($id);
+                $this->regout_m->udpate_tgl_batal($id);
+                $this->regout_m->update_status($id);
+
+                if ($this->db->affected_rows() > 0) {
+                    $this->session->set_flashdata('info', 'Data berhasil batalkan');
+                }
+                redirect('kasir');
+            } else {
+                $this->session->set_flashdata('warning', 'Pasien Aktif dengan register lain');
+            }
         }
         redirect('info_registrasi_keluar');
     }

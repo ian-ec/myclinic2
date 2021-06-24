@@ -101,7 +101,8 @@
                             <th>Kode Reg</th>
                             <th>Nama</th>
                             <th>Tgl Piutang</th>
-                            <th style="text-align: right;">Klaim</th>
+                            <th style="text-align: right;">Tagihan</th>
+                            <th style="text-align: right;">Sisa Piutang</th>
                             <th style="width: 5%; text-align: center;"><i class="fas fa-cog"></th>
                         </tr>
                     </thead>
@@ -201,15 +202,16 @@
                     i += 1
                     data_piutang += '<tr>' +
                         '<td>' + i + '</td>' +
-                        '<td>' + val.fs_kd_regout2 + '</td>' +
+                        '<td>' + val.fs_kd_piutang + '</td>' +
                         '<td>' + val.fs_kd_registrasi + '</td>' +
                         '<td>' + val.fs_nm_pasien + '</td>' +
-                        '<td>' + dateFormat(val.fd_tgl_bayar) + '</td>' +
-                        '<td style="text-align: right;">' + currencyFormat(val.fn_klaim) + '</td>' +
-                        '<td style="text-align: center;"><input type="checkbox" value="' + val.fn_klaim + '" ' +
-                        'data-fs_id_regout2="' + val.fs_id_regout2 + '"' +
+                        '<td>' + dateFormat(val.fd_tgl_piutang) + '</td>' +
+                        '<td style="text-align: right;">' + currencyFormat(val.fn_piutang) + '</td>' +
+                        '<td style="text-align: right;">' + currencyFormat(val.fn_sisa_piutang) + '</td>' +
+                        '<td style="text-align: center;"><input type="checkbox" value="' + val.fn_sisa_piutang + '" ' +
+                        'data-fs_id_piutang="' + val.fs_id_piutang + '"' +
                         'data-fs_id_registrasi="' + val.id_registrasi + '"' +
-                        'data-fn_klaim="' + val.fn_klaim + '"/></td></tr>'
+                        'data-fn_klaim="' + val.fn_sisa_piutang + '"/></td></tr>'
                 })
                 $('#data_piutang').html(data_piutang)
             })
@@ -219,7 +221,7 @@
     })
 
     $(document).on("click", "input[type='checkbox']", function() {
-        var fs_id_regout2 = $(this).data('fs_id_regout2')
+        var fs_id_piutang = $(this).data('fs_id_piutang')
         var fs_id_registrasi = $(this).data('fs_id_registrasi')
         var fn_klaim = $(this).data('fn_klaim')
 
@@ -227,7 +229,7 @@
             type: 'POST',
             url: "<?= base_url('order_piutang/add_cart_order'); ?>",
             data: {
-                'fs_id_regout2': fs_id_regout2,
+                'fs_id_piutang': fs_id_piutang,
                 'fs_id_registrasi': fs_id_registrasi,
                 'fn_klaim': fn_klaim
             },

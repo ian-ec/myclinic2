@@ -6,16 +6,16 @@ class Order_piutang_m extends CI_Model
 
     public function get($id, $awal, $akhir)
     {
-        $this->db->select('*, t_trs_regout2.fs_id_registrasi as id_registrasi');
-        $this->db->from('t_trs_regout2');
-        $this->db->join('t_trs_registrasi', 't_trs_registrasi.fs_id_registrasi=t_trs_regout2.fs_id_registrasi');
+        $this->db->select('*, t_piutang.fs_id_registrasi as id_registrasi');
+        $this->db->from('t_piutang');
+        $this->db->join('t_trs_registrasi', 't_trs_registrasi.fs_id_registrasi=t_piutang.fs_id_registrasi');
         $this->db->join('t_rm', 't_rm.fs_id_rm=t_trs_registrasi.fs_id_rm');
-        $this->db->where('t_trs_regout2.fs_id_jaminan', $id);
-        $this->db->where('t_trs_regout2.fd_tgl_bayar>=', $awal);
-        $this->db->where('t_trs_regout2.fd_tgl_bayar<=', $akhir);
+        $this->db->where('t_piutang.fs_id_jaminan', $id);
+        $this->db->where('t_piutang.fd_tgl_piutang>=', $awal);
+        $this->db->where('t_piutang.fd_tgl_piutang<=', $akhir);
         $this->db->where('t_trs_registrasi.fb_aktif', '1');
-        $this->db->where('t_trs_regout2.fn_klaim <>', '0');
-        $this->db->where('t_trs_regout2.fs_id_order_piutang =', '0');
+        $this->db->where('t_piutang.fn_sisa_piutang <>', '0');
+        $this->db->where('t_piutang.fs_id_order_piutang =', '0');
         $this->db->order_by('t_trs_registrasi.fs_id_registrasi', 'DESC');
         $query = $this->db->get();
         return $query;
@@ -113,7 +113,7 @@ class Order_piutang_m extends CI_Model
 
         $params = array(
             'fs_id_cart_order_piutang' => $car_no,
-            'fs_id_regout2' => $post['fs_id_regout2'],
+            'fs_id_piutang' => $post['fs_id_piutang'],
             'fs_id_registrasi' => $post['fs_id_registrasi'],
             'fn_nilai_piutang' => $post['fn_klaim'],
             'fs_id_user' => $this->session->userdata('userid'),
@@ -150,11 +150,11 @@ class Order_piutang_m extends CI_Model
         $this->db->insert_batch('t_trs_order_piutang_detail', $params);
     }
 
-    public function update_data_regout2($fs_id_order_piutang)
+    public function update_data_piutang($fs_id_order_piutang)
     {
         $id_user = $this->session->userdata('userid');
 
-        $data = "UPDATE t_trs_regout2 SET fs_id_order_piutang ='$fs_id_order_piutang'
+        $data = "UPDATE t_piutang SET fs_id_order_piutang ='$fs_id_order_piutang'
         WHERE fs_id_registrasi IN (SELECT fs_id_registrasi FROM t_trs_order_piutang_cart WHERE fs_id_user = '$id_user')
         ";
 
@@ -200,10 +200,10 @@ class Order_piutang_m extends CI_Model
         $this->db->update('t_trs_order_piutang');
     }
 
-    public function del_regout2($id)
+    public function del_piutang($id)
     {
         $this->db->set('fs_id_order_piutang', '0');
         $this->db->where('fs_id_order_piutang', $id);
-        $this->db->update('t_trs_regout2');
+        $this->db->update('t_piutang');
     }
 }

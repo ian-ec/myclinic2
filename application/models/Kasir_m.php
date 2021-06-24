@@ -14,6 +14,16 @@ class Kasir_m extends CI_Model
         return $no_trs;
     }
 
+    public function no_piutang()
+    {
+        $this->db->from('t_no');
+        $this->db->where('fs_trs', 'PT');
+        $query = $this->db->get()->row();
+        $no = sprintf("%08d", $query->fn_no);
+        $no_trs = "PT" . $no;
+        return $no_trs;
+    }
+
     public function add_regout($post)
     {
         $params = array(
@@ -46,6 +56,19 @@ class Kasir_m extends CI_Model
             'fd_tgl_bayar' => $post['fd_tgl_regout'],
         );
         $this->db->insert('t_trs_regout2', $params);
+    }
+
+    public function add_piutang($post)
+    {
+        $params = array(
+            'fs_kd_piutang' => $this->no_piutang(),
+            'fd_tgl_piutang' => $post['fd_tgl_regout'],
+            'fs_id_jaminan' => $post['fs_id_jaminan'],
+            'fs_id_registrasi' => $post['fs_id_registrasi'],
+            'fn_piutang' => $post['fn_klaim'],
+            'fn_sisa_piutang' => $post['fn_klaim']
+        );
+        $this->db->insert('t_piutang', $params);
     }
 
     public function update_no()

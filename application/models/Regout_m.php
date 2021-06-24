@@ -174,4 +174,15 @@ class Regout_m extends CI_Model
         $query = $this->db->get();
         return $query;
     }
+
+    public function cek_order_piutang($id = null)
+    {
+        $this->db->select('*');
+        $this->db->from('t_trs_order_piutang_detail');
+        if ($id != null) {
+            $this->db->where('t_trs_order_piutang_detail.fs_id_registrasi', $id);
+        }
+        $query = $this->db->get();
+        return $query;
+    }
 }

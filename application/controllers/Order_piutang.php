@@ -68,14 +68,14 @@ class Order_piutang extends CI_Controller
             foreach ($cart as $c => $value) {
                 array_push($row, array(
                     'fs_id_order_piutang' => $order_piutang_id,
-                    'fs_id_regout2' => $value->fs_id_regout2,
+                    'fs_id_piutang' => $value->fs_id_piutang,
                     'fs_id_registrasi' => $value->fs_id_registrasi,
                     'fn_nilai_piutang' => $value->fn_nilai_piutang,
                 ));
             }
             $this->order_piutang_m->add_order_piutang_detail($row);
             $this->order_piutang_m->update_no();
-            $this->order_piutang_m->update_data_regout2($order_piutang_id);
+            $this->order_piutang_m->update_data_piutang($order_piutang_id);
             $this->order_piutang_m->del_cart();
 
             if ($this->db->affected_rows() > 0) {
@@ -101,7 +101,7 @@ class Order_piutang extends CI_Controller
     public function del($id)
     {
         $this->order_piutang_m->del($id);
-        $this->order_piutang_m->del_regout2($id);
+        $this->order_piutang_m->del_piutang($id);
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('danger', 'Data berhasil dihapus');
         }

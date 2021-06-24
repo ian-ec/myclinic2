@@ -347,7 +347,7 @@
                     '<td style="text-align: left;  vertical-align: middle;">' + dateFormat(val.fd_tgl_keluar) + '</td>' +
                     '<td style="text-align: right;  vertical-align: middle;">' + currencyFormat(val.fn_nilai_piutang) + '</td>' +
                     '<td id="total"><input type="number" class="form-control text-right fn_nilai_pelunasan"  style="width: 100%;" value="' + val.fn_nilai_piutang + '">' +
-                    '<input type="hidden" class="fs_id_piutang" value="' + val.fs_id_regout2 + '">' +
+                    '<input type="hidden" class="fs_id_piutang" value="' + val.fs_id_piutang + '">' +
                     '<input type="hidden" class="fs_id_registrasi" value="' + val.fs_id_registrasi + '">' +
                     '</td></tr>'
             })
@@ -359,7 +359,7 @@
     function calculate() {
         var subtotal = 0;
         $('#data_piutang tr').each(function() {
-            subtotal += parseInt($(this).find('.fn_nilai_piutang').val())
+            subtotal += parseInt($(this).find('.fn_nilai_pelunasan').val())
         })
         isNaN(subtotal) ? $('#fn_subtotal').val(0) : $('#fn_subtotal').val(subtotal)
 
@@ -376,7 +376,7 @@
         }
     }
 
-    $(document).on('keyup mouseup', '.fn_nilai_piutang, #fn_subtotal, #fn_diskon', function() {
+    $(document).on('keyup mouseup', '.fn_nilai_pelunasan, #fn_subtotal, #fn_diskon', function() {
         calculate()
     })
 

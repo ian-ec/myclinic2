@@ -206,7 +206,9 @@
                                                                               $this->uri->segment(1) == 'info_retur' ||
                                                                               $this->uri->segment(1) == 'info_registrasi_keluar' ||
                                                                               $this->uri->segment(1) == 'info_piutang_pasien' ||
+                                                                              $this->uri->segment(1) == 'info_piutang_jaminan' ||
                                                                               $this->uri->segment(1) == 'info_order_piutang' ||
+                                                                              $this->uri->segment(1) == 'info_pelunasan_piutang' ||
                                                                               $this->uri->segment(1) == 'info_laba_rugi'
                                                                               ? ' mm-active' : '' ?>>">
                 <i class="fas fa-book"></i>
@@ -220,8 +222,10 @@
                 <li><a href="<?= site_url('info_adjustment') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_adjustment' ? 'class="mm-active"' : '' ?>>Info Adjustment</a></li>
                 <li><a href="<?= site_url('info_retur') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_retur' ? 'class="mm-active"' : '' ?>>Info Retur Pembelian</a></li>
                 <li><a href="<?= site_url('info_registrasi_keluar') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_registrasi_keluar' ? 'class="mm-active"' : '' ?>>Info Registrasi Keluar</a></li>
-                <li><a href="<?= site_url('info_piutang_pasien') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_piutang_pasien' ? 'class="mm-active"' : '' ?>>Info Piutang Pasien</a></li>
+                <li><a href="<?= site_url('info_piutang_pasien') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_piutang_pasien' ? 'class="mm-active"' : '' ?>>Info Piutang Umum</a></li>
+                <li><a href="<?= site_url('info_piutang_jaminan') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_piutang_jaminan' ? 'class="mm-active"' : '' ?>>Info Piutang Jaminan</a></li>
                 <li><a href="<?= site_url('info_order_piutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_order_piutang' ? 'class="mm-active"' : '' ?>>Info Order Piutang</a></li>
+                <li><a href="<?= site_url('info_pelunasan_piutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_pelunasan_piutang' ? 'class="mm-active"' : '' ?>>Info Pelunasan Piutang</a></li>
                 <li><a href="<?= site_url('info_laba_rugi') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_laba_rugi' ? 'class="mm-active"' : '' ?>>Info Laba Rugi (On Progress)</a></li>
               </ul>
             </li>

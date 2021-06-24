@@ -48,10 +48,14 @@ class Kasir extends CI_Controller
     public function process()
     {
         $data = $this->input->post(null, TRUE);
+        $fn_klaim = $data['fn_klaim'];
 
         if (isset($_POST['process_payment'])) {
             $regout = $this->kasir_m->add_regout($data);
             $regout2 = $this->kasir_m->add_regout2($data, $regout);
+            if ($fn_klaim != 0) {
+                $this->kasir_m->add_piutang($data);
+            }
             $non_aktif_reg = $this->kasir_m->non_aktif_reg($data);
             $udpate_tgl_keluar = $this->kasir_m->udpate_tgl_keluar($data);
             $udpate_tgl_keluar = $this->kasir_m->update_no();

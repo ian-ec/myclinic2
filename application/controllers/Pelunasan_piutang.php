@@ -52,7 +52,11 @@ class Pelunasan_piutang extends CI_Controller
                 ));
             }
             $this->pelunasan_piutang_m->add_pelunasan_piutang_detail($row);
+            $this->pelunasan_piutang_m->update_sisa_piutang($pelunasan_piutang_id);
             $this->pelunasan_piutang_m->update_no();
+            $this->pelunasan_piutang_m->update_no_piutang();
+            $this->pelunasan_piutang_m->update_id_order($pelunasan_piutang_id);
+            $this->pelunasan_piutang_m->update_add_order_piutang($data, $pelunasan_piutang_id);
 
             if ($this->db->affected_rows() > 0) {
                 $params = array("success" => true, "pelunasan_piutang_id" => $pelunasan_piutang_id);
@@ -61,5 +65,27 @@ class Pelunasan_piutang extends CI_Controller
             }
             echo json_encode($params);
         }
+    }
+
+    public function cetak_pdf($id)
+    {
+        $data = array(
+            'pelunasan_piutang' => $this->pelunasan_piutang_m->get_pelunasan_piutang($id)->row(),
+            'pelunasan_piutang_detail' => $this->pelunasan_piutang_m->get_pelunasan_piutang_detail($id),
+            'parameter' => $this->parameter_m->get()->row()
+        );
+        $html = $this->load->view('akunting/pelunasan_piutang/pelunasan_piutang_cetak_pdf', $data, true);
+        $this->fungsi->PdfGenerator($html, 'PRINT', 'A4', 'potrait');
+    }
+
+    public function del($id)
+    {
+        $this->pelunasan_piutang_m->del($id);
+        $this->pelunasan_piutang_m->del_order_piutang($id);
+        $this->pelunasan_piutang_m->update_nilai_piutang($id);
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('danger', 'Data berhasil dihapus');
+        }
+        redirect('info_pelunasan_piutang');
     }
 }
