@@ -10,6 +10,7 @@ class Piutang_m extends CI_Model
         $this->db->from('t_piutang');
         $this->db->join('t_trs_registrasi', 't_trs_registrasi.fs_id_registrasi=t_piutang.fs_id_registrasi');
         $this->db->join('t_rm', 't_rm.fs_id_rm=t_trs_registrasi.fs_id_rm');
+        $this->db->join('t_layanan', 't_layanan.fs_id_layanan=t_trs_registrasi.fs_id_layanan');
         $this->db->join('t_jaminan', 't_jaminan.fs_id_jaminan=t_trs_registrasi.fs_id_jaminan');
         $this->db->join('t_trs_regout', 't_trs_regout.fs_id_registrasi=t_trs_registrasi.fs_id_registrasi');
         if ($id != 0) {

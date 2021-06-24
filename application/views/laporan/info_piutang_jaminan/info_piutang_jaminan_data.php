@@ -128,10 +128,11 @@
             '<th>Kode Registrasi</th>' +
             '<th>Nama </th>' +
             '<th>Jaminan</th>' +
+            '<th>Layanan Reg</th>' +
             '<th>Total Bill</th>' +
             '<th>Piutang</th>' +
             '<th>Sisa Piutang</th>' +
-            '<th><i class="fas fa-cog"></i></th></tr>' +
+            // '<th><i class="fas fa-cog"></i></th></tr>' +
             '</thead>'
         data_piutang_jaminan += '<tbody>'
         $.getJSON('<?= site_url('info_piutang_jaminan/data_piutang_jaminan/') ?>' + $('#awal').val() + '/' + $('#akhir').val() + '/' + $('#fs_id_jaminan').val(),
@@ -144,28 +145,30 @@
                         '<td>' + val.fs_kd_registrasi + '</td>' +
                         '<td>' + val.fs_nm_pasien + '</td>' +
                         '<td>' + val.fs_nm_jaminan + '</td>' +
+                        '<td>' + val.fs_nm_layanan + '</td>' +
                         '<td>' + currencyFormat(val.fn_grandtotal) + '</td>' +
                         '<td>' + currencyFormat(val.fn_piutang) + '</td>' +
                         '<td>' + currencyFormat(val.fn_sisa_piutang) + '</td>' +
-                        '<td  class="text-center" width="160px">' +
-                        '<a data-toggle="tooltip" data-placement="top" title="Detail">' +
-                        '<button class="btn btn-info btn-sm" id="bayar" data-target="#modal-bayar" data-toggle="modal" ' +
-                        'data-fs_id_registrasi="' + val.id_reg +
-                        '" data-fs_id_regout="' + val.fs_id_regout +
-                        '" data-fs_kd_registrasi="' + val.fs_kd_registrasi +
-                        '"data-fd_tgl_regout="' + dateFormat(val.fd_tgl_regout) +
-                        '"data-fs_kd_rm="' + val.fs_kd_rm +
-                        '"data-fs_nm_pasien="' + val.fs_nm_pasien +
-                        '"data-fs_alamat="' + val.fs_alamat +
-                        '"data-fs_nm_jaminan="' + val.fs_nm_jaminan +
-                        '"data-fs_nm_layanan="' + val.fs_nm_layanan +
-                        '"data-fs_nm_pegawai="' + val.fs_nm_pegawai +
-                        '"data-fn_grandtotal="' + currencyFormat(val.fn_grandtotal) +
-                        '"data-fn_terbayar="' + currencyFormat(val.fn_grandtotal - val.fn_hutang) +
-                        '"data-fn_hutang="' + val.fn_hutang +
-                        '" >' +
-                        '<i class="far fa-eye"></i></button></a>' +
-                        '</td></tr>'
+                        // '<td  class="text-center" width="160px">' +
+                        // '<a data-toggle="tooltip" data-placement="top" title="Detail">' +
+                        // '<button class="btn btn-info btn-sm" id="bayar" data-target="#modal-bayar" data-toggle="modal" ' +
+                        // 'data-fs_id_registrasi="' + val.id_reg +
+                        // '" data-fs_id_regout="' + val.fs_id_regout +
+                        // '" data-fs_kd_registrasi="' + val.fs_kd_registrasi +
+                        // '"data-fd_tgl_regout="' + dateFormat(val.fd_tgl_regout) +
+                        // '"data-fs_kd_rm="' + val.fs_kd_rm +
+                        // '"data-fs_nm_pasien="' + val.fs_nm_pasien +
+                        // '"data-fs_alamat="' + val.fs_alamat +
+                        // '"data-fs_nm_jaminan="' + val.fs_nm_jaminan +
+                        // '"data-fs_nm_layanan="' + val.fs_nm_layanan +
+                        // '"data-fs_nm_pegawai="' + val.fs_nm_pegawai +
+                        // '"data-fn_grandtotal="' + currencyFormat(val.fn_grandtotal) +
+                        // '"data-fn_terbayar="' + currencyFormat(val.fn_grandtotal - val.fn_hutang) +
+                        // '"data-fn_hutang="' + val.fn_hutang +
+                        // '" >' +
+                        // '<i class="far fa-eye"></i></button></a>' +
+                        // '</td>' +
+                        '</tr>'
                 })
                 data_piutang_jaminan += '</tbody></table>'
                 $('#data_piutang_jaminan').html(data_piutang_jaminan)
@@ -176,7 +179,7 @@
                     ],
                     columnDefs: [{
                             "targets": [-1],
-                            "className": 'text-center',
+                            "className": 'text-left',
                             "orderable": false
                         },
                         {
