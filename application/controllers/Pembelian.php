@@ -88,6 +88,7 @@ class Pembelian extends CI_Controller
         }
 
         if (isset($_POST['process_payment'])) {
+            $fn_jenis_bayar = $data['fn_jenis_bayar'];
             $pembelian_id = $this->pembelian_m->add_pembelian($data);
             $cart = $this->pembelian_m->get_cart_pembelian()->result();
             $row = [];
@@ -104,6 +105,10 @@ class Pembelian extends CI_Controller
                 ));
             }
             $this->pembelian_m->add_pembelian_detail($row);
+            if ($fn_jenis_bayar == 2) {
+                $this->pembelian_m->add_hutang($data, $pembelian_id);
+                $this->pembelian_m->update_no_hutang();
+            }
             $this->pembelian_m->update_no();
             $this->pembelian_m->del_cart(['fs_id_user' => $this->session->userdata('userid')]);
 

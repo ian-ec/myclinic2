@@ -18,6 +18,7 @@ class Kasir extends CI_Controller
         $this->load->model('racik_m');
         $this->load->model('kasir_m');
         $this->load->model('regout_m');
+        $this->load->model('piutang_m');
     }
 
     public function index()
@@ -55,6 +56,7 @@ class Kasir extends CI_Controller
             $regout2 = $this->kasir_m->add_regout2($data, $regout);
             if ($fn_klaim != 0) {
                 $this->kasir_m->add_piutang($data);
+                $this->kasir_m->update_no_piutang();
             }
             $non_aktif_reg = $this->kasir_m->non_aktif_reg($data);
             $udpate_tgl_keluar = $this->kasir_m->udpate_tgl_keluar($data);

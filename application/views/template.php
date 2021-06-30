@@ -48,7 +48,7 @@
 </head>
 
 
-<body onload="hide_loading();" data-sidebar="dark">
+<body onload="hide_loading();" data-sidebar="dark" class="">
 
   <!-- <body data-layout="horizontal" data-topbar="dark"> -->
 
@@ -177,7 +177,9 @@
                           $this->uri->segment(1) == 'pelunasan_piutang'
                           ? ' mm-active' : '' ?>">
               <a href="javascript: void(0);" class="waves-effect has-arrow <?= $this->uri->segment(1) == 'order_piutang' ||
-                                                                              $this->uri->segment(1) == 'pelunasan_piutang'
+                                                                              $this->uri->segment(1) == 'pelunasan_piutang' ||
+                                                                              $this->uri->segment(1) == 'order_hutang' ||
+                                                                              $this->uri->segment(1) == 'pelunasan_hutang'
                                                                               ? ' mm-active' : '' ?>">
                 <i class="fas fa-file-invoice-dollar"></i>
                 <span key="t-dashboards">Akunting</span>
@@ -185,6 +187,8 @@
               <ul class="sub-menu" aria-expanded="false">
                 <li><a href="<?= site_url('order_piutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'order_piutang' ? 'class="mm-active"' : '' ?>>Order Piutang</a></li>
                 <li><a href="<?= site_url('pelunasan_piutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'pelunasan_piutang' ? 'class="mm-active"' : '' ?>>Pelunasan Piutang</a></li>
+                <li><a href="<?= site_url('order_hutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'order_hutang' ? 'class="mm-active"' : '' ?>>Order Hutang</a></li>
+                <li><a href="<?= site_url('pelunasan_hutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'pelunasan_hutang' ? 'class="mm-active"' : '' ?>>Pelunasan Hutang</a></li>
               </ul>
             </li>
             <li class="menu-title" key="t-menu">LAPORAN INFORMASI</li>
@@ -196,6 +200,7 @@
                           $this->uri->segment(1) == 'info_retur' ||
                           $this->uri->segment(1) == 'info_registrasi_keluar' ||
                           $this->uri->segment(1) == 'info_piutang_pasien' ||
+                          $this->uri->segment(1) == 'info_hutang' ||
                           $this->uri->segment(1) == 'info_laba_rugi'
                           ? ' mm-active' : '' ?>">
               <a href="javascript: void(0);" class="waves-effect has-arrow <?= $this->uri->segment(1) == 'info_tindakan' ||
@@ -209,6 +214,9 @@
                                                                               $this->uri->segment(1) == 'info_piutang_jaminan' ||
                                                                               $this->uri->segment(1) == 'info_order_piutang' ||
                                                                               $this->uri->segment(1) == 'info_pelunasan_piutang' ||
+                                                                              $this->uri->segment(1) == 'info_hutang' ||
+                                                                              $this->uri->segment(1) == 'info_order_hutang' ||
+                                                                              $this->uri->segment(1) == 'info_pelunasan_hutang' ||
                                                                               $this->uri->segment(1) == 'info_laba_rugi'
                                                                               ? ' mm-active' : '' ?>>">
                 <i class="fas fa-book"></i>
@@ -226,6 +234,9 @@
                 <li><a href="<?= site_url('info_piutang_jaminan') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_piutang_jaminan' ? 'class="mm-active"' : '' ?>>Info Piutang Jaminan</a></li>
                 <li><a href="<?= site_url('info_order_piutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_order_piutang' ? 'class="mm-active"' : '' ?>>Info Order Piutang</a></li>
                 <li><a href="<?= site_url('info_pelunasan_piutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_pelunasan_piutang' ? 'class="mm-active"' : '' ?>>Info Pelunasan Piutang</a></li>
+                <li><a href="<?= site_url('info_hutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_hutang' ? 'class="mm-active"' : '' ?>>Info Hutang</a></li>
+                <li><a href="<?= site_url('info_order_hutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_order_hutang' ? 'class="mm-active"' : '' ?>>Info Order Hutang</a></li>
+                <li><a href="<?= site_url('info_pelunasan_hutang') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_pelunasan_hutang' ? 'class="mm-active"' : '' ?>>Info Pelunasan Hutang</a></li>
                 <li><a href="<?= site_url('info_laba_rugi') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_laba_rugi' ? 'class="mm-active"' : '' ?>>Info Laba Rugi (On Progress)</a></li>
               </ul>
             </li>
@@ -330,7 +341,7 @@
     <script src="<?= base_url() ?>assets/plugins/libs/jquery/jquery.min.js"></script>
 
     <!-- Tiny js -->
-    <script src="<?= base_url() ?>assets/plugins/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    <!-- <script src="<?= base_url() ?>assets/plugins/tinymce/tinymce.min.js" referrerpolicy="origin"></script> -->
     <!-- High Charts Pie -->
     <script src="<?= base_url() ?>assets/plugins/highcharts-pie/highcharts.js"></script>
     <script src="<?= base_url() ?>assets/plugins/highcharts-pie/exporting.js"></script>

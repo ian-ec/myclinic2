@@ -78,6 +78,14 @@ class Kasir_m extends CI_Model
         $this->db->update('t_no');
     }
 
+    public function update_no_piutang()
+    {
+        $this->db->set('fn_no', 'fn_no+1', FALSE);
+        $this->db->where('fs_trs', 'PT');
+        $this->db->update('t_no');
+    }
+
+
     public function non_aktif_reg($post)
     {
         $this->db->set('fb_aktif_reg', 0);

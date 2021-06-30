@@ -24,6 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 // $config['base_url'] = 'http://eafd8d2f2927.ngrok.io/myclinic2';
+// $config['base_url'] = 'http://10.10.49.78/myclinic2';
 $config['base_url'] = 'http://localhost/myclinic2/';
 
 /*

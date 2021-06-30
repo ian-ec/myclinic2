@@ -14,6 +14,16 @@ class Pembelian_m extends CI_Model
         return $no_trs;
     }
 
+    public function no_hutang()
+    {
+        $this->db->from('t_no');
+        $this->db->where('fs_trs', 'HT');
+        $query = $this->db->get()->row();
+        $no = sprintf("%08d", $query->fn_no);
+        $no_trs = "HT" . $no;
+        return $no_trs;
+    }
+
     public function get_cart_pembelian($params = null)
     {
         $this->db->select('*, tb_trs_cart_pembelian.fs_id_barang as id_barang, tb_trs_cart_pembelian.fn_harga_beli as harga_beli');
@@ -98,6 +108,19 @@ class Pembelian_m extends CI_Model
         return $this->db->insert_id();
     }
 
+    public function add_hutang($post, $id)
+    {
+        $params = array(
+            'fs_kd_hutang' => $this->no_hutang(),
+            'fd_tgl_hutang' => $post['fd_tgl_pembelian'],
+            'fs_id_distributor' => $post['fs_id_distributor'],
+            'fs_id_pembelian' => $id,
+            'fn_hutang' => $post['fn_total_nilai_beli'],
+            'fn_sisa_hutang' => $post['fn_total_nilai_beli']
+        );
+        $this->db->insert('t_hutang', $params);
+    }
+
     function add_pembelian_detail($params)
     {
         $this->db->insert_batch('tb_trs_pembelian_detail', $params);
@@ -107,6 +130,13 @@ class Pembelian_m extends CI_Model
     {
         $this->db->set('fn_no', 'fn_no+1', FALSE);
         $this->db->where('fs_trs', 'PB');
+        $this->db->update('t_no');
+    }
+
+    public function update_no_hutang()
+    {
+        $this->db->set('fn_no', 'fn_no+1', FALSE);
+        $this->db->where('fs_trs', 'HT');
         $this->db->update('t_no');
     }
 
