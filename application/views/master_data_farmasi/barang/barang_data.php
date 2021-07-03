@@ -75,7 +75,10 @@
                                             <i class="fas fa-eye"></i>
                                         </button>
                                     </a>
-                                    <a href="<?= site_url('barang/edit/' . $data->fs_id_barang) ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
+                                    <a href="<?= site_url('barang/barcode/' . $data->fs_id_barang) ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Barcode">
+                                        <i class="fas fa-barcode"></i>
+                                    </a>
+                                    <a href="<?= site_url('barang/edit/' . $data->fs_id_barang) ?>" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="fas fa-pen"></i>
                                     </a>
                                     <a href="<?= site_url('barang/del/' . $data->fs_id_barang) ?>" id="btn-hapus" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">

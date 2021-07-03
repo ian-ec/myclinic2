@@ -106,4 +106,23 @@ class Barang extends CI_Controller
 		}
 		redirect('barang');
 	}
+
+	function barcode($id)
+	{
+		$data = array(
+			'row' => $this->barang_m->get($id)->row(),
+			'parameter' => $this->parameter_m->get()->row()
+		);
+
+		$this->template->load('template', 'master_data_farmasi/barang/barcode', $data);
+	}
+
+	function barcode_print($id)
+	{
+		$data = array(
+			'row' => $this->barang_m->get($id)->row(),
+			'parameter' => $this->parameter_m->get()->row()
+		);
+		$this->load->view('master_data_farmasi/barang/barcode_print', $data);
+	}
 }
