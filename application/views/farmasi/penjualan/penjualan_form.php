@@ -1530,8 +1530,28 @@
                                         }
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            location.href = '<?= site_url('penjualan') ?>'
                                             window.open('<?= site_url('penjualan/cetak_pdf/') ?>' + kode, '_blank')
+                                            Swal.fire({
+                                                title: 'Cetak etiket?',
+                                                icon: 'info',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#00a65a',
+                                                cancelButtonColor: '#d33',
+                                                confirmButtonText: 'Ya, Cetak!',
+                                                showClass: {
+                                                    popup: 'animate__animated animate__bounceIn'
+                                                },
+                                                hideClass: {
+                                                    popup: 'animate__animated animate__backOutDown'
+                                                }
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    location.href = '<?= site_url('penjualan') ?>'
+                                                    window.open('<?= site_url('penjualan/cetak_etiket/') ?>' + kode, '_blank')
+                                                } else {
+                                                    location.href = '<?= site_url('penjualan') ?>'
+                                                }
+                                            })
                                         } else {
                                             location.href = '<?= site_url('penjualan') ?>'
                                         }

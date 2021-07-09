@@ -80,10 +80,10 @@
                 <?php foreach ($penjualan_detail as $key => $data) { ?>
                     <tr>
                         <td><?= $data->fs_nm_barang ?></td>
-                        <td align="right"><?= $data->fn_qty ?>|</td>
-                        <td align="right"><?= indo_currency2($data->harga_jual) ?>|</td>
-                        <td align="right"><?= indo_currency2($data->fn_diskon_harga_jual) ?>|</td>
-                        <td align="right"><?= indo_currency2($data->fn_total_harga_jual) ?></td>
+                        <td align="right" style="vertical-align: top;"><?= $data->fn_qty ?>|</td>
+                        <td align="right" style="vertical-align: top;"><?= indo_currency2($data->harga_jual) ?>|</td>
+                        <td align="right" style="vertical-align: top;"><?= indo_currency2($data->fn_diskon_harga_jual) ?>|</td>
+                        <td align="right" style="vertical-align: top;"><?= indo_currency2($data->fn_total_harga_jual) ?></td>
                     </tr>
                 <?php } ?>
                 <?php foreach ($racik as $rc => $data_racik) { ?>

@@ -161,6 +161,7 @@ class penjualan_m extends CI_Model
         $this->db->select('*');
         $this->db->from('tb_trs_penjualan');
         $this->db->join('t_trs_registrasi', 't_trs_registrasi.fs_id_registrasi = tb_trs_penjualan.fs_id_registrasi', 'left');
+        $this->db->join('t_rm', 't_rm.fs_id_rm = t_trs_registrasi.fs_id_rm');
         $this->db->join('user', 'user.user_id = tb_trs_penjualan.fs_id_user');
         $this->db->where('tb_trs_penjualan.fd_tgl_void', '0000-00-00');
         if ($id != null) {
@@ -175,6 +176,7 @@ class penjualan_m extends CI_Model
         $this->db->select('*, tb_trs_penjualan_detail.fn_harga_jual as harga_jual');
         $this->db->from('tb_trs_penjualan_detail');
         $this->db->join('tb_barang', 'tb_barang.fs_id_barang = tb_trs_penjualan_detail.fs_id_barang');
+        $this->db->join('tb_etiket', 'tb_etiket.fs_id_etiket = tb_trs_penjualan_detail.fs_id_etiket', 'left');
         $this->db->join('tb_trs_penjualan', 'tb_trs_penjualan.fs_id_penjualan = tb_trs_penjualan_detail.fs_id_penjualan');
         if ($penjualan_id != null) {
             $this->db->where('tb_trs_penjualan_detail.fs_id_penjualan', $penjualan_id);

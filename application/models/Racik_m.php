@@ -40,6 +40,7 @@ class racik_m extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tb_trs_racik');
+        $this->db->join('tb_etiket', 'tb_etiket.fs_id_etiket=tb_trs_racik.fs_id_etiket', 'left');
         if ($id != null) {
             $this->db->where('fs_id_penjualan', $id);
         }

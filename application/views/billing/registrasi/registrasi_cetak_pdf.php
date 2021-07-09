@@ -71,6 +71,11 @@
                         <td><b><?= $registrasi->fs_kd_registrasi ?></b></td>
                     </tr>
                     <tr>
+                        <td>No RM</td>
+                        <td>:</td>
+                        <td><b><?= $registrasi->fs_kd_rm ?></b></td>
+                    </tr>
+                    <tr>
                         <td>Nama</td>
                         <td>:</td>
                         <td><b><?= $registrasi->fs_nm_pasien ?></b></td>
@@ -109,6 +114,16 @@
                         <td>Karcis</td>
                         <td>:</td>
                         <td><b><?= indo_currency($registrasi->nilai_karcis) ?></b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" align="center">
+                            <?php
+                            $generator = new \Picqer\Barcode\BarcodeGeneratorPNG();
+                            echo '<img src="data:image/png;base64,' . base64_encode($generator->getBarcode($registrasi->fs_kd_rm, $generator::TYPE_CODE_128)) . '"  style="width:200px; height:40px; margin-top: 10px;">';
+                            ?>
+                            <br>
+                            <h2 style=" margin: 1px;"><b><?= $registrasi->fs_kd_rm ?></b></h2>
+                        </td>
                     </tr>
                 </tbody>
             </table>

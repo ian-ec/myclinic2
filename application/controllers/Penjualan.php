@@ -293,4 +293,15 @@ class penjualan extends CI_Controller
         $html = $this->load->view('farmasi/penjualan/penjualan_cetak_pdf', $data, true);
         $this->fungsi->PdfGenerator($html, 'INV-' . $data['penjualan']->fs_kd_penjualan, 'A4', 'potrait');
     }
+
+    public function cetak_etiket($id)
+    {
+        $data = array(
+            'penjualan' => $this->penjualan_m->get_penjualan($id)->row(),
+            'penjualan_detail' => $this->penjualan_m->get_penjualan_detail($id)->result(),
+            'racik' => $this->racik_m->get_racik($id)->result(),
+            'parameter' => $this->parameter_m->get()->row()
+        );
+        $this->load->view('farmasi/penjualan/cetak_etiket', $data);
+    }
 }

@@ -127,10 +127,12 @@
               </a>
             </li>
             <li class="<?= $this->uri->segment(1) == 'registrasi' ||
+                          $this->uri->segment(1) == 'laboratorium' ||
                           $this->uri->segment(1) == 'tindakan'
                           ? ' mm-active' : '' ?>">
               <a href="javascript: void(0);" class="waves-effect has-arrow <?= $this->uri->segment(1) == 'registrasi' ||
                                                                               $this->uri->segment(1) == 'tindakan' ||
+                                                                              $this->uri->segment(1) == 'laboratorium' ||
                                                                               $this->uri->segment(1) == 'soap'
                                                                               ? ' mm-active' : '' ?>">
                 <i class="fas fa-stethoscope"></i>
@@ -139,6 +141,7 @@
               <ul class="sub-menu" aria-expanded="false">
                 <li><a href="<?= site_url('registrasi') ?>" key="t-default" <?= $this->uri->segment(1) == 'registrasi' ? 'class="mm-active"' : '' ?>>Registrasi Masuk</a></li>
                 <li><a href="<?= site_url('tindakan') ?>" key="t-default" <?= $this->uri->segment(1) == 'tindakan' ? 'class="mm-active"' : '' ?>>Tindakan</a></li>
+                <li><a href="<?= site_url('laboratorium') ?>" key="t-default" <?= $this->uri->segment(1) == 'laboratorium' ? 'class="mm-active"' : '' ?>>Laboratorium</a></li>
                 <li><a href="<?= site_url('soap') ?>" key="t-default" <?= $this->uri->segment(1) == 'soap' ? 'class="mm-active"' : '' ?>>Catatan Pasien</a></li>
               </ul>
             </li>

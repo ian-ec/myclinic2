@@ -163,11 +163,14 @@
                                 <td><?= $rg->fs_nm_layanan ?></td>
                                 <td>
                                     <a data-toggle="tooltip" data-placement="top" title="Detail">
-                                        <button class="btn btn-success btn-sm" data-toggle="modal" id="detail" data-target="#modal-detail" data-fs_kd_registrasi="<?= $rg->fs_kd_registrasi ?>" data-fs_nm_pasien="<?= $rg->fs_nm_pasien ?>" data-fs_nm_kelamin="<?= $rg->fs_nm_kelamin ?>" data-fs_tmpt_tgl_lahir="<?= $rg->fs_tmpt_lahir . ", " . indo_date($rg->tanggal_lahir) ?>" data-fs_alamat="<?= $rg->fs_alamat ?>" data-layanan="<?= $rg->fs_nm_layanan ?>" data-pegawai="<?= $rg->fs_nm_pegawai ?>" data-jaminan="<?= $rg->fs_nm_jaminan ?>" data-karcis="<?= $rg->fs_nm_karcis ?>" data-karcis_nilai="<?= indo_currency($rg->nilai_karcis) ?>">
+                                        <button class="btn btn-success btn-sm" data-toggle="modal" id="detail" data-target="#modal-detail" data-fs_kd_registrasi="<?= $rg->fs_kd_registrasi ?>" data-fs_kd_rm="<?= $rg->fs_kd_rm ?>" data-fs_nm_pasien="<?= $rg->fs_nm_pasien ?>" data-fs_nm_kelamin="<?= $rg->fs_nm_kelamin ?>" data-fs_tmpt_tgl_lahir="<?= $rg->fs_tmpt_lahir . ", " . indo_date($rg->tanggal_lahir) ?>" data-fs_alamat="<?= $rg->fs_alamat ?>" data-layanan="<?= $rg->fs_nm_layanan ?>" data-pegawai="<?= $rg->fs_nm_pegawai ?>" data-jaminan="<?= $rg->fs_nm_jaminan ?>" data-karcis="<?= $rg->fs_nm_karcis ?>" data-karcis_nilai="<?= indo_currency($rg->nilai_karcis) ?>">
                                             <i class=" fas fa-eye"></i>
                                         </button>
                                     </a>
-                                    <a href="<?= site_url('registrasi/edit/' . $rg->fs_id_registrasi) ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
+                                    <a href="<?= site_url('registrasi/cetak_pdf/' . $rg->fs_id_registrasi) ?>" target="_blank" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Print">
+                                        <i class="fas fa-print"></i>
+                                    </a>
+                                    <a href="<?= site_url('registrasi/edit/' . $rg->fs_id_registrasi) ?>" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="fas fa-pen"></i>
                                     </a>
                                     <a href="<?= site_url('registrasi/del/' . $rg->fs_kd_registrasi . "/" . $rg->fs_id_rm . "/" . $rg->fs_id_registrasi) ?>" id="btn-hapus" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
@@ -424,6 +427,11 @@
                             <td id="kode"></td>
                         </tr>
                         <tr>
+                            <td width="30%">No RM</td>
+                            <td width="2%">:</td>
+                            <td id="rm"></td>
+                        </tr>
+                        <tr>
                             <td>Nama</td>
                             <td>:</td>
                             <td id="nama"></td>
@@ -671,7 +679,7 @@
                                         }
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            location.href = '<?= site_url('registrasi') ?>'
+                                            window.location.assign("<?= site_url('registrasi') ?>")
                                             window.open('<?= site_url('registrasi/cetak_pdf/') ?>' + kode, '_blank')
                                         } else {
                                             location.href = '<?= site_url('registrasi') ?>'
@@ -815,6 +823,7 @@
     $(document).ready(function() {
         $(document).on('click', '#detail', function() {
             $('#kode').text($(this).data('fs_kd_registrasi'));
+            $('#rm').text($(this).data('fs_kd_rm'));
             $('#nama').text($(this).data('fs_nm_pasien'));
             $('#kelamin').text($(this).data('fs_nm_kelamin'));
             $('#fs_tmpt_tgl_lahir').text($(this).data('fs_tmpt_tgl_lahir'));

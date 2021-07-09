@@ -39,7 +39,7 @@ class Rm_m extends CI_Model
         $this->db->from('t_no');
         $this->db->where('fs_trs', 'RM');
         $query = $this->db->get()->row();
-        $no = sprintf("%07d", $query->fn_no);
+        $no = sprintf("%08d", $query->fn_no);
         $no_trs = "RM" . $no;
         return $no_trs;
     }
