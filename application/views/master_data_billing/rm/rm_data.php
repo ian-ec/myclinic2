@@ -26,7 +26,7 @@
                 </div>
                 <br>
                 <br>
-                <table id="table1" class="table table-striped table-sm table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                <table id="table1" class="table table-striped table-sm table-bordered">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -34,7 +34,7 @@
                             <th>Nama</th>
                             <th>Jenis Kelamin</th>
                             <th>Umur</th>
-                            <th>Alamat</th>
+                            <th style="width: 30%;">Alamat</th>
                             <th>Phone</th>
                             <th><i class="fas fa-cog"></th>
                         </tr>

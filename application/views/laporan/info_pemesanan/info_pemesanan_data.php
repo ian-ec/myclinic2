@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h3>Info Pembelian</h3>
+            <h3>Info Pemesanan Barang</h3>
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Info Pembelian</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Info Pemesanan Barang</a></li>
                 </ol>
             </div>
 
@@ -29,7 +29,7 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <span id="data_pembelian"></span>
+                <span id="data_pemesanan"></span>
             </div>
         </div>
     </div>
@@ -37,12 +37,12 @@
 
 
 
-<!-- Modal Detail Penjualan -->
+<!-- Modal Detail Pemesanan -->
 <div class="modal modal-primary fade" id="modal-detail">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-soft-info">
-                <h4 class="modal-title">Detail Pembelian</h4>
+                <h4 class="modal-title">Detail Pemesanan Barang</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -53,10 +53,26 @@
                         <table class="table table-bordered table-sm">
                             <tbody>
                                 <tr>
-                                    <td style="width: 40%;">Kode Pembelian </td>
+                                    <td style="width: 40%;">Kode Pemesanan </td>
                                     <td style="width: 5%;">:</td>
-                                    <th><strong><span id="fs_kd_pembelian"></span></strong></th>
+                                    <th><strong><span id="fs_kd_pemesanan"></span></strong></th>
                                 </tr>
+                                <tr>
+                                    <td>Tanggal Transaksi </td>
+                                    <td>:</td>
+                                    <th><strong><span id="fd_tgl_pemesanan"></span></strong></th>
+                                </tr>
+                                <tr>
+                                    <td>Layanan Order </td>
+                                    <td>:</td>
+                                    <th><strong><span id="fs_nm_layanan"></span></strong></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-bordered table-sm">
+                            <tbody>
                                 <tr>
                                     <td>Distributor </td>
                                     <td>:</td>
@@ -75,36 +91,10 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-md-6">
-                        <table class="table table-bordered table-sm">
-                            <tbody>
-                                <tr>
-                                    <td style="width: 40%;">Petugas </td>
-                                    <td style="width: 5%;">:</td>
-                                    <th><strong><span id="user_name"></span></strong></th>
-                                </tr>
-                                <tr>
-                                    <td>Tanggal Transaksi </td>
-                                    <td>:</td>
-                                    <th><strong><span id="fd_tgl_pembelian"></span></strong></th>
-                                </tr>
-                                <tr>
-                                    <td>Tanggal Bayar </td>
-                                    <td>:</td>
-                                    <th><strong><span id="fd_tgl_bayar"></span></strong></th>
-                                </tr>
-                                <tr>
-                                    <td>Status Pembayaran</td>
-                                    <td>:</td>
-                                    <th><strong><span id="fn_jenis_bayar"></span></strong></th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <span id="detail_pembelian"></span>
+                        <span id="detail_pemesanan"></span>
                     </div>
                 </div>
                 <div class="row">
@@ -125,7 +115,7 @@
                                 <tr>
                                     <td>Subtotal </td>
                                     <td>:</td>
-                                    <th><strong><span id="fn_nilai_beli"></span></strong></th>
+                                    <th><strong><span id="fn_subtotal"></span></strong></th>
                                 </tr>
                                 <tr>
                                     <td>Discount Global</td>
@@ -135,7 +125,7 @@
                                 <tr>
                                     <td>Total</td>
                                     <td>:</td>
-                                    <th><strong><span id="fn_total_nilai_beli"></span></strong></th>
+                                    <th><strong><span id="fn_grandtotal"></span></strong></th>
                                 </tr>
                             </tbody>
                         </table>
@@ -152,35 +142,37 @@
 
 
 <script>
+    $(document).ready(function() {
+        $('#get').click();
+    })
+
     $(document).on('click', '#detail', function() {
-        $('#fs_kd_pembelian').text($(this).data('fs_kd_pembelian'));
+        $('#fs_kd_pemesanan').text($(this).data('fs_kd_pemesanan'));
+        $('#fs_nm_layanan').text($(this).data('fs_nm_layanan'));
         $('#fs_nm_distributor').text($(this).data('fs_nm_distributor'));
         $('#fs_alamat_distributor').text($(this).data('fs_alamat_distributor'));
         $('#fs_telp_distributor').text($(this).data('fs_telp_distributor'));
-        $('#user_name').text($(this).data('user_name'));
-        $('#fn_nilai_beli').text($(this).data('fn_nilai_beli'));
+        $('#fn_subtotal').text($(this).data('fn_subtotal'));
         $('#fn_diskon').text($(this).data('fn_diskon'));
-        $('#fn_total_nilai_beli').text($(this).data('fn_total_nilai_beli'));
+        $('#fn_grandtotal').text($(this).data('fn_grandtotal'));
         $('#fs_keterangan').text($(this).data('fs_keterangan'));
-        $('#fn_jenis_bayar').text($(this).data('fn_jenis_bayar'));
-        $('#fd_tgl_pembelian').text($(this).data('fd_tgl_pembelian'));
-        $('#fd_tgl_bayar').text($(this).data('fd_tgl_bayar'));
+        $('#fd_tgl_pemesanan').text($(this).data('fd_tgl_pemesanan'));
 
-        var detail_pembelian = '<table class="table table-bordered table-sm">'
-        detail_pembelian += '<tr><th>Kode</th><th>Nama Barang</th><th>HPP</th><th>QTY</th><th>Diskon @</th><th>PPN %</th><th>Total</th></tr>'
-        $.getJSON('<?= site_url('info_pembelian/detail/') ?>' + $(this).data('fs_id_pembelian'), function(data) {
+        var detail_pemesanan = '<table class="table table-bordered table-sm">'
+        detail_pemesanan += '<tr><th>Kode</th><th>Nama Barang</th><th>HPP</th><th>QTY</th><th>Diskon @</th><th>PPN %</th><th>Total</th></tr>'
+        $.getJSON('<?= site_url('info_pemesanan/detail/') ?>' + $(this).data('fs_id_pemesanan'), function(data) {
             $.each(data, function(key, val) {
-                detail_pembelian += '<tr><td>' +
+                detail_pemesanan += '<tr><td>' +
                     val.fs_kd_barang + '</td><td>' +
                     val.fs_nm_barang + '</td><td>' +
-                    currencyFormat(val.fn_harga_beli) + '</td><td>' +
+                    currencyFormat(val.fn_hpp) + '</td><td>' +
                     val.fn_qty + '</td><td>' +
-                    currencyFormat(val.fn_diskon) + '</td><td>' +
-                    currencyFormat(val.fn_pajak_beli) + '</td><td>' +
-                    currencyFormat(val.fn_total_harga_beli) + '</td></tr>'
+                    currencyFormat(val.diskon) + '</td><td>' +
+                    currencyFormat(val.fn_ppn) + '</td><td>' +
+                    currencyFormat(val.fn_total) + '</td></tr>'
             })
-            detail_pembelian += '</table>'
-            $('#detail_pembelian').html(detail_pembelian)
+            detail_pemesanan += '</table>'
+            $('#detail_pemesanan').html(detail_pemesanan)
         })
     })
 
@@ -189,83 +181,59 @@
         var awal = $('#awal').val()
         var akhir = $('#akhir').val()
         var i = 0;
-        var data_pembelian = '<table id="table1" class="table table-sm table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">' +
+        var data_pemesanan = '<table id="table1" class="table table-sm table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">' +
             '<thead>' +
             '<tr>' +
             '<th>No</th>' +
-            '<th>Kode pembelian</th>' +
-            '<th>Tgl pembelian</th>' +
+            '<th>Kode pemesanan</th>' +
+            '<th>Tgl pemesanan</th>' +
+            '<th>Layanan Order</th>' +
             '<th>Distributor</th>' +
-            '<th>Total Harga</th>' +
-            '<th>Status Pembayaran</th>' +
-            '<th>Tgl Bayar</th>' +
+            '<th>Subtotal</th>' +
+            '<th>Diskon</th>' +
+            '<th>Grandtotal</th>' +
             '<th><i class="fas fa-cog"></i></th></tr>' +
             '</thead>'
-        data_pembelian += '<tbody>'
-        $.getJSON('<?= site_url('info_pembelian/data_pembelian/') ?>' + $('#awal').val() + '/' + $('#akhir').val(), function(data) {
+        data_pemesanan += '<tbody>'
+        $.getJSON('<?= site_url('info_pemesanan/data_pemesanan/') ?>' + $('#awal').val() + '/' + $('#akhir').val(), function(data) {
             $.each(data, function(key, val) {
                 i += 1
-                data_pembelian += '<tr>' +
+                data_pemesanan += '<tr>' +
                     '<td>' + i + '</td>' +
-                    '<td>' + val.fs_kd_pembelian + '</td>' +
-                    '<td>' + dateFormat(val.fd_tgl_pembelian) + '</td>' +
+                    '<td>' + val.fs_kd_pemesanan + '</td>' +
+                    '<td>' + dateFormat(val.fd_tgl_pemesanan) + '</td>' +
+                    '<td>' + val.fs_nm_layanan + '</td>' +
                     '<td>' + val.fs_nm_distributor + '</td>' +
-                    '<td>' + currencyFormat(val.fn_nilai_beli) + '</td>' +
-                    '<td><span class="btn btn-sm btn-'
-                if (parseInt(val.fn_jenis_bayar) === 1) {
-                    data_pembelian += 'success'
-                } else {
-                    data_pembelian += 'danger'
-                }
-                data_pembelian += '">'
-                if (parseInt(val.fn_jenis_bayar) === 1) {
-                    data_pembelian += 'Lunas'
-                } else {
-                    data_pembelian += 'Hutang'
-                }
-                data_pembelian += '</td>' +
-                    '<td><span class="btn btn-sm btn-'
-                if (parseInt(val.fn_jenis_bayar) === 1) {
-                    data_pembelian += 'success'
-                } else {
-                    data_pembelian += 'danger'
-                }
-                data_pembelian += '">' + dateFormat(val.fd_tgl_bayar) + '</td>' +
+                    '<td>' + currencyFormat(val.fn_subtotal) + '</td>' +
+                    '<td>' + currencyFormat(val.fn_diskon) + '</td>' +
+                    '<td>' + currencyFormat(val.fn_grandtotal) + '</td>' +
                     '<td  class="text-center" width="160px">' +
                     '<a data-toggle="tooltip" data-placement="top" title="Detail">' +
                     '<button class="btn btn-success btn-sm" id="detail" data-target="#modal-detail" data-toggle="modal" ' +
-                    'data-fs_id_pembelian="' + val.fs_id_pembelian +
-                    '" data-fs_kd_pembelian="' + val.fs_kd_pembelian +
+                    'data-fs_id_pemesanan="' + val.fs_id_pemesanan +
+                    '" data-fs_kd_pemesanan="' + val.fs_kd_pemesanan +
                     '"data-fs_nm_distributor="' + val.fs_nm_distributor +
+                    '"data-fs_nm_layanan="' + val.fs_nm_layanan +
                     '"data-fs_alamat_distributor="' + val.fs_alamat_distributor +
                     '"data-fs_telp_distributor="' + val.fs_telp_distributor +
                     '"data-user_name="' + val.name +
-                    '"data-fn_nilai_beli="' + currencyFormat(val.fn_nilai_beli) +
+                    '"data-fn_subtotal="' + currencyFormat(val.fn_subtotal) +
                     '"data-fn_diskon="' + currencyFormat(val.fn_diskon) +
-                    '"data-fn_total_nilai_beli="' + currencyFormat(val.fn_total_nilai_beli) +
+                    '"data-fn_grandtotal="' + currencyFormat(val.fn_grandtotal) +
                     '"data-fs_keterangan="' + val.fs_keterangan +
-                    '"data-fn_jenis_bayar="'
-                if (parseInt(val.fn_jenis_bayar) === 1) {
-                    data_pembelian += 'Lunas'
-                } else {
-                    data_pembelian += 'Hutang'
-                }
-                data_pembelian += '"data-fd_tgl_pembelian="' + dateFormat(val.fd_tgl_pembelian) +
-                    '"data-fd_tgl_bayar="' + dateFormat(val.fd_tgl_bayar) +
+                    '"data-fd_tgl_pemesanan="' + dateFormat(val.fd_tgl_pemesanan) +
                     '" >' +
                     '<i class="fa fa-eye"></i></button></a>' +
-                    ' <a href="<?= site_url('pembelian/cetak_pdf/') ?>' + val.fs_id_pembelian + '" target="_blank" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Print">' +
+                    ' <a href="<?= site_url('pemesanan/cetak_pdf/') ?>' + val.fs_id_pemesanan + '" target="_blank" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Print">' +
                     ' <i class="fa fa-print"></i></a>' +
-                    ' <a href="<?= site_url('info_pembelian/update_pembayaran/') ?>' + val.fs_id_pembelian + '" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Update Pembayaran">' +
-                    ' <i class="fas fa-pen"></i></a>' +
                     '<?php if ($this->fungsi->user_login()->level == 1) { ?>' +
-                    ' <a href="<?= site_url('info_pembelian/delete/') ?>' + val.fs_id_pembelian + '" id="btn-hapus" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">' +
+                    ' <a href="<?= site_url('info_pemesanan/delete/') ?>' + val.fs_id_pemesanan + '" id="btn-hapus" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">' +
                     '<i class="fa fa-trash"></i></a>' +
                     '<?php } ?>' +
                     '</td></tr>'
             })
-            data_pembelian += '</tbody></table>'
-            $('#data_pembelian').html(data_pembelian)
+            data_pemesanan += '</tbody></table>'
+            $('#data_pemesanan').html(data_pemesanan)
             $('#table1').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
@@ -291,41 +259,41 @@
         var awal = $('#awal').val()
         var akhir = $('#akhir').val()
         var i = 0;
-        var data_pembelian = '<table id="table1" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">' +
+        var data_pemesanan = '<table id="table1" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">' +
             '<thead>' +
             '<tr>' +
             '<th>No</th>' +
-            '<th>Kode pembelian</th>' +
-            '<th>Tgl pembelian</th>' +
+            '<th>Kode pemesanan</th>' +
+            '<th>Tgl pemesanan</th>' +
             '<th>Kode Barang</th>' +
             '<th>Nama Barang</th>' +
             '<th>HPP</th>' +
             '<th>Tax %</th>' +
-            '<th>HNA</th>' +
             '<th>QTY</th>' +
             '<th>Total</th>' +
+            '<th>Layanan</th>' +
             '<th>Distributor</th>' +
             '</thead>'
-        data_pembelian += '<tbody>'
-        $.getJSON('<?= site_url('info_pembelian/data_pembelian_detail/') ?>' + $('#awal').val() + '/' + $('#akhir').val(), function(data) {
+        data_pemesanan += '<tbody>'
+        $.getJSON('<?= site_url('info_pemesanan/data_pemesanan_detail/') ?>' + $('#awal').val() + '/' + $('#akhir').val(), function(data) {
             $.each(data, function(key, val) {
                 i += 1
-                data_pembelian += '<tr>' +
+                data_pemesanan += '<tr>' +
                     '<td>' + i + '</td>' +
-                    '<td>' + val.fs_kd_pembelian + '</td>' +
-                    '<td>' + dateFormat(val.fd_tgl_pembelian) + '</td>' +
+                    '<td>' + val.fs_kd_pemesanan + '</td>' +
+                    '<td>' + dateFormat(val.fd_tgl_pemesanan) + '</td>' +
                     '<td>' + val.fs_kd_barang + '</td>' +
                     '<td>' + val.fs_nm_barang + '</td>' +
                     '<td>' + currencyFormat(val.hpp) + '</td>' +
-                    '<td>' + val.fn_pajak_beli + ' %</td>' +
-                    '<td>' + currencyFormat(val.hna) + '</td>' +
+                    '<td>' + val.fn_ppn + ' %</td>' +
                     '<td>' + val.fn_qty + '</td>' +
-                    '<td>' + currencyFormat(val.fn_total_harga_beli) + '</td>' +
+                    '<td>' + currencyFormat(val.fn_total) + '</td>' +
+                    '<td>' + val.fs_nm_layanan + '</td>' +
                     '<td>' + val.fs_nm_distributor + '</td>' +
                     '</tr>'
             })
-            data_pembelian += '</tbody></table>'
-            $('#data_pembelian').html(data_pembelian)
+            data_pemesanan += '</tbody></table>'
+            $('#data_pemesanan').html(data_pemesanan)
             $('#table1').DataTable({
                 dom: 'Bfrtip',
                 buttons: [

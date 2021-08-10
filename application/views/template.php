@@ -48,7 +48,19 @@
 </head>
 
 
-<body onload="hide_loading();" data-sidebar="dark" class="">
+<body onload="hide_loading();" data-sidebar="dark" class="<?= $this->uri->segment(1) == 'registrasi' ||
+                                                            $this->uri->segment(1) == 'tindakan' ||
+                                                            $this->uri->segment(1) == 'soap' ||
+                                                            $this->uri->segment(1) == 'pemesanan' ||
+                                                            $this->uri->segment(1) == 'penerimaan' ||
+                                                            $this->uri->segment(1) == 'retur' ||
+                                                            $this->uri->segment(1) == 'adjustment' ||
+                                                            $this->uri->segment(1) == 'order_piutang' ||
+                                                            $this->uri->segment(1) == 'pelunasan_piutang' ||
+                                                            $this->uri->segment(1) == 'order_hutang' ||
+                                                            $this->uri->segment(1) == 'pelunasan_hutang' ||
+                                                            $this->uri->segment(1) == 'penjualan'
+                                                            ? 'sidebar-enable vertical-collpsed' : '' ?>">
 
   <!-- <body data-layout="horizontal" data-topbar="dark"> -->
 
@@ -145,12 +157,16 @@
                 <li><a href="<?= site_url('soap') ?>" key="t-default" <?= $this->uri->segment(1) == 'soap' ? 'class="mm-active"' : '' ?>>Catatan Pasien</a></li>
               </ul>
             </li>
-            <li class="<?= $this->uri->segment(1) == 'pembelian' ||
+            <li class="<?= $this->uri->segment(1) == 'pemesanan' ||
+                          $this->uri->segment(1) == 'penerimaan' ||
+                          $this->uri->segment(1) == 'pembelian' ||
                           $this->uri->segment(1) == 'penjualan' ||
                           $this->uri->segment(1) == 'retur' ||
                           $this->uri->segment(1) == 'adjustment'
                           ? ' mm-active' : '' ?>">
-              <a href="javascript: void(0);" class="waves-effect has-arrow <?= $this->uri->segment(1) == 'pembelian' ||
+              <a href="javascript: void(0);" class="waves-effect has-arrow <?= $this->uri->segment(1) == 'pemesanan' ||
+                                                                              $this->uri->segment(1) == 'penerimaan' ||
+                                                                              $this->uri->segment(1) == 'pembelian' ||
                                                                               $this->uri->segment(1) == 'penjualan' ||
                                                                               $this->uri->segment(1) == 'retur' ||
                                                                               $this->uri->segment(1) == 'adjustment'
@@ -159,6 +175,8 @@
                 <span key="t-dashboards">Farmasi</span>
               </a>
               <ul class="sub-menu" aria-expanded="false">
+                <li><a href="<?= site_url('pemesanan') ?>" key="t-default" <?= $this->uri->segment(1) == 'pemesanan' ? 'class="mm-active"' : '' ?>>Pemesanan Barang</a></li>
+                <li><a href="<?= site_url('penerimaan') ?>" key="t-default" <?= $this->uri->segment(1) == 'penerimaan' ? 'class="mm-active"' : '' ?>>Penerimaan Barang</a></li>
                 <li><a href="<?= site_url('pembelian') ?>" key="t-default" <?= $this->uri->segment(1) == 'pembelian' ? 'class="mm-active"' : '' ?>>Pembelian</a></li>
                 <li><a href="<?= site_url('penjualan') ?>" key="t-default" <?= $this->uri->segment(1) == 'penjualan' ? 'class="mm-active"' : '' ?>>Penjualan</a></li>
                 <li><a href="<?= site_url('retur') ?>" key="t-default" <?= $this->uri->segment(1) == 'retur' ? 'class="mm-active"' : '' ?>>Retur Pembelian</a></li>
@@ -197,6 +215,7 @@
             <li class="menu-title" key="t-menu">LAPORAN INFORMASI</li>
             <li class="<?= $this->uri->segment(1) == 'info_tindakan' ||
                           $this->uri->segment(1) == 'info_soap' ||
+                          $this->uri->segment(1) == 'info_pemesanan' ||
                           $this->uri->segment(1) == 'info_pembelian' ||
                           $this->uri->segment(1) == 'info_penjualan' ||
                           $this->uri->segment(1) == 'info_adjustment' ||
@@ -208,6 +227,7 @@
                           ? ' mm-active' : '' ?>">
               <a href="javascript: void(0);" class="waves-effect has-arrow <?= $this->uri->segment(1) == 'info_tindakan' ||
                                                                               $this->uri->segment(1) == 'info_soap' ||
+                                                                              $this->uri->segment(1) == 'info_pemesanan' ||
                                                                               $this->uri->segment(1) == 'info_pembelian' ||
                                                                               $this->uri->segment(1) == 'info_penjualan' ||
                                                                               $this->uri->segment(1) == 'info_adjustment' ||
@@ -228,6 +248,7 @@
               <ul class="sub-menu" aria-expanded="false">
                 <li><a href="<?= site_url('info_tindakan') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_tindakan' ? 'class="mm-active"' : '' ?>>Info Tindakan</a></li>
                 <li><a href="<?= site_url('info_soap') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_soap' ? 'class="mm-active"' : '' ?>>Info Catatan Pasien</a></li>
+                <li><a href="<?= site_url('info_pemesanan') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_pemesanan' ? 'class="mm-active"' : '' ?>>Info Pemesanan Barang</a></li>
                 <li><a href="<?= site_url('info_pembelian') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_pembelian' ? 'class="mm-active"' : '' ?>>Info Pembelian</a></li>
                 <li><a href="<?= site_url('info_penjualan') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_penjualan' ? 'class="mm-active"' : '' ?>>Info Penjualan</a></li>
                 <li><a href="<?= site_url('info_adjustment') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_adjustment' ? 'class="mm-active"' : '' ?>>Info Adjustment</a></li>
@@ -381,11 +402,11 @@
             <div class="col-sm-6">
               <script>
                 document.write(new Date().getFullYear())
-              </script> © Elite Coding.
+              </script> © RAS Coding.
             </div>
             <div class="col-sm-6">
               <div class="text-sm-right d-none d-sm-block">
-                Design & Develop by Elite Coding
+                Design & Develop by RAS Coding
               </div>
             </div>
           </div>

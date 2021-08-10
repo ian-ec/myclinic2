@@ -52,7 +52,7 @@ class Pelunasan_piutang extends CI_Controller
                 ));
             }
             $this->pelunasan_piutang_m->add_pelunasan_piutang_detail($row);
-            $this->pelunasan_piutang_m->update_sisa_piutang($pelunasan_piutang_id);
+            $this->pelunasan_piutang_m->update_sisa_piutang($pelunasan_piutang_id); 
             $this->pelunasan_piutang_m->update_no();
             $this->pelunasan_piutang_m->update_id_order($pelunasan_piutang_id);
             $this->pelunasan_piutang_m->update_add_order_piutang($data, $pelunasan_piutang_id);
