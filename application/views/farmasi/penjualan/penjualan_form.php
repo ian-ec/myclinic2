@@ -53,16 +53,30 @@
                     </div>
                 </div>
                 <div class="form-group row mb-2">
+                    <label class="col-sm-4 col-form-label text-right">Layanan Stok</label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input type="hidden" id="fs_id_layanan">
+                            <input type="text" style="background-color: lavender;" class="form-control" id="fs_nm_layanan" readonly>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#modal-layanan">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
                     <label class="col-sm-4 col-form-label text-right">Barcode</label>
                     <div class="col-sm-8 input-group">
                         <input type="hidden" id="fs_id_barang">
-                        <input type="hidden" id="fs_kd_barang">
+                        <input type="hidden" id="fs_kd_barcode">
                         <input type="hidden" id="fn_harga_beli">
                         <input type="hidden" id="fn_harga_jual">
                         <input type="hidden" id="fn_stok">
-                        <input type="text" id="fs_kd_barcode" class="form-control" autofocus>
+                        <input type="text" id="fs_kd_barang" class="form-control" readonly style="background-color: lavender;">
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#modal-barang">
+                            <button type="button" class="btn btn-info btn-flat" id="barang" data-toggle="modal" data-target="#modal-barang">
                                 <i class="fa fa-search"></i>
                             </button>
                         </span>
@@ -267,7 +281,7 @@
                                     <input type="hidden" id="fn_stok_racik">
                                     <input type="text" id="fs_kd_barang_racik" class="form-control" autofocus>
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#modal-barang_racik">
+                                        <button type="button" id="barang-racik" class="btn btn-info btn-flat" data-toggle="modal" data-target="#modal-barang_racik">
                                             <i class="fa fa-search"></i>
                                         </button>
                                     </span>
@@ -456,52 +470,36 @@
     </div>
 </div>
 
-<!-- Modal Add Product Barang -->
-<div class="modal fade" id="modal-barang">
+<!-- Modal Layanan -->
+<div class="modal fade" id="modal-layanan">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-soft-info">
-                <h4 class="modal-title">Pilih Barang</h4>
+                <h4 class="modal-title">Pilih Layanan</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body table-responsive">
-                <table class="table table-bordered table-striped  table-sm" id="tabel-barang">
+                <table class="table table-bordered table-striped table-sm" id="tabel-layanan">
                     <thead>
                         <tr>
-                            <th>Kode</th>
-                            <th>Barcode</th>
-                            <th>Barang</th>
-                            <th>Satuan</th>
-                            <th>Harga Jual</th>
-                            <th>Stok</th>
-                            <th>Pilihan</th>
+                            <th>No</th>
+                            <th>Kode Layanan</th>
+                            <th>Nama Layanan</th>
+                            <th>Pilih</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($barang as $brg => $data) { ?>
+                        <?php
+                        $no = 1;
+                        foreach ($layanan->result() as $ly) { ?>
                             <tr>
-                                <td><?= $data->fs_kd_barang ?></td>
-                                <td><?= $data->fs_kd_barcode ?></td>
-                                <td><?= $data->fs_nm_barang ?></td>
-                                <td><?= $data->fs_nm_satuan ?></td>
-                                <td class="text-right">
-                                    <?php
-                                    $harga_jual_profit = ($data->fn_hna * $data->fn_profit / 100) + $data->fn_hna;
-                                    $harga_jual = $data->fn_harga_jual;
-                                    $profit = $data->fn_profit;
-                                    echo indo_currency($profit == 0 ? $harga_jual : round($harga_jual_profit));
-                                    ?>
-                                </td>
-                                <td class="text-right"><?= $data->fn_stok ?></td>
-                                <td class="text-center">
-                                    <button class="btn btn-sm btn-info" id="select" data-fs_nm_etiket="<?= $data->fs_nm_etiket ?>" data-fs_id_barang="<?= $data->fs_id_barang ?>" data-fs_kd_barcode="<?= $data->fs_kd_barcode ?>" data-fs_id_etiket="<?= $data->fs_id_etiket ?>" data-fs_nm_barang="<?= $data->fs_nm_barang ?>" data-fs_kd_barang="<?= $data->fs_kd_barang ?>" data-fn_harga_beli="<?= $data->fn_harga_beli ?>" data-fn_harga_jual="<?php
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        $harga_jual_profit = ($data->fn_hna * $data->fn_profit / 100) + $data->fn_hna;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        $harga_jual = $data->fn_harga_jual;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        $profit = $data->fn_profit;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        echo $profit == 0 ? $harga_jual : round($harga_jual_profit);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        ?>" data-fn_stok="<?= $data->fn_stok ?>">
+                                <td width="5%"><?= $no++ ?></td>
+                                <td width="20%"><?= $ly->fs_kd_layanan ?></td>
+                                <td><?= $ly->fs_nm_layanan ?></td>
+                                <td class="text-center" width="10%">
+                                    <button class="btn btn-sm btn-info" id="select_layanan" data-id_layanan="<?= $ly->fs_id_layanan ?>" data-kode_layanan="<?= $ly->fs_kd_layanan ?>" data-nama_layanan="<?= $ly->fs_nm_layanan ?>">
                                         <i class="fa fa-check"></i>
                                     </button>
                                 </td>
@@ -510,8 +508,25 @@
                     </tbody>
                 </table>
             </div>
-            <div class="modal-footer bg-soft-info">
+            <div class="modal-footer bg-soft-info"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Add Product Barang -->
+<div class="modal fade" id="modal-barang">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-soft-info">
+                <h4 class="modal-title">Pilih Barang</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <div class="modal-body table-responsive">
+                <span id="data_barang"></span>
+            </div>
+            <div class="modal-footer bg-soft-info"></div>
         </div>
     </div>
 </div>
@@ -527,7 +542,8 @@
                 </button>
             </div>
             <div class="modal-body table-responsive">
-                <table class="table table-bordered table-striped  table-sm" id="tabel-barang_racik">
+                <span id="data_barang_racik"></span>
+                <!-- <table class="table table-bordered table-striped  table-sm" id="tabel-barang_racik">
                     <thead>
                         <tr>
                             <th>Kode</th>
@@ -568,7 +584,7 @@
                             </tr>
                         <?php } ?>
                     </tbody>
-                </table>
+                </table> -->
             </div>
             <div class="modal-footer bg-soft-info">
             </div>
@@ -787,8 +803,30 @@
         $('#fs_kd_registrasi').val($(this).data('kode'))
         $('#fs_nm_pasien').val($(this).data('nama'))
         $('#fs_nm_jaminan').val($(this).data('jaminan'))
-        $('#fs_nm_layanan').val($(this).data('layanan'))
+        // $('#fs_nm_layanan').val($(this).data('layanan'))
         $('#modal-registrasi').modal('hide')
+    })
+
+    $(document).on('click', '#select_layanan', function() {
+        $('#fs_id_layanan').val($(this).data('id_layanan'))
+        $('#fs_kd_layanan').val($(this).data('kode_layanan'))
+        $('#fs_nm_layanan').val($(this).data('nama_layanan'))
+        $('#modal-layanan').modal('hide')
+    })
+
+    $(document).ready(function() {
+        $('#tabel-layanan').DataTable({
+            columnDefs: [{
+                    "targets": [-1],
+                    "className": 'text-center',
+                    "orderable": false
+                },
+                {
+                    "targets": [0, -1],
+                    "orderable": false
+                },
+            ],
+        })
     })
 
     $(document).on('click', '#pilih_etiket', function() {
@@ -839,6 +877,136 @@
                     "orderable": false
                 },
             ],
+        })
+    })
+
+    $(document).on('click', '#barang', function() {
+        var i = 0;
+        var data_barang = '<table class="table table-bordered table-striped table-sm" id="tabel-barang">' +
+            '<thead>' +
+            '<tr>' +
+            '<th>No</th>' +
+            '<th>Kode</th>' +
+            '<th>Nama</th>' +
+            '<th>Satuan</th>' +
+            '<th>Harga Jual</th>' +
+            '<th>Stok</th>' +
+            '<th>Pilih</th>' +
+            '</thead>'
+        data_barang += '<tbody>'
+        $.getJSON('<?= site_url('penjualan/stok_barang/') ?>' + $('#fs_id_layanan').val(), function(data) {
+            $.each(data, function(key, val) {
+                i += 1
+                data_barang += '<tr>' +
+                    '<td>' + i + '</td>' +
+                    '<td>' + val.fs_kd_barang + '</td>' +
+                    '<td>' + val.fs_nm_barang + '</td>' +
+                    '<td>' + val.fs_nm_satuan + '</td>'
+                if (val.fn_profit == 0) {
+                    data_barang += '<td>' + currencyFormat(val.fn_harga_jual) + '</td>'
+                } else {
+                    data_barang += '<td>' + currencyFormat(parseInt(val.fn_hna * val.fn_profit / 100) + parseInt(val.fn_hna)) + '</td>'
+                }
+
+                data_barang += '<td>' + val.fn_qty + '</td>' +
+                    '<td>' +
+                    '<button class="btn btn-sm btn-info" id="select" ' +
+                    'data-fs_nm_etiket="' + val.fs_nm_etiket + '" ' +
+                    'data-fs_id_barang="' + val.fs_id_barang + '" ' +
+                    'data-fs_nm_barang="' + val.fs_nm_barang + '" ' +
+                    'data-fs_kd_barang="' + val.fs_kd_barang + ' / ' + val.fs_nm_barang + '" ' +
+                    'data-fs_id_etiket="' + val.fs_id_etiket + '" ' +
+                    'data-fn_harga_beli="' + val.fn_hpp + '" '
+                if (val.fn_profit == 0) {
+                    data_barang += 'data-fn_harga_jual="' + val.fn_harga_jual + '" '
+                } else {
+                    data_barang += 'data-fn_harga_jual="' + (parseInt(val.fn_hna * val.fn_profit / 100) + parseInt(val.fn_hna)) + '" '
+                }
+                data_barang += 'data-fn_stok="' + val.fn_qty + '" >' +
+                    '<i class="fa fa-check"></i>' +
+                    '</button>' +
+                    '</td>' +
+                    '</tr>'
+            })
+            data_barang += '</tbody></table>'
+            $('#data_barang').html(data_barang)
+            $('#tabel-barang').DataTable({
+                columnDefs: [{
+                        "targets": [-1],
+                        "className": 'text-center',
+                        "orderable": false
+                    },
+                    {
+                        "targets": [0, -1],
+                        "orderable": false
+                    },
+                ],
+            })
+        })
+    })
+
+    $(document).on('click', '#barang-racik', function() {
+        var i = 0;
+        var data_barang_racik = '<table class="table table-bordered table-striped table-sm" id="tabel-barang-racik">' +
+            '<thead>' +
+            '<tr>' +
+            '<th>No</th>' +
+            '<th>Kode</th>' +
+            '<th>Nama</th>' +
+            '<th>Satuan</th>' +
+            '<th>Harga Jual</th>' +
+            '<th>Stok</th>' +
+            '<th>Pilih</th>' +
+            '</thead>'
+        data_barang_racik += '<tbody>'
+        $.getJSON('<?= site_url('penjualan/stok_barang/') ?>' + $('#fs_id_layanan').val(), function(data) {
+            $.each(data, function(key, val) {
+                i += 1
+                data_barang_racik += '<tr>' +
+                    '<td>' + i + '</td>' +
+                    '<td>' + val.fs_kd_barang + '</td>' +
+                    '<td>' + val.fs_nm_barang + '</td>' +
+                    '<td>' + val.fs_nm_satuan + '</td>'
+                if (val.fn_profit == 0) {
+                    data_barang_racik += '<td>' + currencyFormat(val.fn_harga_jual) + '</td>'
+                } else {
+                    data_barang_racik += '<td>' + currencyFormat(parseInt(val.fn_hna * val.fn_profit / 100) + parseInt(val.fn_hna)) + '</td>'
+                }
+
+                data_barang_racik += '<td>' + val.fn_qty + '</td>' +
+                    '<td>' +
+                    '<button class="btn btn-sm btn-info" id="select_racik" ' +
+                    'data-fs_nm_etiket="' + val.fs_nm_etiket + '" ' +
+                    'data-fs_id_barang="' + val.fs_id_barang + '" ' +
+                    'data-fs_nm_barang="' + val.fs_nm_barang + '" ' +
+                    'data-fs_kd_barang="' + val.fs_kd_barang + ' / ' + val.fs_nm_barang + '" ' +
+                    'data-fs_id_etiket="' + val.fs_id_etiket + '" ' +
+                    'data-fn_harga_beli="' + val.fn_hpp + '" '
+                if (val.fn_profit == 0) {
+                    data_barang_racik += 'data-fn_harga_jual="' + val.fn_harga_jual + '" '
+                } else {
+                    data_barang_racik += 'data-fn_harga_jual="' + (parseInt(val.fn_hna * val.fn_profit / 100) + parseInt(val.fn_hna)) + '" '
+                }
+                data_barang_racik += 'data-fn_stok="' + val.fn_qty + '" >' +
+                    '<i class="fa fa-check"></i>' +
+                    '</button>' +
+                    '</td>' +
+                    '</tr>'
+            })
+            data_barang_racik += '</tbody></table>'
+            $('#data_barang_racik').html(data_barang_racik)
+            $('#tabel-barang-racik').DataTable({
+                columnDefs: [{
+                        "targets": [-1],
+                        "className": 'text-center',
+                        "orderable": false
+                    },
+                    {
+                        "targets": [0, -1],
+                        "orderable": false
+                    },
+                ],
+            })
         })
     })
 
@@ -900,6 +1068,7 @@
 
     $(document).on('click', '#add_cart', function() {
         var fs_id_barang = $('#fs_id_barang').val()
+        var fs_id_layanan = $('#fs_id_layanan').val()
         var fs_kd_barang = $('#fs_kd_barang').val()
         var fs_id_etiket = $('#fs_id_etiket').val()
         var fn_harga_beli = $('#fn_harga_beli').val()
@@ -927,6 +1096,7 @@
                 url: '<?= site_url('penjualan/process') ?>',
                 data: {
                     'add_cart': true,
+                    'fs_id_layanan': fs_id_layanan,
                     'fs_id_barang': fs_id_barang,
                     'fs_kd_barang': fs_kd_barang,
                     'fs_id_etiket': fs_id_etiket,
@@ -964,6 +1134,7 @@
     })
 
     $(document).on('click', '#add_cart_racik', function() {
+        var fs_id_layanan = $('#fs_id_layanan').val()
         var fs_id_barang = $('#fs_id_barang_racik').val()
         var fs_kd_barang = $('#fs_kd_barang_racik').val()
         var fs_id_etiket = $('#fs_id_etiket_racik').val()
@@ -992,6 +1163,7 @@
                 url: '<?= site_url('penjualan/process') ?>',
                 data: {
                     'add_cart_racik': true,
+                    'fs_id_layanan': fs_id_layanan,
                     'fs_id_barang': fs_id_barang,
                     'fs_kd_barang': fs_kd_barang,
                     'fs_id_etiket': fs_id_etiket,
@@ -1227,7 +1399,6 @@
         count_edit_modal()
     })
 
-
     $(document).on('click', '#edit_cart', function() {
         var fs_id_barang = $('#fs_id_barang_edit').val()
         var fs_id_etiket = $('#fs_id_etiket_edit').val()
@@ -1292,7 +1463,6 @@
         }
     })
 
-
     function calculate() {
         var subtotal = 0;
         $('#cart_table tr').each(function() {
@@ -1348,6 +1518,7 @@
 
     $(document).on('click', '#simpan_racik', function() {
         var fs_kd_racik = $('#fs_kd_racik').val()
+        var fs_id_layanan = $('#fs_id_layanan').val()
         var fs_nm_racik = $('#fs_nm_racik').val()
         var fs_id_satuan = $('#fs_id_satuan_racik').val()
         var fn_qty_racik = $('#fn_qty_racik').val()
@@ -1413,6 +1584,7 @@
                         url: '<?= site_url('penjualan/process') ?>',
                         data: {
                             'simpan_racik': true,
+                            'fs_id_layanan': fs_id_layanan,
                             'fs_kd_racik': fs_kd_racik,
                             'fs_nm_racik': fs_nm_racik,
                             'fs_id_satuan': fs_id_satuan,
@@ -1461,6 +1633,7 @@
     $(document).on('click', '#process_payment', function() {
         var fs_kd_penjualan = $('#fs_kd_penjualan').val()
         var fs_id_registrasi = $('#fs_id_registrasi').val()
+        var fs_id_layanan = $('#fs_id_layanan').val()
         var fn_nilai_beli = $('#sub_total_beli').val()
         var fn_nilai_jual = $('#sub_total').val()
         var fn_diskon = $('#discount').val()
@@ -1474,6 +1647,13 @@
                 text: 'Silahkan masukan barang terlebih dahulu!',
             })
             $('#fs_kd_barang').focus()
+        } else if (fs_id_layanan = '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Layanan masih kosong',
+                text: 'Silahkan pilih layanan stok terlebih dahulu!',
+            })
+            $('#fs_kd_registrasi').focus()
         } else if (fs_id_registrasi == '') {
             Swal.fire({
                 icon: 'error',
@@ -1505,6 +1685,7 @@
                             'process_payment': true,
                             'fs_kd_penjualan': fs_kd_penjualan,
                             'fs_id_registrasi': fs_id_registrasi,
+                            'fs_id_layanan': fs_id_layanan,
                             'fn_nilai_beli': fn_nilai_beli,
                             'fn_nilai_jual': fn_nilai_jual,
                             'fn_diskon': fn_diskon,
@@ -1553,7 +1734,27 @@
                                                 }
                                             })
                                         } else {
-                                            location.href = '<?= site_url('penjualan') ?>'
+                                            Swal.fire({
+                                                title: 'Cetak etiket?',
+                                                icon: 'info',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#00a65a',
+                                                cancelButtonColor: '#d33',
+                                                confirmButtonText: 'Ya, Cetak!',
+                                                showClass: {
+                                                    popup: 'animate__animated animate__bounceIn'
+                                                },
+                                                hideClass: {
+                                                    popup: 'animate__animated animate__backOutDown'
+                                                }
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    location.href = '<?= site_url('penjualan') ?>'
+                                                    window.open('<?= site_url('penjualan/cetak_etiket/') ?>' + kode, '_blank')
+                                                } else {
+                                                    location.href = '<?= site_url('penjualan') ?>'
+                                                }
+                                            })
                                         }
                                     })
                             } else {

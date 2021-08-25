@@ -14,18 +14,18 @@
 <?php $this->view('messages') ?>
 
 <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-4">
         <div class="card">
             <div class="card-body">
                 <div class="form-group row mb-2">
-                    <label class="col-sm-3 col-form-label text-right">Tanggal</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-4 col-form-label text-right">Tanggal</label>
+                    <div class="col-sm-8">
                         <input type="date" id="fd_tgl_registrasi" value="<?= $row->fd_tgl_registrasi ?>" class="form-control">
                     </div>
                 </div>
                 <div class="form-group row mb-2">
-                    <label class="col-sm-3 col-form-label text-right">Kode REG</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-4 col-form-label text-right">Kode REG</label>
+                    <div class="col-sm-8">
                         <input type="hidden" id="fs_id_registrasi" value="<?= $row->fs_id_registrasi ?>">
                         <input type="text" style="background-color: lavender;" id="fs_kd_registrasi" value="<?php
                                                                                                             if ($page == 'add') {
@@ -37,8 +37,8 @@
                     </div>
                 </div>
                 <div class="form-group row mb-2">
-                    <label class="col-sm-3 col-form-label text-right">No RM</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-4 col-form-label text-right">No RM</label>
+                    <div class="col-sm-8">
                         <div class="input-group">
                             <input type="hidden" id="fs_id_rm" value="<?= $row->fs_id_rm ?>">
                             <input type="text" style="background-color: lavender;" class="form-control" id="fs_kd_rm" value="<?= $row->fs_kd_rm ?>" readonly>
@@ -51,20 +51,20 @@
                     </div>
                 </div>
                 <div class="form-group row mb-2">
-                    <label class="col-sm-3 col-form-label text-right">Nama Pasien</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-4 col-form-label text-right">Nama Pasien</label>
+                    <div class="col-sm-8">
                         <input type="text" style="background-color: lavender;" id="fs_nm_pasien" value="<?= $row->fs_nm_pasien ?>" class="form-control" readonly>
                     </div>
                 </div>
                 <div class="form-group row mb-2">
-                    <label class="col-sm-3 col-form-label text-right">Jns. Kelamin</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-4 col-form-label text-right">Jns. Kelamin</label>
+                    <div class="col-sm-8">
                         <input type="text" style="background-color: lavender;" id="fs_nm_kelamin" value="<?= $row->fs_nm_kelamin ?>" class="form-control" readonly>
                     </div>
                 </div>
                 <div class="form-group row mb-2">
-                    <label class="col-sm-3 col-form-label text-right">Layanan</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-4 col-form-label text-right">Layanan</label>
+                    <div class="col-sm-8">
                         <div class="input-group">
                             <input type="hidden" id="fs_id_layanan" value="<?= $row->fs_id_layanan ?>">
                             <input type="text" style="background-color: lavender;" class="form-control" id="fs_nm_layanan" value="<?= $row->fs_nm_layanan ?>" readonly>
@@ -77,8 +77,8 @@
                     </div>
                 </div>
                 <div class="form-group row mb-2">
-                    <label class="col-sm-3 col-form-label text-right">Dokter</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-4 col-form-label text-right">Dokter</label>
+                    <div class="col-sm-8">
                         <div class="input-group">
                             <input type="hidden" id="fs_id_pegawai" value="<?= $row->fs_id_pegawai ?>">
                             <input type="text" style="background-color: lavender;" class="form-control" id="fs_nm_pegawai" value="<?= $row->fs_nm_pegawai ?>" readonly>
@@ -91,8 +91,8 @@
                     </div>
                 </div>
                 <div class="form-group row mb-2">
-                    <label class="col-sm-3 col-form-label text-right">Jaminan</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-4 col-form-label text-right">Jaminan</label>
+                    <div class="col-sm-8">
                         <div class="input-group">
                             <input type="hidden" id="fs_id_jaminan" value="<?= $row->fs_id_jaminan ?>">
                             <input type="text" style="background-color: lavender;" class="form-control" id="fs_nm_jaminan" value="<?= $row->fs_nm_jaminan ?>" readonly>
@@ -105,14 +105,14 @@
                     </div>
                 </div>
                 <div class="form-group row mb-2">
-                    <label class="col-sm-3 col-form-label text-right">No Polis</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-4 col-form-label text-right">No Polis</label>
+                    <div class="col-sm-8">
                         <input type="text" id="fn_no_polis" value="<?= $row->fn_no_polis ?>" class="form-control">
                     </div>
                 </div>
                 <div class="form-group row mb-2">
-                    <label class="col-sm-3 col-form-label text-right">Karcis</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-4 col-form-label text-right">Karcis</label>
+                    <div class="col-sm-8">
                         <div class="input-group">
                             <input type="hidden" id="fs_id_karcis" value="<?= $row->fs_id_karcis ?>">
                             <input type="text" style="background-color: lavender;" class="form-control" id="fs_nm_karcis" value="<?= $page == 'edit' ? $row->fs_nm_karcis . " / " . indo_currency($row->fn_nilai) : null ?>" readonly>
@@ -126,8 +126,8 @@
                     </div>
                 </div>
                 <div class="form-group row mb-2">
-                    <label class="col-sm-3 col-form-label text-right"></label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-4 col-form-label text-right"></label>
+                    <div class="col-sm-8">
                         <button id="<?= $page ?>" class="btn btn-success btn-flat">
                             <i class="fa fa-paper-plane"></i> Simpan
                         </button>
@@ -139,7 +139,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-8">
         <div class="card">
             <div class="card-body">
                 <table id="table1" class="table table-striped table-bordered dt-responsive nowrap  table-sm" style="border-collapse: collapse; border-spacing: 0; width: 100%;">

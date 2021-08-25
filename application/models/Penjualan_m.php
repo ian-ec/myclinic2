@@ -72,6 +72,7 @@ class penjualan_m extends CI_Model
 
         $params = array(
             'fs_id_cart_penjualan' => $car_no,
+            'fs_id_layanan' => $post['fs_id_layanan'],
             'fs_id_barang' => $post['fs_id_barang'],
             'fs_id_etiket' => $post['fs_id_etiket'],
             'fn_harga_beli' => $post['fn_harga_beli'],
@@ -227,12 +228,18 @@ class penjualan_m extends CI_Model
         $this->db->update('tb_trs_penjualan');
     }
 
+    public function del_buku($id)
+    {
+        $this->db->where('fs_kd_mutasi', $id);
+        $this->db->delete('tb_buku');
+    }
+
     public function update_stok($id)
     {
-        $sql =  "UPDATE tb_barang 
-        INNER JOIN tb_trs_penjualan_detail ON tb_trs_penjualan_detail.fs_id_barang = tb_barang.fs_id_barang
-        SET fn_stok = fn_stok + fn_qty      
-        WHERE fs_kd_penjualan = '$id'";
+        $sql =  "UPDATE tb_stok 
+        INNER JOIN tb_buku ON tb_buku.fs_id_penerimaan = tb_stok.fs_id_penerimaan AND tb_buku.fs_id_barang = tb_stok.fs_id_barang
+        SET fn_qty = fn_qty + fn_stok_out      
+        WHERE tb_buku.fs_kd_mutasi = '$id'";
 
         $this->db->query($sql);
     }

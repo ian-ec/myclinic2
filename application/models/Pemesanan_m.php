@@ -178,4 +178,14 @@ class Pemesanan_m extends CI_Model
         $query = $this->db->get();
         return $query;
     }
+
+    public function cek_penerimaan($id_pemesanan = null)
+    {
+        $this->db->select('*');
+        $this->db->from('tb_trs_penerimaan');
+        $this->db->where('fs_id_pemesanan', $id_pemesanan);
+        $this->db->where('fd_tgl_void', '0000-00-00');
+        $query = $this->db->get();
+        return $query;
+    }
 }

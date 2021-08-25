@@ -216,6 +216,9 @@
             <li class="<?= $this->uri->segment(1) == 'info_tindakan' ||
                           $this->uri->segment(1) == 'info_soap' ||
                           $this->uri->segment(1) == 'info_pemesanan' ||
+                          $this->uri->segment(1) == 'info_penerimaan' ||
+                          $this->uri->segment(1) == 'info_buku' ||
+                          $this->uri->segment(1) == 'info_stok' ||
                           $this->uri->segment(1) == 'info_pembelian' ||
                           $this->uri->segment(1) == 'info_penjualan' ||
                           $this->uri->segment(1) == 'info_adjustment' ||
@@ -228,6 +231,9 @@
               <a href="javascript: void(0);" class="waves-effect has-arrow <?= $this->uri->segment(1) == 'info_tindakan' ||
                                                                               $this->uri->segment(1) == 'info_soap' ||
                                                                               $this->uri->segment(1) == 'info_pemesanan' ||
+                                                                              $this->uri->segment(1) == 'info_penerimaan' ||
+                                                                              $this->uri->segment(1) == 'info_buku' ||
+                                                                              $this->uri->segment(1) == 'info_stok' ||
                                                                               $this->uri->segment(1) == 'info_pembelian' ||
                                                                               $this->uri->segment(1) == 'info_penjualan' ||
                                                                               $this->uri->segment(1) == 'info_adjustment' ||
@@ -249,6 +255,9 @@
                 <li><a href="<?= site_url('info_tindakan') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_tindakan' ? 'class="mm-active"' : '' ?>>Info Tindakan</a></li>
                 <li><a href="<?= site_url('info_soap') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_soap' ? 'class="mm-active"' : '' ?>>Info Catatan Pasien</a></li>
                 <li><a href="<?= site_url('info_pemesanan') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_pemesanan' ? 'class="mm-active"' : '' ?>>Info Pemesanan Barang</a></li>
+                <li><a href="<?= site_url('info_penerimaan') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_penerimaan' ? 'class="mm-active"' : '' ?>>Info Penerimaan Barang</a></li>
+                <li><a href="<?= site_url('info_buku') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_buku' ? 'class="mm-active"' : '' ?>>Info Buku</a></li>
+                <li><a href="<?= site_url('info_stok') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_stok' ? 'class="mm-active"' : '' ?>>Info Stok</a></li>
                 <li><a href="<?= site_url('info_pembelian') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_pembelian' ? 'class="mm-active"' : '' ?>>Info Pembelian</a></li>
                 <li><a href="<?= site_url('info_penjualan') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_penjualan' ? 'class="mm-active"' : '' ?>>Info Penjualan</a></li>
                 <li><a href="<?= site_url('info_adjustment') ?>" key="t-default" <?= $this->uri->segment(1) == 'info_adjustment' ? 'class="mm-active"' : '' ?>>Info Adjustment</a></li>

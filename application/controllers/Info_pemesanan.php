@@ -13,6 +13,7 @@ class Info_pemesanan extends CI_Controller
             'distributor_m',
             'barang_m',
             'pemesanan_m',
+            'buku_m',
         ]);
     }
     public function index()
@@ -26,15 +27,29 @@ class Info_pemesanan extends CI_Controller
     public function detail($id)
     {
         $pemesanan_detail = $this->pemesanan_m->get_pemesanan_detail($id)->result();
-        echo json_encode($pemesanan_detail); 
+        echo json_encode($pemesanan_detail);
     }
-
 
     public function delete($id)
     {
-        $this->pemesanan_m->del($id);
+        $cek = $this->pemesanan_m->cek_penerimaan($id)->result();
         if ($this->db->affected_rows() > 0) {
-            $this->session->set_flashdata('danger', 'Data berhasil dihapus');
+
+            $kd = array();
+            foreach ($cek as $key => $data) {
+                $kd[] = $data->fs_kd_penerimaan;
+            };
+            $kode = implode(", ", $kd);
+
+            $this->session->set_flashdata('info', 'Barang sudah dikeluarkan dengan Kode: ' . $kode);
+        } else {
+            $this->pemesanan_m->del($id);
+            $this->buku_m->del_stok($id);
+            if ($this->db->affected_rows() > 0) {
+                $this->session->set_flashdata('danger', 'Data berhasil dihapus');
+            } else {
+                $this->session->set_flashdata('danger', 'Data gagal dihapus');
+            }
         }
         redirect('info_pemesanan');
     }

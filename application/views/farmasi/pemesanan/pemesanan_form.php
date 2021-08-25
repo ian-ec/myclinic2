@@ -64,9 +64,9 @@
                         <input type="hidden" id="fs_id_barang">
                         <input type="hidden" id="fn_harga_beli">
                         <input type="hidden" id="fn_stok">
-                        <input type="text" id="fs_kd_barang" class="form-control" autofocus>
+                        <input type="text" id="fs_kd_barang" class="form-control" readonly style="background-color: lavender;">
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#modal-barang">
+                            <button type="button" id="barang" class="btn btn-info btn-flat" data-toggle="modal" data-target="#modal-barang">
                                 <i class="fa fa-search"></i>
                             </button>
                         </span>
@@ -244,34 +244,7 @@
                 </button>
             </div>
             <div class="modal-body table-responsive">
-                <table class="table table-sm table-bordered table-striped" id="table2">
-                    <thead>
-                        <tr>
-                            <th>Kode</th>
-                            <th>Barang</th>
-                            <th>Satuan</th>
-                            <th>HPP</th>
-                            <th>Stok</th>
-                            <th>Pilihan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($barang as $brg => $data) { ?>
-                            <tr>
-                                <td><?= $data->fs_kd_barang ?></td>
-                                <td><?= $data->fs_nm_barang ?></td>
-                                <td><?= $data->fs_nm_satuan ?></td>
-                                <td class="text-right"><?= indo_currency($data->fn_harga_beli) ?></td>
-                                <td class="text-right"><?= $data->fn_stok ?></td>
-                                <td class="text-center">
-                                    <button class="btn btn-sm btn-info" id="select" data-fs_id_barang="<?= $data->fs_id_barang ?>" data-fs_nm_barang="<?= $data->fs_nm_barang ?>" data-fs_kd_barang="<?= $data->fs_kd_barang ?>" data-fn_harga_beli="<?= $data->fn_harga_beli ?>" data-fn_stok="<?= $data->fn_stok ?>">
-                                        <i class="fa fa-check"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
+                <span id="data_barang"></span>
             </div>
             <div class="modal-footer bg-soft-info"></div>
         </div>
@@ -383,6 +356,59 @@
                     "orderable": false
                 },
             ],
+        })
+    })
+
+    $(document).on('click', '#barang', function() {
+        var i = 0;
+        var data_barang = '<table class="table table-bordered table-striped table-sm" id="tabel-barang">' +
+            '<thead>' +
+            '<tr>' +
+            '<th>No</th>' +
+            '<th>Kode barang</th>' +
+            '<th>Nama barang</th>' +
+            '<th>Satuan</th>' +
+            '<th>HPP</th>' +
+            '<th>Stok</th>' +
+            '<th>Pilih</th>' +
+            '</thead>'
+        data_barang += '<tbody>'
+        $.getJSON('<?= site_url('pemesanan/stok_barang/') ?>' + $('#fs_id_layanan').val(), function(data) {
+            $.each(data, function(key, val) {
+                i += 1
+                data_barang += '<tr>' +
+                    '<td>' + i + '</td>' +
+                    '<td>' + val.fs_kd_barang + '</td>' +
+                    '<td>' + val.fs_nm_barang + '</td>' +
+                    '<td>' + val.fs_nm_satuan + '</td>' +
+                    '<td>' + currencyFormat(val.fn_hpp) + '</td>' +
+                    '<td>' + val.fn_qty + '</td>' +
+                    '<td>' +
+                    '<button class="btn btn-sm btn-info" id="select" ' +
+                    'data-fs_id_barang="' + val.fs_id_barang + '" ' +
+                    'data-fs_nm_barang="' + val.fs_nm_barang + '" ' +
+                    'data-fs_kd_barang="' + val.fs_kd_barang + ' / ' + val.fs_nm_barang + '" ' +
+                    'data-fn_harga_beli="' + val.fn_hpp + '" ' +
+                    'data-fn_stok="' + val.fn_qty + '" >' +
+                    '<i class="fa fa-check"></i>' +
+                    '</button>' +
+                    '</td>' +
+                    '</tr>'
+            })
+            data_barang += '</tbody></table>'
+            $('#data_barang').html(data_barang)
+            $('#tabel-baranf').DataTable({
+                columnDefs: [{
+                        "targets": [-1],
+                        "className": 'text-center',
+                        "orderable": false
+                    },
+                    {
+                        "targets": [0, -1],
+                        "orderable": false
+                    },
+                ],
+            })
         })
     })
 

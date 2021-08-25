@@ -81,6 +81,7 @@ class racik_m extends CI_Model
 
         $params = array(
             'fs_id_cart_racik' => $car_no,
+            'fs_id_layanan' => $post['fs_id_layanan'],
             'fs_id_barang' => $post['fs_id_barang'],
             'fs_id_etiket' => 0,
             'fn_harga_beli' => $post['fn_harga_beli'],

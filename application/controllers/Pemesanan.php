@@ -14,6 +14,7 @@ class pemesanan extends CI_Controller
             'barang_m',
             'pemesanan_m',
             'layanan_m',
+            'buku_m',
         ]);
     }
 
@@ -28,6 +29,12 @@ class pemesanan extends CI_Controller
             'parameter' => $this->parameter_m->get()->row()
         );
         $this->template->load('template', 'farmasi/pemesanan/pemesanan_form', $data);
+    }
+
+    public function stok_barang($id)
+    {
+        $stok_barang = $this->buku_m->stok_barang($id)->result();
+        echo json_encode($stok_barang);
     }
 
     function cart_data()

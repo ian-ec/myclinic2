@@ -17,6 +17,8 @@ class penjualan extends CI_Controller
             'billing_m',
             'etiket_m',
             'satuan_m',
+            'layanan_m',
+            'buku_m',
             'racik_m'
         ]);
     }
@@ -25,6 +27,7 @@ class penjualan extends CI_Controller
     {
         $data = array(
             'registrasi' => $this->registrasi_m->get()->result(),
+            'layanan' => $this->layanan_m->get(),
             'barang' => $this->barang_m->get_penjualan()->result(),
             'cart' => $this->penjualan_m->get_cart_penjualan(),
             'no_penjualan' => $this->penjualan_m->no_penjualan(),
@@ -38,6 +41,12 @@ class penjualan extends CI_Controller
             'parameter' => $this->parameter_m->get()->row()
         );
         $this->template->load('template', 'farmasi/penjualan/penjualan_form', $data);
+    }
+
+    public function stok_barang($id)
+    {
+        $stok_barang = $this->buku_m->stok_ada($id)->result();
+        echo json_encode($stok_barang);
     }
 
     function get_barang()
@@ -176,6 +185,7 @@ class penjualan extends CI_Controller
             foreach ($cart as $c => $value) {
                 array_push($row, array(
                     'fs_id_racik' => $racik_id,
+                    'fs_id_layanan' => $value->fs_id_layanan,
                     'fs_id_barang' => $value->id_barang_racik,
                     'fs_id_etiket' => $value->id_etiket_racik,
                     'fn_harga_beli' => $value->harga_beli_racik,
@@ -199,11 +209,18 @@ class penjualan extends CI_Controller
         }
 
         if (isset($_POST['process_payment'])) {
+            // update status di registrasi
             $this->registrasi_m->update_status($data, 3);
+
             $no_penjualan = $this->penjualan_m->no_penjualan();
+
+            // menambahkan data ke billing
             $this->billing_m->add_penjualan($data, $no_penjualan);
+
+            //add penjualan
             $penjualan_id = $this->penjualan_m->add_penjualan($data);
 
+            // add penjualan detail
             $cart = $this->penjualan_m->get_cart_penjualan()->result();
             $row = [];
             foreach ($cart as $c => $value) {
@@ -220,6 +237,7 @@ class penjualan extends CI_Controller
             }
             $this->penjualan_m->add_penjualan_detail($row);
 
+            // add racik detail
             $cart_racik = $this->penjualan_m->get_cart_racik_detail()->result();
             $racik = [];
             foreach ($cart_racik as $rck => $r) {
@@ -235,9 +253,117 @@ class penjualan extends CI_Controller
             }
             $this->penjualan_m->add_penjualan_detail_racik($racik);
 
+            // update stok
+            $cart_stok = $this->penjualan_m->get_cart_penjualan()->result();
+            foreach ($cart_stok as $cs => $stok_data) {
+                $id_barang = $stok_data->id_barang;
+                $fn_qty = $stok_data->fn_qty;
+                // $fn_qty2 = $stok_data->fn_qty;
+                $layanan = $stok_data->fs_id_layanan;
+
+                $sql = $this->buku_m->stok2($layanan, $id_barang)->row();
+                $stok_all = $sql->fn_qty;
+
+                $sql2 = $this->buku_m->stok3($layanan, $id_barang)->result();
+
+                if ($id_barang <= $stok_all) {
+                    foreach ($sql2 as $s => $qty_barang) {
+                        $fs_id_penerimaan = $qty_barang->fs_id_penerimaan;
+                        $stok = $qty_barang->fn_qty;
+                        $fn_hpp = $qty_barang->fn_hpp;
+                        $fs_id_pemesanan = $qty_barang->fs_id_pemesanan;
+                        $fd_tgl_expired = $qty_barang->fd_tgl_expired;
+
+                        if ($fn_qty > 0) {
+                            $temp = $fn_qty;
+                            $fn_qty = $fn_qty - $stok;
+
+                            if ($fn_qty > 0) {
+                                $stok_update = 0;
+                                $fn_qty_buku = $stok;
+                            } else {
+                                $stok_update = $stok - $temp;
+                                $fn_qty_buku = $temp;
+                            }
+                            // add ke tabel buku
+                            $this->buku_m->add_stok_out(
+                                $id_barang,
+                                $layanan,
+                                $fn_hpp,
+                                $fn_qty_buku,
+                                $fs_id_pemesanan,
+                                $fs_id_penerimaan,
+                                $no_penjualan,
+                                $fd_tgl_expired
+                            );
+
+                            $this->buku_m->update_stok($stok_update, $id_barang, $fs_id_penerimaan);
+                        };
+                    };
+                };
+            };
+
+            // update stok racik
+            $cart_stok_racik = $this->penjualan_m->get_cart_racik_detail()->result();
+            foreach ($cart_stok_racik as $cs => $stok_data_racik) {
+                $id_barang_racik = $stok_data_racik->id_barang;
+                $fn_qty_racik = $stok_data_racik->fn_qty;
+                // $fn_qty2 = $stok_data_racik->fn_qty;
+                $layanan_racik = $stok_data_racik->fs_id_layanan;
+
+                $sql = $this->buku_m->stok2($layanan_racik, $id_barang_racik)->row();
+                $stok_all = $sql->fn_qty;
+
+                $sql2 = $this->buku_m->stok3($layanan_racik, $id_barang_racik)->result();
+
+                if ($id_barang_racik <= $stok_all) {
+                    foreach ($sql2 as $s => $qty_barang) {
+                        $fs_id_penerimaan = $qty_barang->fs_id_penerimaan;
+                        $stok = $qty_barang->fn_qty;
+                        $fn_hpp = $qty_barang->fn_hpp;
+                        $fs_id_pemesanan = $qty_barang->fs_id_pemesanan;
+                        $fd_tgl_expired = $qty_barang->fd_tgl_expired;
+
+                        if ($fn_qty_racik > 0) {
+                            $temp = $fn_qty_racik;
+                            $fn_qty_racik = $fn_qty_racik - $stok;
+
+                            if ($fn_qty_racik > 0) {
+                                $stok_update = 0;
+                                $fn_qty_buku = $stok;
+                            } else {
+                                $stok_update = $stok - $temp;
+                                $fn_qty_buku = $temp;
+                            }
+                            // add ke tabel buku
+                            $this->buku_m->add_stok_out(
+                                $id_barang_racik,
+                                $layanan_racik,
+                                $fn_hpp,
+                                $fn_qty_buku,
+                                $fs_id_pemesanan,
+                                $fs_id_penerimaan,
+                                $no_penjualan,
+                                $fd_tgl_expired
+                            );
+
+                            $this->buku_m->update_stok($stok_update, $id_barang_racik, $fs_id_penerimaan);
+                        };
+                    };
+                };
+            };
+
+
+
+
+            // update id penjualan di tabel racik
             $this->racik_m->update_id_penjualan($penjualan_id);
             $this->racik_m->update_id_penjualan_detail($penjualan_id);
+
+            // menghapus cart data
             $this->penjualan_m->del_cart(['fs_id_user' => $this->session->userdata('userid')]);
+
+            // update nomer transaksi penjualan
             $this->penjualan_m->update_no();
 
             if ($this->db->affected_rows() > 0) {

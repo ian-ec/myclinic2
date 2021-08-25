@@ -25,7 +25,7 @@ class Penerimaan extends CI_Controller
             'distributor' => $this->distributor_m->get()->result(),
             'layanan' => $this->layanan_m->get(),
             'barang' => $this->barang_m->get()->result(),
-            'pemesanan' => $this->pemesanan_m->get_pemesanan()->result(),
+            'pemesanan' => $this->penerimaan_m->get_pemesanan()->result(),
             'no_penerimaan' => $this->penerimaan_m->no_penerimaan(),
             'parameter' => $this->parameter_m->get()->row()
         );
@@ -60,7 +60,8 @@ class Penerimaan extends CI_Controller
                     'fn_qty_do' => $value->fn_qty_sisa,
                     'fn_diskon' => $value->fn_diskon,
                     'fn_ppn' => $value->fn_ppn,
-                    'fn_total' => $value->fn_total,
+                    'fn_hna_barang' => $value->fn_hpp -  $value->fn_diskon + (($value->fn_hpp - $value->fn_diskon) * $value->fn_ppn / 100),
+                    'fn_total' => $value->fn_total / $value->fn_qty * $value->fn_qty_sisa,
                     'fs_id_user' => $this->session->userdata('userid'),
                 ));
             }
@@ -91,7 +92,6 @@ class Penerimaan extends CI_Controller
             $id = $this->session->userdata('userid');
             $id_pemesanan = $data['fs_id_pemesanan'];
             $fs_kd_penerimaan = $this->penerimaan_m->no_penerimaan();
-            $fs_kd_buku = $this->buku_m->no_buku();
             $penerimaan_id = $this->penerimaan_m->add_penerimaan($data);
             $cart = $this->penerimaan_m->get_cart_penerimaan($id)->result();
             $row = [];
@@ -105,6 +105,7 @@ class Penerimaan extends CI_Controller
                     'fn_qty_do' => $value->fn_qty_do,
                     'fn_diskon' => $value->fn_diskon,
                     'fn_ppn' => $value->fn_ppn,
+                    'fn_hna_barang' => $value->fn_hna_barang,
                     'fn_total' => $value->fn_total,
                 ));
             }
@@ -121,11 +122,32 @@ class Penerimaan extends CI_Controller
                     'fs_id_pemesanan' => $id_pemesanan,
                     'fs_id_penerimaan' => $penerimaan_id,
                     'fs_kd_mutasi' => $fs_kd_penerimaan,
-                    'fd_tgl_expired' => $value->fn_total,
-                    'fd_tgl_mutasi' => $value->fn_total,
+                    'fd_tgl_expired' => $value->fd_tgl_expired,
+                    'fd_tgl_mutasi' => $data['fd_tgl_penerimaan'],
                 ));
             }
             $this->buku_m->add_buku($buku);
+
+            $stok = [];
+            foreach ($cart as $c => $value) {
+                array_push($stok, array(
+                    'fs_id_barang' => $value->id_barang,
+                    'fs_id_layanan' => $value->fs_id_layanan,
+                    'fn_qty' => $value->fn_qty_do,
+                    'fn_hpp' => $value->fn_hpp,
+                    'fs_id_pemesanan' => $id_pemesanan,
+                    'fs_id_penerimaan' => $penerimaan_id,
+                    'fs_kd_mutasi' => $fs_kd_penerimaan,
+                    'fd_tgl_mutasi' => $data['fd_tgl_penerimaan'],
+                    'fd_tgl_expired' => $value->fd_tgl_expired,
+                ));
+            }
+
+            $this->buku_m->add_stok($stok);
+
+            $this->penerimaan_m->update_qty_sisa($id_pemesanan);
+
+            $this->penerimaan_m->update_barang($penerimaan_id);
 
             $this->penerimaan_m->del_cart();
             $this->penerimaan_m->update_no();
@@ -137,5 +159,16 @@ class Penerimaan extends CI_Controller
             }
             echo json_encode($params);
         }
+    }
+
+    public function cetak_pdf($id)
+    {
+        $data = array(
+            'penerimaan' => $this->penerimaan_m->get_penerimaan($id)->row(),
+            'penerimaan_detail' => $this->penerimaan_m->data_penerimaan_detail($id)->result(),
+            'parameter' => $this->parameter_m->get()->row()
+        );
+        $html = $this->load->view('farmasi/penerimaan/penerimaan_cetak_pdf', $data, true);
+        $this->fungsi->PdfGenerator($html, 'PO-' . $data['penerimaan']->fs_kd_penerimaan, 'A4', 'potrait');
     }
 }

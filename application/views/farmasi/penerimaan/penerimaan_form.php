@@ -29,6 +29,8 @@
                     <div class="col-sm-8">
                         <div class="input-group">
                             <input type="hidden" id="fs_id_pemesanan">
+                            <input type="hidden" id="fs_id_distributor">
+                            <input type="hidden" id="fs_id_layanan">
                             <input type="text" style="background-color: lavender;" class="form-control" id="fs_kd_pemesanan" readonly>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#modal-pemesanan">
@@ -146,12 +148,12 @@
                         foreach ($pemesanan as $data) { ?>
                             <tr>
                                 <td width="5%"><?= $no++ ?></td>
-                                <td width="25%"><?= $data->fs_kd_pemesanan ?></td>
-                                <td><?= $data->fs_nm_layanan ?></td>
-                                <td><?= $data->fs_nm_distributor ?></td>
-                                <td><?= indo_currency($data->fn_grandtotal) ?></td>
+                                <td width="25%"><?= $data->kode ?></td>
+                                <td><?= $data->layanan ?></td>
+                                <td><?= $data->distributor ?></td>
+                                <td><?= indo_currency($data->total) ?></td>
                                 <td class="text-center" width="10%">
-                                    <button class="btn btn-sm btn-info" id="select_pemesanan" data-fs_id_pemesanan="<?= $data->fs_id_pemesanan ?>" data-fs_kd_pemesanan="<?= $data->fs_kd_pemesanan ?>" data-fs_nm_layanan="<?= $data->fs_nm_layanan ?>" data-fs_nm_distributor="<?= $data->fs_nm_distributor ?>" data-fn_grandtotal="<?= $data->fn_grandtotal ?>" data-fs_id_user="<?= $this->session->userdata('userid') ?>">
+                                    <button class="btn btn-sm btn-info" id="select_pemesanan" data-fs_id_pemesanan="<?= $data->id ?>" data-fs_kd_pemesanan="<?= $data->kode ?>" data-fs_id_layanan="<?= $data->id_layanan ?>" data-fs_nm_layanan="<?= $data->layanan ?>" data-fs_id_distributor="<?= $data->id_distributor ?>" data-fs_nm_distributor="<?= $data->distributor ?>" data-fn_grandtotal="<?= $data->total ?>" data-fs_id_user="<?= $this->session->userdata('userid') ?>">
                                         <i class="fa fa-check"></i>
                                     </button>
                                 </td>
@@ -248,7 +250,9 @@
     $(document).on('click', '#select_pemesanan', function() {
         $('#fs_id_pemesanan').val($(this).data('fs_id_pemesanan'))
         $('#fs_kd_pemesanan').val($(this).data('fs_kd_pemesanan'))
+        $('#fs_id_layanan').val($(this).data('fs_id_layanan'))
         $('#fs_nm_layanan').val($(this).data('fs_nm_layanan'))
+        $('#fs_id_distributor').val($(this).data('fs_id_distributor'))
         $('#fs_nm_distributor').val($(this).data('fs_nm_distributor'))
         $('#fn_subtotal').val($(this).data('fn_grandtotal'))
         $('#fn_grandtotal').val($(this).data('fn_grandtotal'))
@@ -473,11 +477,13 @@
 
     $(document).on('click', '#simpan', function() {
         var fs_id_pemesanan = $('#fs_id_pemesanan').val()
+        var fs_id_layanan = $('#fs_id_layanan').val()
+        var fs_id_distributor = $('#fs_id_distributor').val()
         var fs_keterangan = $('#fs_keterangan').val()
         var fd_tgl_penerimaan = $('#fd_tgl_penerimaan').val()
         var fn_subtotal = $('#fn_subtotal').val()
         var fn_diskon = $('#discount').val()
-        var fn_grandtotal = $('#fn_diskon').val()
+        var fn_grandtotal = $('#fn_grandtotal').val()
 
         if (fs_id_pemesanan == '') {
             Swal.fire({
@@ -509,6 +515,8 @@
                         data: {
                             'simpan': true,
                             'fs_id_pemesanan': fs_id_pemesanan,
+                            'fs_id_layanan': fs_id_layanan,
+                            'fs_id_distributor': fs_id_distributor,
                             'fs_keterangan': fs_keterangan,
                             'fd_tgl_penerimaan': fd_tgl_penerimaan,
                             'fn_subtotal': fn_subtotal,
@@ -518,7 +526,7 @@
                         dataType: 'json',
                         success: function(result) {
                             if (result.success) {
-                                kode = result.pembelian_id,
+                                kode = result.penerimaan_id,
                                     Swal.fire({
                                         title: 'Cetak transaksi ini?',
                                         icon: 'info',

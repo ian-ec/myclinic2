@@ -49,8 +49,9 @@ class Info_penjualan extends CI_Controller
         $this->penjualan_m->del($id);
         $this->penjualan_m->update_stok($id);
         $this->billing_m->del_penjualan($id);
+        $this->penjualan_m->del_buku($id);
         if ($this->db->affected_rows() > 0) {
-            $this->session->set_flashdata('danger', 'Data berhasil dihapus');
+            $this->session->set_flashdata('success', 'Data berhasil dihapus');
         }
         redirect('info_penjualan');
     }
